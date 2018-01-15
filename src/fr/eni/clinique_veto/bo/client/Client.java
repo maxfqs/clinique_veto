@@ -1,5 +1,8 @@
 package fr.eni.clinique_veto.bo.client;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Client {
 
 
@@ -15,6 +18,7 @@ public class Client {
 	private String email;
 	private String remarque;
 	private int archive;
+	//private List<Animal>listeAnimaux = new ArrayList<Animal>();
 	
 	
 	public Client() {
@@ -62,6 +66,13 @@ public class Client {
 		this.setArchive(archive);
 	}
 
+//	public void addAnimal(Animal a) {
+//		this.listeAnimaux.add(a);
+//	}
+//	
+//	public void removeAnimal(Animal a) {
+//		this.listeAnimaux.remove(a.getCodeAnimal());
+//	}
 
 	public int getCodeClient() {
 		return codeClient;
