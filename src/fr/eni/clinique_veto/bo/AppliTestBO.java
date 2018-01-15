@@ -1,7 +1,5 @@
 package fr.eni.clinique_veto.bo;
 
-import fr.eni.clinique_veto.bo.personnel.Personnel;
-
 public class AppliTestBO {
 
 	public static void main(String[] args) {
