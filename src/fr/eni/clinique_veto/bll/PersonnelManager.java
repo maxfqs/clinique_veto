@@ -15,6 +15,13 @@ public class PersonnelManager {
 		return instance;
 	}
 	
+	public boolean logIn(String nom, String mdp) {
+		if(nom == null || nom.trim().equals("") || mdp == null || mdp.trim().equals("")) {
+			return false;
+		}
+		
+		return true;
+	}
 		
 	public void validerPersonnel(Personnel p) throws BLLException {
 		if(p.getNom() == null || p.getNom().trim().equals("")) {
