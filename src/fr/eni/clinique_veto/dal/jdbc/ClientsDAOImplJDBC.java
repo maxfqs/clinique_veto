@@ -50,7 +50,8 @@ public class ClientsDAOImplJDBC {
 	private static final String TROUVER_CLIENT  = ""
 			+ "SELECT * "
 			+ " FROM "+ TABLE_CLIENT
-			+ " WHERE upper(NomClient) like ?";
+			+ " WHERE upper(NomClient) like ?"
+			+ " AND Archive = 0";
 	
 	private static final String ARCHIVER = ""
 			+ "BEGIN TRANSACTION;"
@@ -194,7 +195,7 @@ public class ClientsDAOImplJDBC {
 	
 	// => a remplacer par dalException
 	public Client trouverParId(int id) throws ClientDALException {
-		
+	
 		PreparedStatement pst = null;
 		Client retClient = null;
 		boolean result = false;
