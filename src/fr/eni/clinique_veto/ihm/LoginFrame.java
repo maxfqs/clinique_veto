@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 public class LoginFrame extends JFrame {
+	private static final long serialVersionUID = 2599708452804266382L;
 
 	private static final int WIDTH = 400;
 	private static final int HEIGHT = 300;
@@ -89,8 +90,11 @@ public class LoginFrame extends JFrame {
 	}
 	
 	
-	private void initListeners() {
-		valider.addActionListener((e)-> System.out.println("clic sur ok"));
+	private void initListeners() {		
 		annuler.addActionListener((e)-> System.exit(1));
+		
+		valider.addActionListener((e)-> {
+			LoginController.get().logUser();
+		});
 	}
 }
