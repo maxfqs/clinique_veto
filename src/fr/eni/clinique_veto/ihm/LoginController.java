@@ -1,5 +1,7 @@
 package fr.eni.clinique_veto.ihm;
 
+import fr.eni.clinique_veto.bll.BLLException;
+import fr.eni.clinique_veto.bll.LoginMger;
 
 /** Singleton */
 public class LoginController {
@@ -32,6 +34,10 @@ public class LoginController {
 		String name = lframe.getUsernameField().getText().trim();
 		String password = lframe.getPasswordField().getText().trim();
 		
-		System.out.println("nom: " + name + ", password: " + password);
+		try {
+			LoginMger.get().verifierUser(name, password);
+		} catch (BLLException e) {
+			e.printStackTrace();
+		}
 	}
 }
