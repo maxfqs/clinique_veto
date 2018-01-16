@@ -9,20 +9,16 @@ import fr.eni.clinique_veto.bo.Personnel;
  *  */
 public class CVApp implements ConnexionObserver {
 	public static final String APP_TITLE = "Ani'Forme";
-	private LoginController lc;
+
 	
 	public CVApp() {
 		LoginMger.get().ajouterObservateur(this);
-		
-		lc = LoginController.get();		
-		lc.createFrame();
-		
-//		HomeController.get().createFrame();
+		LoginController.get().createFrame();		
 	}
 	
 	@Override
 	public void connexionNotification(Personnel p) {
-		lc.closeFrame();
+		LoginController.get().closeFrame();
 		HomeController.get().createFrame();
 	}
 	

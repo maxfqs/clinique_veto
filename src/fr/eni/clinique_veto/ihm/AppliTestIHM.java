@@ -1,9 +1,9 @@
 package fr.eni.clinique_veto.ihm;
 
+import fr.eni.clinique_veto.ihm.personnel.PersonnelController;
+
 public class AppliTestIHM {
 	public static void main(String[] args) {
-		System.out.println("test");
-		LoginFrame login = new LoginFrame();
-		login.setVisible(true);
+		PersonnelController.get().createFrame();
 	}
 }

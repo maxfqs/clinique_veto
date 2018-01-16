@@ -4,6 +4,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
@@ -20,6 +21,9 @@ public class HomeFrame extends JFrame {
 		
 		menu = new JMenuBar();
 		
+		JMenu gp = new JMenu("Gestion du personnel");
+		
+		menu.add(gp);
 		
 		container = new JPanel();
 		container.setLayout(new GridBagLayout());
@@ -31,6 +35,7 @@ public class HomeFrame extends JFrame {
 		container.add(toolBar);
 		
 		getContentPane().add(container);
+		setJMenuBar(menu);
 	}
 
 }
