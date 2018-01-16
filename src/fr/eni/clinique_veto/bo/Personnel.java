@@ -10,7 +10,10 @@ public class Personnel {
 	public Personnel() {
 		
 	}
-	
+	public Personnel(String nom, String mdp){
+		setNom(nom);
+		setMdp(mdp);
+	}
 	public Personnel(int id, String nom, String mdp, String role, boolean archive) {
 		setId(id);
 		setNom(nom);

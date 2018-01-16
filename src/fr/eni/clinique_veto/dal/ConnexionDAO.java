@@ -1,5 +1,8 @@
 package fr.eni.clinique_veto.dal;
 
-public interface ConnexionDAO {
+import fr.eni.clinique_veto.bo.Personnel;
 
+
+public interface ConnexionDAO {
+	public boolean verifierPersonnel(String nom, String mdp) throws DALException;
 }
