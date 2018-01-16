@@ -6,8 +6,11 @@ import java.awt.GridBagLayout;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
+
+import fr.eni.clinique_veto.ihm.personnel.PersonnelController;
 
 public class HomeFrame extends JFrame {
 	private static final long serialVersionUID = -6107674517780760465L;
@@ -18,10 +21,17 @@ public class HomeFrame extends JFrame {
 	public HomeFrame() {
 		setTitle(CVApp.APP_TITLE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize la frame
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		menu = new JMenuBar();
 		
 		JMenu gp = new JMenu("Gestion du personnel");
+		JMenuItem gpi = new JMenuItem("Ouvrir");
+		gpi.addActionListener((e) -> {
+			HomeController.get().selectMenu(PersonnelController.get());
+		});
+		
+		gp.add(gpi);
 		
 		menu.add(gp);
 		

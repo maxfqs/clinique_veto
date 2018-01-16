@@ -4,14 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.clinique_veto.bo.Personnel;
+import fr.eni.clinique_veto.ihm.MenuController;
 
-public class PersonnelController {
+public class PersonnelController implements MenuController {
 	public static PersonnelController instance;
 	private PersonnelFrame pf;
 	
 	
 	private PersonnelController() {
+		// Temp
+		List<Personnel> ps = new ArrayList<Personnel>();
+		ps.add(new Personnel(1, "bob", "mdp", "VET", false));
+		ps.add(new Personnel(2, "brian", "mdp", "VET", false));
+		ps.add(new Personnel(3, "jack", "mdp", "VET", false));
 		
+		pf = new PersonnelFrame(ps);
 	}
 	
 	public static PersonnelController get() {
@@ -22,27 +29,12 @@ public class PersonnelController {
 		return instance;
 	}
 	
-	public void createFrame() {
-		// Temp
-		List<Personnel> ps = new ArrayList<Personnel>();
-		ps.add(new Personnel(1, "bob", "mdp", "VET", false));
-		ps.add(new Personnel(2, "brian", "mdp", "VET", false));
-		ps.add(new Personnel(3, "jack", "mdp", "VET", false));
-		
-		pf = new PersonnelFrame(ps);
+	public void show() {
 		pf.setVisible(true);
 	}
 	
-	public void show() {
-		if(pf == null) {
-			createFrame();
-		} else {
-			pf.setVisible(true);
-		}
-	}
-	
 	public void hide() {
-		if(pf != null) pf.setVisible(false);
+		pf.setVisible(false);
 	}
 	
 	

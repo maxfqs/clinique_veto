@@ -1,5 +1,7 @@
 package fr.eni.clinique_veto.ihm.personnel;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -10,6 +12,8 @@ import javax.swing.JScrollPane;
 
 import fr.eni.clinique_veto.bo.Personnel;
 import fr.eni.clinique_veto.ihm.CVApp;
+import fr.eni.clinique_veto.ihm.HomeController;
+import fr.eni.clinique_veto.ihm.MenuController;
 
 public class PersonnelFrame extends JFrame {
 	private static final long serialVersionUID = 1444564582371527529L;
@@ -17,7 +21,15 @@ public class PersonnelFrame extends JFrame {
 	public PersonnelFrame(List<Personnel> prs) {
 		this.setTitle(CVApp.APP_TITLE + " - Gestion du personnel");
 		this.setSize(500, 500);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setAlwaysOnTop(true);
+		
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent evt) {
+				HomeController.get().closeMenu(PersonnelController.get());
+			}
+		});
+		
+		
 		
 		JPanel container = new JPanel();
 		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
