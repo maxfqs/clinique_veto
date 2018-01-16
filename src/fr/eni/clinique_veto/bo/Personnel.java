@@ -1,7 +1,7 @@
 package fr.eni.clinique_veto.bo;
 
 public class Personnel {
-	private static final String[] ROLES = {"ADM", "VET", "SEC"};
+	private static final String[] ROLES = {"ADM", "VET", "SEC", "ASS"};
 	
 	private int id;
 	private String nom, mdp, role;
@@ -17,6 +17,13 @@ public class Personnel {
 		setMdp(mdp);
 		setRole(role);
 		setArchive(archive);
+	}
+	
+	public Personnel(int id, String nom, String mdp, String role) {
+		setId(id);
+		setNom(nom);
+		setMdp(mdp);
+		setRole(role);
 	}
 	
 	public Personnel(String nom, String mdp, String role, boolean archive) {
