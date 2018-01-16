@@ -27,7 +27,7 @@ public class LoginFrame extends JFrame {
 	private JButton annuler;
 	
 	public LoginFrame() {
-		this.setTitle("login");
+		this.setTitle(CVApp.APP_TITLE + " - Login");
 		this.setSize(WIDTH, HEIGHT);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.initComponents();
