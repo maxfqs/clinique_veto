@@ -10,13 +10,27 @@ import fr.eni.clinique_veto.dal.DAOFactory;
 
 
 public class LoginMger {
-	private static ConnexionDAO daoConnexion;
+	private static LoginMger instance;
+	
+	private ConnexionDAO daoConnexion;
 	private List<ConnexionObserver> listeObservateurs;
 	
-	public LoginMger() throws BLLException{
-			//Instancier le Data Access Object
-		 	daoConnexion = DAOFactory.getConnexionDAO();
-		 	listeObservateurs = new ArrayList<>();
+	
+	private LoginMger() throws BLLException {
+	 	daoConnexion = DAOFactory.getConnexionDAO();
+	 	listeObservateurs = new ArrayList<>();
+	}
+	
+	public static LoginMger get() {
+		if(instance == null) {
+			try {
+				instance = new LoginMger();
+			} catch (BLLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return instance;
 	}
 	
 	public Personnel verifierUser(String nom, String mdp) throws BLLException{
