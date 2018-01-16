@@ -17,14 +17,15 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 	
 	private Connection cnx = null;
 	private static final String sqlDelete = "delete from Personnels where CodePers = ?";
-	private static final String sqlSelectAll = "select * from Personnels";
+	private static final String sqlSelectAll = "select CodePers,Nom,MotPasse,Role from Personnels where Archive = false";
 	private static final String sqlInsert = "insert into Personnels (Nom, MotPasse, Role, Archive) values(?,?,?,?)";
 	private static final String sqlUpdate = "update Personnels set Nom = ?, MotPasse = ?, Role = ?, Archive = ? where CodePers = ?";
 	
-	public void insert(Personnel p) throws SQLException, DALException {	
+	public void insert(Personnel p) throws DALException {	
 		PreparedStatement rqt = null;
 		ResultSet rs = null;
 		try{
+			
 			cnx = JDBCTools.getConnection();
 			rqt = cnx.prepareStatement(sqlUpdate);
 			rqt = cnx.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
@@ -37,9 +38,9 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 		    rs = rqt.getGeneratedKeys();
 			
 			rs.next();
-			int index = rs.getInt(1);
-			
+			int index = rs.getInt(1);			
 			p.setId(index);
+			
 		}  catch (SQLException e) {
 			throw new DALException("insert failed - personnel = " + p.getId() , e);
 		} finally {
@@ -99,12 +100,19 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 	
 	public List<Personnel> selectAll() throws SQLException, DALException {
 		List<Personnel> ps = new ArrayList<Personnel>();
-		PreparedStatement rqt = null;
+		Statement rqt = null;
 		ResultSet rs = null;
 		cnx = JDBCTools.getConnection();
 		try{
 			cnx = JDBCTools.getConnection();
-			rqt = cnx.prepareStatement(sqlSelectAll);
+			rqt = cnx.createStatement();
+			rs = rqt.executeQuery(sqlSelectAll);
+			Personnel p = null;
+			while(rs.next()){
+				p = new Personnel(
+						
+						);
+			}
 		} catch (SQLException e) {
 			throw new DALException("selectAll failed" , e);
 		} finally {
