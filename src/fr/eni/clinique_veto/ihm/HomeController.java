@@ -1,11 +1,18 @@
 package fr.eni.clinique_veto.ihm;
 
+import fr.eni.clinique_veto.ihm.personnel.PersonnelController;
+
 public class HomeController {
 	public static HomeController instance;
+	
 	private HomeFrame hframe;
+	private MenuController selectedMenu;
+	private MenuController personnel;
+	
 	
 	private HomeController() {
-		
+		selectedMenu = null;
+		personnel = PersonnelController.get();
 	}
 	
 	public static HomeController get() {
@@ -24,5 +31,30 @@ public class HomeController {
 	public void closeFrame() {
 		hframe.setVisible(false);
 		hframe.dispose();
+	}
+	
+	public void selectMenu(MenuController mc) {
+		System.out.println(mc);
+		if(selectedMenu == null) {
+			mc.show();
+			selectedMenu = mc;
+			return;
+		}
+		
+		if(selectedMenu.equals(mc)) {
+			mc.hide();
+			selectedMenu = null;
+		} else {
+			selectedMenu.hide();
+			mc.show();
+			selectedMenu = mc;
+		}
+	}
+	
+	public void closeMenu(MenuController mc) {
+		if(selectedMenu.equals(mc)) {
+			mc.hide();
+			selectedMenu = null;
+		}
 	}
 }
