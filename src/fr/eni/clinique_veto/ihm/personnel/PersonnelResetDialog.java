@@ -26,6 +26,9 @@ public class PersonnelResetDialog extends JDialog {
 		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		getRootPane().setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
+		String title = "Réinitialiser le mot de passe de " + 
+				PersonnelController.get().getSelectedPersonnel().getNom();
+		
 		
 		JPanel container = new JPanel();
 		container.setLayout(new GridBagLayout());
@@ -36,7 +39,7 @@ public class PersonnelResetDialog extends JDialog {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridwidth = 2;
-		container.add(new JLabel("Réinitialiser le mot de passe"), gbc);
+		container.add(new JLabel(title), gbc);
 		
 		gbc.gridwidth = 1;
 		

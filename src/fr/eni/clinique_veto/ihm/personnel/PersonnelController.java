@@ -14,6 +14,7 @@ public class PersonnelController implements MenuController {
 	private PersonnelFrame pf;
 	private PersonnelAddController pac;
 	private PersonnelResetController prc;
+	private Personnel selectedPersonnel;
 	
 	private PersonnelController() {
 		// Temp
@@ -47,6 +48,15 @@ public class PersonnelController implements MenuController {
 	
 	public void hide() {
 		pf.setVisible(false);
+	}
+	
+	public void setSelectedPersonnel(Personnel p) {
+		selectedPersonnel = p;
+		pf.enableActionButtons();
+	}
+	
+	public Personnel getSelectedPersonnel() {
+		return selectedPersonnel;
 	}
 	
 	public void openAddPersonnel() {

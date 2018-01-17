@@ -17,6 +17,8 @@ import fr.eni.clinique_veto.ihm.HomeController;
 public class PersonnelFrame extends JFrame {
 	private static final long serialVersionUID = 1444564582371527529L;
 
+	private JButton add, del, reset;
+	
 	public PersonnelFrame(List<Personnel> prs) {
 		this.setTitle(CVApp.APP_TITLE + " - Gestion du personnel");
 		this.setSize(500, 500);
@@ -29,9 +31,12 @@ public class PersonnelFrame extends JFrame {
 		JPanel btnc = new JPanel();
 		
 		// Buttons
-		JButton add = new JButton("Ajouter");
-		JButton del = new JButton("Supprimer");
-		JButton reset = new JButton("Réinitialiser");
+		add = new JButton("Ajouter");
+		del = new JButton("Supprimer");
+		reset = new JButton("Réinitialiser");
+		
+		del.setEnabled(false);
+		reset.setEnabled(false);
 		
 		btnc.add(add);
 		btnc.add(del);
@@ -49,6 +54,11 @@ public class PersonnelFrame extends JFrame {
 		container.add(scroll);
 		
 		getContentPane().add(container);
+	}
+	
+	public void enableActionButtons() {
+		del.setEnabled(true);
+		reset.setEnabled(true);
 	}
 
 }
