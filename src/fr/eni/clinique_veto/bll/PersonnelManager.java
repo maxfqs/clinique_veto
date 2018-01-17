@@ -23,7 +23,11 @@ public class PersonnelManager {
 		try {
 			personnelDAO = DAOFactory.getPersonnelDAO();
 			personnelList = new ArrayList<Personnel>();
-			personnelList.addAll(personnelDAO.selectAll());
+			
+			List<Personnel> all = personnelDAO.selectAll();
+			for(Personnel p : all) {
+				if(!p.isArchive()) personnelList.add(p);
+			}
 		} catch (DALException | SQLException e) {
 			throw new BLLException("Erreur lors de l'initialisation du PersonnelManager");
 		}
