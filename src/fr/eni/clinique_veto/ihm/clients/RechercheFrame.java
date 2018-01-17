@@ -1,9 +1,11 @@
 package fr.eni.clinique_veto.ihm.clients;
 
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -12,7 +14,7 @@ import fr.eni.clinique_veto.bo.client.Client;
 import fr.eni.clinique_veto.dal.ClientDALException;
 import fr.eni.clinique_veto.dal.jdbc.ClientsDAOImplJDBC;
 
-public class RechercheFrame extends JFrame {
+public class RechercheFrame extends JDialog {
 
 	private static final int FRAME_WIDTH = 550;
 	private static final int FRAME_HEIGHT = 300;
@@ -30,6 +32,7 @@ public class RechercheFrame extends JFrame {
 		this.setTitle("Recherche d'un client");
 		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	    setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		this.initComponent();
 		this.initListeners();
 	}

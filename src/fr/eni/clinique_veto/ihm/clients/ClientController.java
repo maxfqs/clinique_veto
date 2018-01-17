@@ -5,6 +5,7 @@ package fr.eni.clinique_veto.ihm.clients;
 public class ClientController {
 
 	private static ClientController instance;
+
 	
 	public static ClientController get() {
 		if(instance == null) {
@@ -14,15 +15,17 @@ public class ClientController {
 		return instance;
 	}
 	
-	public void rechercheClient(String string) {	
-		RechercheFrame rframe = new RechercheFrame();
-		rframe.setVisible(true);
+	public void rechercheClient(String string) {
+		if(!AjoutClientFrame.get().isVisible()) {
+			AjoutClientFrame.get().setVisible(true);
+		}
 		System.out.println("recherche client-> "+ string);
 	}
 
 	public void ajouterClient() {
-		AjoutClientFrame aframe  =new AjoutClientFrame();
-		aframe.setVisible(true);
+		if(!AjoutClientFrame.get().isVisible()) {
+			AjoutClientFrame.get().setVisible(true);
+		}
 		System.out.println("ajout client");
 	}
 
@@ -39,8 +42,9 @@ public class ClientController {
 	}
 
 	public void ajouterAnimal() {
-		AnimalFrame aniframe  =new AnimalFrame();
-		aniframe.setVisible(true);
+		if(!AnimalFrame.get().isVisible()) {
+			AnimalFrame.get().setVisible(true);
+		}
 		System.out.println("ajouter animal");
 	}
 

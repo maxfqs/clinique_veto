@@ -35,4 +35,21 @@ public class DAOFactory {
 		}
 		return PersonnelDAO; 
 	}
+	
+	public static ClientDAO getClientDAO(){
+		ClientDAO ClientDAO=null;
+		try {
+			ClientDAO=(ClientDAO ) Class.forName("fr.eni.clinique_veto.dal.jdbc.ClientsDAOJdbcImpl").newInstance();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ClientDAO; 
+	}
 }

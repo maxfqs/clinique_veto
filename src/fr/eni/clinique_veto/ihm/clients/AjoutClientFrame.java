@@ -1,4 +1,5 @@
 package fr.eni.clinique_veto.ihm.clients;
+import java.awt.Dialog;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
@@ -6,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -13,8 +15,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class AjoutClientFrame extends JFrame {
+public class AjoutClientFrame extends JDialog {
 
+	private static AjoutClientFrame instance;
+	
 	private static final int FRAME_WIDTH = 350;
 	private static final int FRAME_HEIGHT = 600;
 	private static final int TEXTFIELD_WIDTH = 12;
@@ -41,11 +45,22 @@ public class AjoutClientFrame extends JFrame {
 	public AjoutClientFrame() {
 		this.setTitle("Ajouter un client");
 		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);  
+	    setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+	 
 		this.setLayout(new BorderLayout());
 		this.initComponent();
 		this.initListeners();
+		this.setVisible(true);
 	}
+	
+	public static AjoutClientFrame get() {
+		if(instance == null) {
+			instance = new AjoutClientFrame();
+		}
+		return instance;
+	}
+
 
 
 	private void initListeners() {

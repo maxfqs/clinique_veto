@@ -11,9 +11,10 @@ import java.util.regex.Pattern;
 
 import fr.eni.clinique_veto.bo.client.Client;
 import fr.eni.clinique_veto.dal.ClientDALException;
+import fr.eni.clinique_veto.dal.ClientDAO;
 import fr.eni.clinique_veto.dal.JDBCTools;
 
-public class ClientsDAOImplJDBC {
+public class ClientsDAOImplJDBC implements ClientDAO {
 
 	private Connection conn;
 	private static final String TABLE_CLIENT = "Clients";
