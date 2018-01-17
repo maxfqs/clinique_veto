@@ -42,6 +42,8 @@ public class ClientsFrame extends JFrame {
 	private JTextField emailField;
 	private JTextArea remarqueField;
 	
+	private JTextField searchField;
+	
 	//partie btn
 	JButton btnRechercheClt;
 	JButton btnAjouterClt;
@@ -65,15 +67,15 @@ public class ClientsFrame extends JFrame {
 
 
 	private void initListeners() {
-		btnRechercheClt.addActionListener((e)-> System.out.println("clic sur recherche client"));
-		btnAjouterClt.addActionListener((e)-> System.out.println("clic sur ajout client"));
-		btnValiderClt.addActionListener((e)-> System.out.println("clic sur valider client"));
-		btnAnnulerClt.addActionListener((e)-> System.out.println("clic sur annuler client"));
-		btnSupprimerClt.addActionListener((e)-> System.out.println("clic sur supprimer client"));
+		btnRechercheClt.addActionListener((e)-> ClientController.get().rechercheClient(searchField.getText()));
+		btnAjouterClt.addActionListener((e)-> ClientController.get().ajouterClient());
+		btnValiderClt.addActionListener((e)-> ClientController.get().updateClient());
+		btnAnnulerClt.addActionListener((e)-> ClientController.get().annuler());
+		btnSupprimerClt.addActionListener((e)->ClientController.get().supprimerClient());
 		
-		btnAjouterAnimal.addActionListener((e)-> System.out.println("clic sur ajouter animal"));
-		btnSupprAnimal.addActionListener((e)-> System.out.println("clic sur supprimer animal"));
-		btnEditerAnimal.addActionListener((e)-> System.out.println("clic sur editer animal"));
+		btnAjouterAnimal.addActionListener((e)-> ClientController.get().ajouterAnimal());
+		btnSupprAnimal.addActionListener((e)-> ClientController.get().supprimerAnimal());
+		btnEditerAnimal.addActionListener((e)-> ClientController.get().editerAnimal());
 		
 	}
 
@@ -203,7 +205,9 @@ public class ClientsFrame extends JFrame {
 		btnSupprimerClt = new JButton("supprimer");
 		btnValiderClt = new JButton("valider");
 		btnAnnulerClt = new JButton("Annuler");
-		
+			
+		searchField = new JTextField(10);
+		containerBtn.add(searchField);
 		containerBtn.add(btnRechercheClt);
 		containerBtn.add(btnAjouterClt);
 		containerBtn.add(btnSupprimerClt);

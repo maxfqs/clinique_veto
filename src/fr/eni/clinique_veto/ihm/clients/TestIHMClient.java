@@ -15,14 +15,14 @@ public class TestIHMClient {
 		ClientsFrame cf = new ClientsFrame();
 		cf.setVisible(true);
 
-		AjoutClientFrame aframe  =new AjoutClientFrame();
-		aframe.setVisible(true);
+//		AjoutClientFrame aframe  =new AjoutClientFrame();
+//		aframe.setVisible(true);
 		
-		AnimalFrame aniframe  =new AnimalFrame();
-		aniframe.setVisible(true);
-		
-		RechercheFrame rframe = new RechercheFrame();
-		rframe.setVisible(true);
+//		AnimalFrame aniframe  =new AnimalFrame();
+//		aniframe.setVisible(true);
+//		
+//		RechercheFrame rframe = new RechercheFrame();
+//		rframe.setVisible(true);
 	}
 
 }

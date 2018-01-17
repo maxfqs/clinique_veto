@@ -44,7 +44,13 @@ public class AjoutClientFrame extends JFrame {
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLayout(new BorderLayout());
 		this.initComponent();
-		
+		this.initListeners();
+	}
+
+
+	private void initListeners() {
+		btnAjouter.addActionListener((e)-> AjoutClientController.get().ajouterClient());
+		btnAnnuler.addActionListener((e)-> this.setVisible(false));
 	}
 
 

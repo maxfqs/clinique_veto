@@ -43,12 +43,18 @@ public class AnimalFrame extends JFrame {
 
 	
 	public AnimalFrame() {
-		this.setTitle("Editer/Ajouter");
+		this.setTitle("Editer/Ajouter un animal");
 		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLayout(new BorderLayout());
 		this.initComponent();
-		
+		this.initListeners();
+	}
+
+
+	private void initListeners() {
+		btnAjouter.addActionListener((e)-> AnimalController.get().addAnimal());
+		btnAnnuler.addActionListener((e)-> this.setVisible(false));
 	}
 
 

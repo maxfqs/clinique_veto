@@ -27,6 +27,7 @@ public class RechercheFrame extends JFrame {
 	private JTextField searchField;
 
 	public RechercheFrame() {
+		this.setTitle("Recherche d'un client");
 		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.initComponent();
@@ -34,7 +35,7 @@ public class RechercheFrame extends JFrame {
 	}
 
 	private void initListeners() {
-		btnChercher.addActionListener((e) -> getTableOnSearch());
+		btnChercher.addActionListener((e) -> RechercheClientController.get().chercherClient(searchField.getText()));
 	}
 
 	private void initComponent() {
