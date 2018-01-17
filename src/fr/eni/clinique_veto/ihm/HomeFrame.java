@@ -23,7 +23,25 @@ public class HomeFrame extends JFrame {
 		setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize la frame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		HomeController homeController = HomeController.get();
+		
+		
 		menu = new JMenuBar();
+		
+		
+		// Fichier
+		JMenu menuFichier = new JMenu("Fichier");
+		JMenuItem itemLogOut = new JMenuItem("Déconnexion");
+		JMenuItem itemClose = new JMenuItem("Fermer");
+		
+		itemLogOut.addActionListener((e) -> homeController.logOut());
+		itemClose.addActionListener((e) -> homeController.closeApp());
+		
+		menuFichier.add(itemLogOut);
+		menuFichier.add(itemClose);
+		
+		menu.add(menuFichier);
+		
 		
 		JMenu gp = new JMenu("Gestion du personnel");
 		JMenuItem gpi = new JMenuItem("Ouvrir");
@@ -32,8 +50,8 @@ public class HomeFrame extends JFrame {
 		});
 		
 		gp.add(gpi);
-		
 		menu.add(gp);
+
 		
 		container = new JPanel();
 		container.setLayout(new GridBagLayout());

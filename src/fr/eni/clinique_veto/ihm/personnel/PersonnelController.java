@@ -1,24 +1,37 @@
 package fr.eni.clinique_veto.ihm.personnel;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.clinique_veto.bll.PersonnelManager;
+import fr.eni.clinique_veto.bll.PersonnelObserver;
 import fr.eni.clinique_veto.bo.Personnel;
+import fr.eni.clinique_veto.ihm.HomeController;
 import fr.eni.clinique_veto.ihm.MenuController;
 
-public class PersonnelController implements MenuController {
+public class PersonnelController implements MenuController, PersonnelObserver {
 	public static PersonnelController instance;
-	private PersonnelFrame pf;
-	
+	private PersonnelFrame personnelFrame;
+	private PersonnelAddController pAddController;
+	private PersonnelResetController pResetController;
+	private PersonnelDeleteController pDeleteController;
+	private Personnel selectedPersonnel;
 	
 	private PersonnelController() {
-		// Temp
-		List<Personnel> ps = new ArrayList<Personnel>();
-		ps.add(new Personnel(1, "bob", "mdp", "VET", false));
-		ps.add(new Personnel(2, "brian", "mdp", "VET", false));
-		ps.add(new Personnel(3, "jack", "mdp", "VET", false));
+		personnelFrame = new PersonnelFrame();
+		pAddController = PersonnelAddController.get();
+		pResetController = PersonnelResetController.get();
+		pDeleteController = PersonnelDeleteController.get();
 		
-		pf = new PersonnelFrame(ps);
+		personnelFrame.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent evt) {
+				HomeController.get().closeMenu(instance);
+			}
+		});
+		
+		PersonnelManager.get().registerObserver(this);
 	}
 	
 	public static PersonnelController get() {
@@ -30,24 +43,40 @@ public class PersonnelController implements MenuController {
 	}
 	
 	public void show() {
-		pf.setVisible(true);
+		personnelFrame.setVisible(true);
 	}
 	
 	public void hide() {
-		pf.setVisible(false);
+		personnelFrame.setVisible(false);
 	}
 	
-	
-	
-	public void addPersonnel() {
-		
+	public void setSelectedPersonnel(Personnel p) {
+		selectedPersonnel = p;
+		personnelFrame.enableActionButtons(true);
 	}
 	
-	public void deletePersonnel() {
-		
+	public Personnel getSelectedPersonnel() {
+		return selectedPersonnel;
 	}
 	
-	public void resetPersonnel() {
-		
+	public void openAddPersonnel() {
+		pAddController.create();
 	}
+	
+	public void openResetPersonnel() {
+		pResetController.create();
+	}
+	
+	public void openDeletePersonnel() {
+		pDeleteController.create();
+	}
+
+	
+	@Override
+	public void onListUpdated() {
+		selectedPersonnel = null;
+		personnelFrame.enableActionButtons(false);
+		personnelFrame.getPersonnelTable().getModel().fireTableDataChanged();		
+	}
+
 }

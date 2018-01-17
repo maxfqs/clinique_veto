@@ -24,17 +24,33 @@ public class AppliTestDALPersonnel {
 		personnelDAO.insert(p3);
 		System.out.println("Ajuot de personnel " + p1.getNom());
 		
-		System.out.println("Affichage de la base de donn�e\n----------------------");
+		System.out.println("\nAffichage de la base de donn�e\n----------------------");
 		afficherPersonnels(personnelDAO);
 		
-		
+		System.out.println("\nInitialiser un mot de passe\n---------------------");
+		p1.setMdp("passe3");
+		try {
+			personnelDAO.update(p1);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Le mot de passe de l'utilisateur " + p1.getNom() + " a été initialisé");
+		System.out.println("\nSupprimer un personnel\n-----------------------");
+		try {
+			personnelDAO.delete(p2);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("l'utilisateur " + p2.getNom() + " a été suprimé");
 	}
 	public static void afficherPersonnels(PersonnelDAO pDAO){
 		List<Personnel> lp= new ArrayList<>();
 		try {
 			lp.addAll(pDAO.selectAll());
 			for(Personnel p : lp){
-				System.out.println(p.getId());
+				System.out.println(p);
 			}
 		} catch (SQLException | DALException e) {
 			// TODO Auto-generated catch block
