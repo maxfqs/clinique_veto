@@ -43,7 +43,20 @@ public class PersonnelManager {
 	public List<Personnel> getPersonnels() {
 		return Collections.unmodifiableList(personnelList);
 	}
+	
+	public Personnel getById(int id) throws BLLException {
+		Personnel retval = null;
+		for(Personnel p : personnelList) {
+			if(p.getId() == id) retval = p;
+		}
 		
+		if(retval == null) {
+			throw new BLLException("Impossible de trouver le personnel avec l'id " + id);
+		}
+		
+		return retval;
+	}
+	
 	public void addPersonnel(Personnel p) throws BLLException{
 		try {
 			validatePersonnel(p);

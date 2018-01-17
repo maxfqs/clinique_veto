@@ -60,10 +60,6 @@ public class HomeController {
 		}
 	}
 	
-	public void setUser(Personnel p) {
-		user = p;
-	}
-	
 	public Personnel getUser() {
 		return user;
 	}
