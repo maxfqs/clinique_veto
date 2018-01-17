@@ -17,13 +17,9 @@ public class PersonnelController implements MenuController {
 	private Personnel selectedPersonnel;
 	
 	private PersonnelController() {
-		// Temp
-		List<Personnel> ps = new ArrayList<Personnel>();
-		ps.add(new Personnel(1, "bob", "mdp", "VET", false));
-		ps.add(new Personnel(2, "brian", "mdp", "VET", false));
-		ps.add(new Personnel(3, "jack", "mdp", "VET", false));
+
 		
-		pf = new PersonnelFrame(ps);
+		pf = new PersonnelFrame();
 		pac = PersonnelAddController.get();
 		prc = PersonnelResetController.get();
 		

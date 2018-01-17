@@ -11,38 +11,67 @@ import fr.eni.clinique_veto.dal.PersonnelDAO;
 
 
 public class PersonnelManager {
-	
-	private PersonnelDAO personnelDAO;
 	private static PersonnelManager instance;
+	private PersonnelDAO personnelDAO;
+	private List<Personnel> personnelList;
 	
-	private PersonnelManager() throws BLLException {
-		personnelDAO = DAOFactory.getPersonnelDAO();
+	private PersonnelManager() throws BLLException {		
+		try {
+			personnelDAO = DAOFactory.getPersonnelDAO();
+			personnelList = new ArrayList<Personnel>();
+			personnelList.addAll(personnelDAO.selectAll());
+		} catch (DALException | SQLException e) {
+			throw new BLLException("Erreur lors de l'initialisation du PersonnelManager");
+		}
 	}
 	
-	public static PersonnelManager get() throws BLLException {
-		if(instance == null) instance = new PersonnelManager();
+	public static PersonnelManager get() {
+		try {
+			if(instance == null) instance = new PersonnelManager();			
+		} catch (BLLException e) {
+			e.printStackTrace();
+		}
+		
 		return instance;
 	}
 	
-	public List<Personnel> getPersonnels() throws SQLException, DALException{
-		List<Personnel> lp = new ArrayList<>();
-		lp.addAll(personnelDAO.selectAll());
-		return lp;
+	
+	public List<Personnel> getPersonnels() {
+		return personnelList;
 	}
 		
-	public void addPersonnel(Personnel p) throws DALException{
-		personnelDAO.insert(p);
+	public void addPersonnel(Personnel p) throws BLLException{
+		try {
+			validatePersonnel(p);
+			personnelDAO.insert(p);
+			personnelList.add(p);
+		} catch (DALException e) {
+			throw new BLLException("Erreur lors de l'ajout d'un personnel");
+		}		
 	}
 	
-	public void updatePersonnel(Personnel p) throws SQLException, DALException{
-		final String VET = "VET";
-		if(p.getRole().equals(VET)){
-			//todo
-		} else {
+	public void updatePassword(Personnel p) throws BLLException {
+		update(p);
+	}
+	
+	public void archiver(Personnel p) throws BLLException {
+		// On fait rien pour le moment, en attente de AGENDA
+		if(p.getRole().equals("VET")) return;
+		update(p);		
+	}
+	
+	private void update(Personnel p) throws BLLException {
+		validatePersonnel(p);
+		try {
 			personnelDAO.update(p);
+		} catch (DALException | SQLException e) {
+			throw new BLLException("Impossible de maj ce personnel");
 		}
-		
 	}
+
 	
+	private void validatePersonnel(Personnel p) throws BLLException{
+		// Règles métiers à coder.
+	}	
 	
 }

@@ -19,7 +19,7 @@ public class PersonnelFrame extends JFrame {
 
 	private JButton add, del, reset;
 	
-	public PersonnelFrame(List<Personnel> prs) {
+	public PersonnelFrame() {
 		this.setTitle(CVApp.APP_TITLE + " - Gestion du personnel");
 		this.setSize(500, 500);
 		this.setLocationRelativeTo(null);
@@ -49,7 +49,7 @@ public class PersonnelFrame extends JFrame {
 		
 		
 		// Table
-		PersonnelTable pt = new PersonnelTable(prs);
+		PersonnelTable pt = new PersonnelTable();
 		JScrollPane scroll = new JScrollPane(pt);
 		container.add(scroll);
 		
