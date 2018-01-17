@@ -11,13 +11,17 @@ public class PersonnelTableModel extends AbstractTableModel {
 
 	private List<Personnel> pers;
 	private String[] colNames = {
-		"Nom", "Role", "Mot de passe"	
+		"Nom", "Rôle", "Mot de passe"	
 	};
 	
 	public PersonnelTableModel(List<Personnel> p) {
 		pers = p;
 	}
 	
+	@Override
+	public String getColumnName(int col) {
+        return colNames[col];
+    }
 	
 	@Override
 	public int getColumnCount() {
