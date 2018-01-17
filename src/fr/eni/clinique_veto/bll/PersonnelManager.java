@@ -75,8 +75,6 @@ public class PersonnelManager {
 	
 	public void updatePassword(Personnel p) throws BLLException {
 		update(p);
-		int i = personnelList.indexOf(p);
-		personnelList.set(i, p);
 		fireUpdate();
 	}
 	

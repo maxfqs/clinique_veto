@@ -64,7 +64,12 @@ public class PersonnelResetDialog extends JDialog {
 		container.add(valid, gbc);
 		
 		cancel.addActionListener((e) -> PersonnelResetController.get().destroy());
+		valid.addActionListener((e) -> PersonnelResetController.get().valider());
 		
 		getContentPane().add(container);
+	}
+	
+	public JTextField getPasswordField() {
+		return password;
 	}
 }
