@@ -21,10 +21,8 @@ public class PersonnelAddDialog extends JDialog {
 	public PersonnelAddDialog() {
 		setSize(500, 300);
 		setLocationRelativeTo(null);
-		setUndecorated(true);
 		setAlwaysOnTop(true);
 		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-		getRootPane().setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 		JPanel container = new JPanel();
 		container.setLayout(new GridBagLayout());

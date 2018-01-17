@@ -18,10 +18,8 @@ public class PersonnelDeleteDialog extends JDialog {
 	public PersonnelDeleteDialog() {
 		setSize(350, 100);
 		setLocationRelativeTo(null);
-		setUndecorated(true);
 		setAlwaysOnTop(true);
 		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-		getRootPane().setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 		String info = "Etes-vous sûr de vouloir supprimer " +
 				PersonnelController.get().getSelectedPersonnel().getNom();

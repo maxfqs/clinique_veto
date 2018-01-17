@@ -21,10 +21,8 @@ public class PersonnelResetDialog extends JDialog {
 	public PersonnelResetDialog() {
 		setSize(500, 300);
 		setLocationRelativeTo(null);
-		setUndecorated(true);
 		setAlwaysOnTop(true);
 		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-		getRootPane().setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 		String title = "Réinitialiser le mot de passe de " + 
 				PersonnelController.get().getSelectedPersonnel().getNom();
