@@ -1,8 +1,12 @@
 package fr.eni.clinique_veto.ihm.clients;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,15 +16,19 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import fr.eni.clinique_veto.bo.AnimalTest;
+
 public class ClientsFrame extends JFrame {
 
-	private static final int FRAME_WIDTH = 600;
-	private static final int FRAME_HEIGHT = 400;
+	private static final int FRAME_WIDTH = 800;
+	private static final int FRAME_HEIGHT = 600;
+	private static final int TEXTFIELD_WIDTH = 12;
 	
 	// containers principaux
 	private JPanel containerBtn;
 	private JPanel containerInfosClient;
-	private JPanel containerTableAnimal;
+	private JPanel animauxPanel ;
+	private JPanel containerBtnAnimaux;
 	
 	// => partie client
 	private JTextField nomField;
@@ -34,44 +42,101 @@ public class ClientsFrame extends JFrame {
 	private JTextField emailField;
 	private JTextArea remarqueField;
 	
+	private JTextField searchField;
+	
 	//partie btn
-	JButton btnRecherche;
-	JButton btnAjouter;
-	JButton btnSupprimer;
-	JButton btnValider;
-	JButton btnAnnuler;
+	JButton btnRechercheClt;
+	JButton btnAjouterClt;
+	JButton btnSupprimerClt;
+	JButton btnValiderClt;
+	JButton btnAnnulerClt;
 
+	JButton btnAjouterAnimal;
+	JButton btnSupprAnimal;
+	JButton btnEditerAnimal;
+	
 	
 	public ClientsFrame() {
 		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLayout(new GridBagLayout());
-		this.initComponent();
+		this.setLayout(new BorderLayout());
+		this.initComponentClient();
+		this.initComponentAnimaux();
+		this.initListeners();
 	}
 
 
-	private void initComponent() {
+	private void initListeners() {
+		btnRechercheClt.addActionListener((e)-> ClientController.get().rechercheClient(searchField.getText()));
+		btnAjouterClt.addActionListener((e)-> ClientController.get().ajouterClient());
+		btnValiderClt.addActionListener((e)-> ClientController.get().updateClient());
+		btnAnnulerClt.addActionListener((e)-> ClientController.get().annuler());
+		btnSupprimerClt.addActionListener((e)->ClientController.get().supprimerClient());
+		
+		btnAjouterAnimal.addActionListener((e)-> ClientController.get().ajouterAnimal());
+		btnSupprAnimal.addActionListener((e)-> ClientController.get().supprimerAnimal());
+		btnEditerAnimal.addActionListener((e)-> ClientController.get().editerAnimal());
+		
+	}
+
+
+	private void initComponentAnimaux() {
+		// partie pour tester Ã  revoir
+		AnimalTest a2 = new AnimalTest("numero2", "nom2", "sexe2", "couleu2", "race2", "espece22", "tatouage2");
+		AnimalTest a3 = new AnimalTest("numero3", "nom3", "sexe3", "couleur3", "race3", "espece3", "tatouage3");
+		AnimalTest a1 = new AnimalTest("numero", "nom", "sexe", "couleur", "race", "espece", "tatouage");
+		List<AnimalTest> listeAnimaux = new ArrayList<>();
+		listeAnimaux.add(a1);
+		listeAnimaux.add(a2);
+		listeAnimaux.add(a3);
+		//==========================
+		animauxPanel = new JPanel();
+		containerBtnAnimaux = new JPanel();
+		
+		btnAjouterAnimal = new JButton("ajouter");
+		btnSupprAnimal = new JButton("supprimer");
+		btnEditerAnimal = new JButton("Ã©diter");
+		containerBtnAnimaux.add(btnAjouterAnimal);
+		containerBtnAnimaux.add(btnSupprAnimal);
+		containerBtnAnimaux.add(btnEditerAnimal);
+	
+		AnimauxTable table = new AnimauxTable(listeAnimaux);
+		table.setPreferredScrollableViewportSize(new Dimension(500,150));
+		JScrollPane scroll = new JScrollPane(table);
+		animauxPanel.add(scroll);
+		animauxPanel.add(containerBtnAnimaux);
+
+	
+		this.add(animauxPanel, BorderLayout.CENTER);
+		
+	}
+
+
+	private void initComponentClient() {
 		
 		//=>partie client
 		containerInfosClient = new JPanel();
 		containerInfosClient.setLayout(new GridBagLayout());
 		
-		nomField = new JTextField(10);
-		prenomField = new JTextField(10);
-		adresse1Field = new JTextField(10);
-		adresse2Field = new JTextField(10);
-		codePostalField = new JTextField(10);
-		villeField = new JTextField(10);
-		numTelField = new JTextField(10);
-		assuranceField = new JTextField(10);
-		emailField = new JTextField(10);
-		remarqueField = new JTextArea(20,10);
+		nomField = new JTextField(TEXTFIELD_WIDTH);
+		prenomField = new JTextField(TEXTFIELD_WIDTH);
+		adresse1Field = new JTextField(TEXTFIELD_WIDTH);
+		adresse2Field = new JTextField(TEXTFIELD_WIDTH);
+		codePostalField = new JTextField(TEXTFIELD_WIDTH);
+		villeField = new JTextField(TEXTFIELD_WIDTH);
+		numTelField = new JTextField(TEXTFIELD_WIDTH);
+		assuranceField = new JTextField(TEXTFIELD_WIDTH);
+		emailField = new JTextField(TEXTFIELD_WIDTH);
+		remarqueField = new JTextArea(12,TEXTFIELD_WIDTH-1);
 		JScrollPane scrollpane = new JScrollPane(remarqueField,
 	            JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 	            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
+		
 		GridBagConstraints gbd = new GridBagConstraints();
 		gbd.insets =new Insets(5, 5, 5, 5);
+		gbd.anchor = GridBagConstraints.WEST;
+		
 		gbd.gridx = 0;
 		gbd.gridy = 0;
 		containerInfosClient.add(new JLabel("Nom : "), gbd);
@@ -80,7 +145,7 @@ public class ClientsFrame extends JFrame {
 		
 		gbd.gridx = 0;
 		gbd.gridy = 1;
-		containerInfosClient.add(new JLabel("Prénom : "), gbd);
+		containerInfosClient.add(new JLabel("PrÃ©nom : "), gbd);
 		gbd.gridx = 1;
 		containerInfosClient.add(prenomField, gbd);
 		
@@ -90,11 +155,11 @@ public class ClientsFrame extends JFrame {
 		gbd.gridx = 1;
 		containerInfosClient.add(adresse1Field, gbd);
 		
-//		gbd.gridx = 0;
+		gbd.gridx = 0;
 		gbd.gridy = 3;
-//		containerInfosClient.add(new JLabel("Adresse : "), gbd);
+		containerInfosClient.add(new JLabel("Adresse 2 : "), gbd);
 		gbd.gridx = 1;
-		containerInfosClient.add(adresse1Field, gbd);
+		containerInfosClient.add(adresse2Field, gbd);
 		
 		gbd.gridx = 0;
 		gbd.gridy = 4;
@@ -110,7 +175,7 @@ public class ClientsFrame extends JFrame {
 		
 		gbd.gridx = 0;
 		gbd.gridy = 6;
-		containerInfosClient.add(new JLabel("Téléphone : "), gbd);
+		containerInfosClient.add(new JLabel("TÃ©lÃ©phone : "), gbd);
 		gbd.gridx = 1;
 		containerInfosClient.add(numTelField, gbd);
 		
@@ -135,27 +200,25 @@ public class ClientsFrame extends JFrame {
 		//partie btn
 		containerBtn = new JPanel();
 		
-		btnRecherche = new JButton("Rechercher");
-		btnAjouter = new JButton("ajouter");
-		btnSupprimer = new JButton("supprimer");
-		btnValider = new JButton("valider");
-		btnAnnuler = new JButton("Annuler");
-		
-		containerBtn.add(btnRecherche);
-		containerBtn.add(btnAjouter);
-		containerBtn.add(btnSupprimer);
-		containerBtn.add(btnValider);
-		containerBtn.add(btnAnnuler);
+		btnRechercheClt = new JButton("Rechercher");
+		btnAjouterClt = new JButton("ajouter");
+		btnSupprimerClt = new JButton("supprimer");
+		btnValiderClt = new JButton("valider");
+		btnAnnulerClt = new JButton("Annuler");
+			
+		searchField = new JTextField(10);
+		containerBtn.add(searchField);
+		containerBtn.add(btnRechercheClt);
+		containerBtn.add(btnAjouterClt);
+		containerBtn.add(btnSupprimerClt);
+		containerBtn.add(btnValiderClt);
+		containerBtn.add(btnAnnulerClt);
 		
 		// ajout au frame principal
-		gbd.gridy = 0;
-		gbd.gridwidth = 0;
-		this.add(containerBtn, gbd);
+		this.add(containerBtn, BorderLayout.NORTH);
+		this.add(containerInfosClient, BorderLayout.WEST);
 		
-		gbd.gridx = 0;
-		gbd.gridy = 1;
-		gbd.gridwidth = 2;
-		this.add(containerInfosClient, gbd);
+	
 	}
 	
 	
