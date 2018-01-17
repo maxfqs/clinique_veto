@@ -29,7 +29,6 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 		try{
 			
 			cnx = JDBCTools.getConnection();
-			rqt = cnx.prepareStatement(sqlUpdate);
 			rqt = cnx.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
 			rqt.setString(1, p.getNom());
 			rqt.setString(2, p.getMdp());
