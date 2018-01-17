@@ -10,7 +10,7 @@ public class AppliTestDALPersonnel {
 	public static void main(String[] args) throws DALException{
 		
 		PersonnelDAO personnelDAO = DAOFactory.getPersonnelDAO();
-		/*
+		
 		Personnel p1 = new Personnel("pers1", "passe1", "SEC", false);
 		Personnel p2 = new Personnel("pers2", "passe2", "VET", false);
 		Personnel p3 = new Personnel("pers3", "passe3", "ASS", false);
@@ -23,8 +23,8 @@ public class AppliTestDALPersonnel {
 		System.out.println("Ajuot de personnel " + p1.getNom());
 		personnelDAO.insert(p3);
 		System.out.println("Ajuot de personnel " + p1.getNom());
-		*/
-		System.out.println("Affichage de la base de donnée\n----------------------");
+		
+		System.out.println("Affichage de la base de donnï¿½e\n----------------------");
 		afficherPersonnels(personnelDAO);
 		
 		
