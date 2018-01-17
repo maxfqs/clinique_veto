@@ -2,6 +2,7 @@ package fr.eni.clinique_veto.bll;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import fr.eni.clinique_veto.bo.Personnel;
@@ -14,8 +15,11 @@ public class PersonnelManager {
 	private static PersonnelManager instance;
 	private PersonnelDAO personnelDAO;
 	private List<Personnel> personnelList;
+	private List<PersonnelObserver> observers;
 	
 	private PersonnelManager() throws BLLException {		
+		observers = new ArrayList<PersonnelObserver>();
+		
 		try {
 			personnelDAO = DAOFactory.getPersonnelDAO();
 			personnelList = new ArrayList<Personnel>();
@@ -37,7 +41,7 @@ public class PersonnelManager {
 	
 	
 	public List<Personnel> getPersonnels() {
-		return personnelList;
+		return Collections.unmodifiableList(personnelList);
 	}
 		
 	public void addPersonnel(Personnel p) throws BLLException{
@@ -47,7 +51,9 @@ public class PersonnelManager {
 			personnelList.add(p);
 		} catch (DALException e) {
 			throw new BLLException("Erreur lors de l'ajout d'un personnel");
-		}		
+		}
+		
+		for(PersonnelObserver po : observers) po.onNewPersonnelAdded(p);
 	}
 	
 	public void updatePassword(Personnel p) throws BLLException {
@@ -57,11 +63,15 @@ public class PersonnelManager {
 	public void archiver(Personnel p) throws BLLException {
 		// On fait rien pour le moment, en attente de AGENDA
 		if(p.getRole().equals("VET")) return;
+		
 		update(p);		
 	}
 	
 	private void update(Personnel p) throws BLLException {
-		validatePersonnel(p);
+		if(!personnelList.contains(p)) {
+			throw new BLLException("Impossible de maj ce personnel");
+		}		
+		
 		try {
 			personnelDAO.update(p);
 		} catch (DALException | SQLException e) {
@@ -74,4 +84,7 @@ public class PersonnelManager {
 		// Règles métiers à coder.
 	}	
 	
+	public void registerObserver(PersonnelObserver po) {
+		observers.add(po);
+	}
 }

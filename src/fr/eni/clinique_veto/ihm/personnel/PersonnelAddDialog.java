@@ -74,7 +74,20 @@ public class PersonnelAddDialog extends JDialog {
 		container.add(valid, gbc);
 		
 		cancel.addActionListener((e) -> PersonnelAddController.get().destroy());
-		
+		valid.addActionListener((e) -> PersonnelAddController.get().valider());
+	
 		getContentPane().add(container);
+	}
+
+	public JTextField getNameField() {
+		return name;
+	}
+
+	public JTextField getPasswordField() {
+		return password;
+	}
+
+	public JTextField getRoleField() {
+		return role;
 	}
 }

@@ -18,6 +18,7 @@ public class PersonnelFrame extends JFrame {
 	private static final long serialVersionUID = 1444564582371527529L;
 
 	private JButton add, del, reset;
+	private PersonnelTable personnelTable;
 	
 	public PersonnelFrame() {
 		this.setTitle(CVApp.APP_TITLE + " - Gestion du personnel");
@@ -49,8 +50,8 @@ public class PersonnelFrame extends JFrame {
 		
 		
 		// Table
-		PersonnelTable pt = new PersonnelTable();
-		JScrollPane scroll = new JScrollPane(pt);
+		personnelTable = new PersonnelTable();
+		JScrollPane scroll = new JScrollPane(personnelTable);
 		container.add(scroll);
 		
 		getContentPane().add(container);
@@ -60,5 +61,8 @@ public class PersonnelFrame extends JFrame {
 		del.setEnabled(true);
 		reset.setEnabled(true);
 	}
-
+	
+	public PersonnelTable getPersonnelTable() {
+		return personnelTable;
+	}
 }

@@ -28,4 +28,8 @@ public class PersonnelTable extends JTable {
 			}
 		});
 	}
+	
+	public PersonnelTableModel getModel() {
+		return ptm;
+	}
 }

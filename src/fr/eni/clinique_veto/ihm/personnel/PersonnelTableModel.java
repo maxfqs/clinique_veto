@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import fr.eni.clinique_veto.bll.PersonnelObserver;
 import fr.eni.clinique_veto.bo.Personnel;
 
 public class PersonnelTableModel extends AbstractTableModel {
