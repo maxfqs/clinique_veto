@@ -1,5 +1,6 @@
 package fr.eni.clinique_veto.ihm;
 
+import fr.eni.clinique_veto.bll.ConnexionManager;
 import fr.eni.clinique_veto.bo.Personnel;
 import fr.eni.clinique_veto.ihm.personnel.PersonnelController;
 
@@ -62,5 +63,13 @@ public class HomeController {
 	
 	public Personnel getUser() {
 		return user;
+	}
+	
+	public void closeApp() {
+		System.exit(1);
+	}
+	
+	public void logOut() {
+		ConnexionManager.get().logOutUser();
 	}
 }

@@ -29,6 +29,7 @@ public class LoginFrame extends JFrame {
 	public LoginFrame() {
 		this.setTitle(CVApp.APP_TITLE + " - Login");
 		this.setSize(WIDTH, HEIGHT);
+		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.initComponents();
 		this.initListeners();

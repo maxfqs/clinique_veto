@@ -44,7 +44,8 @@ public class ConnexionManager {
 	}
 	
 	public void logOutUser() {
-		user = null;		
+		user = null;
+		for(ConnexionObserver co : observers) co.onUserLogOut();
 	}
 	
 	public Personnel getUser() throws BLLException {
