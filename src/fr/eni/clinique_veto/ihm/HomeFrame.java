@@ -25,16 +25,18 @@ public class HomeFrame extends JFrame {
 		
 		menu = new JMenuBar();
 		
-		JMenu gp = new JMenu("Gestion du personnel");
-		JMenuItem gpi = new JMenuItem("Ouvrir");
-		gpi.addActionListener((e) -> {
-			HomeController.get().selectMenu(PersonnelController.get());
-		});
-		
-		gp.add(gpi);
-		
-		menu.add(gp);
-		
+		if(HomeController.get().getUser().getRole().equals("ADM")) {
+			JMenu gp = new JMenu("Gestion du personnel");
+			JMenuItem gpi = new JMenuItem("Ouvrir");
+			gpi.addActionListener((e) -> {
+				HomeController.get().selectMenu(PersonnelController.get());
+			});
+			
+			gp.add(gpi);
+			
+			menu.add(gp);
+		}
+				
 		container = new JPanel();
 		container.setLayout(new GridBagLayout());
 		

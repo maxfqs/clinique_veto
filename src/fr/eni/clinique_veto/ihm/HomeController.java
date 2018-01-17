@@ -1,10 +1,12 @@
 package fr.eni.clinique_veto.ihm;
 
+import fr.eni.clinique_veto.bo.Personnel;
 import fr.eni.clinique_veto.ihm.personnel.PersonnelController;
 
 public class HomeController {
 	public static HomeController instance;
 	
+	private Personnel user;
 	private HomeFrame hframe;
 	private MenuController selectedMenu;
 	private MenuController personnel;
@@ -56,5 +58,13 @@ public class HomeController {
 			mc.hide();
 			selectedMenu = null;
 		}
+	}
+	
+	public void setUser(Personnel p) {
+		user = p;
+	}
+	
+	public Personnel getUser() {
+		return user;
 	}
 }

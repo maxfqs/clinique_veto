@@ -19,6 +19,7 @@ public class CVApp implements ConnexionObserver {
 	@Override
 	public void connexionNotification(Personnel p) {
 		LoginController.get().closeFrame();
+		HomeController.get().setUser(p);
 		HomeController.get().createFrame();
 	}
 	
