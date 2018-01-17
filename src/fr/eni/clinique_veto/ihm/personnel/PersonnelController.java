@@ -9,7 +9,7 @@ import fr.eni.clinique_veto.ihm.MenuController;
 public class PersonnelController implements MenuController {
 	public static PersonnelController instance;
 	private PersonnelFrame pf;
-	
+	private PersonnelAddController pac;
 	
 	private PersonnelController() {
 		// Temp
@@ -19,6 +19,7 @@ public class PersonnelController implements MenuController {
 		ps.add(new Personnel(3, "jack", "mdp", "VET", false));
 		
 		pf = new PersonnelFrame(ps);
+		pac = PersonnelAddController.get();
 	}
 	
 	public static PersonnelController get() {
@@ -37,7 +38,9 @@ public class PersonnelController implements MenuController {
 		pf.setVisible(false);
 	}
 	
-	
+	public void openAddPersonnel() {
+		pac.create();
+	}
 	
 	public void addPersonnel() {
 		

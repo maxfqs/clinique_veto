@@ -13,11 +13,10 @@ import javax.swing.JScrollPane;
 import fr.eni.clinique_veto.bo.Personnel;
 import fr.eni.clinique_veto.ihm.CVApp;
 import fr.eni.clinique_veto.ihm.HomeController;
-import fr.eni.clinique_veto.ihm.MenuController;
 
 public class PersonnelFrame extends JFrame {
 	private static final long serialVersionUID = 1444564582371527529L;
-	
+
 	public PersonnelFrame(List<Personnel> prs) {
 		this.setTitle(CVApp.APP_TITLE + " - Gestion du personnel");
 		this.setSize(500, 500);
@@ -46,6 +45,9 @@ public class PersonnelFrame extends JFrame {
 		btnc.add(reset);
 		
 		container.add(btnc);
+		
+		add.addActionListener((e) -> PersonnelController.get().openAddPersonnel());
+		
 		
 		// Table
 		PersonnelTable pt = new PersonnelTable(prs);
