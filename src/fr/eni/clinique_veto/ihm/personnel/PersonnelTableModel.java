@@ -4,20 +4,25 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import fr.eni.clinique_veto.bll.PersonnelObserver;
 import fr.eni.clinique_veto.bo.Personnel;
 
 public class PersonnelTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = -5819375907592880238L;
 
-	private List<Personnel> pers;
+	private List<Personnel> personnelList;
 	private String[] colNames = {
-		"Nom", "Role", "Mot de passe"	
+		"Nom", "Rôle", "Mot de passe"	
 	};
 	
 	public PersonnelTableModel(List<Personnel> p) {
-		pers = p;
+		personnelList = p;
 	}
 	
+	@Override
+	public String getColumnName(int col) {
+        return colNames[col];
+    }
 	
 	@Override
 	public int getColumnCount() {
@@ -26,7 +31,7 @@ public class PersonnelTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		return pers.size();
+		return personnelList.size();
 	}
 
 	@Override
@@ -35,13 +40,13 @@ public class PersonnelTableModel extends AbstractTableModel {
 		
 		switch (col) {
 		case 0:
-			val = pers.get(row).getNom();
+			val = personnelList.get(row).getNom();
 			break;
 		case 1:
-			val = pers.get(row).getRole();
+			val = personnelList.get(row).getRole();
 			break;
 		case 2:
-			val = pers.get(row).getMdp();
+			val = personnelList.get(row).getMdp();
 			break;			
 		default:
 			break;
@@ -49,5 +54,4 @@ public class PersonnelTableModel extends AbstractTableModel {
 		
 		return val;
 	}
-
 }

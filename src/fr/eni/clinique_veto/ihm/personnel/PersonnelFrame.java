@@ -13,33 +13,31 @@ import javax.swing.JScrollPane;
 import fr.eni.clinique_veto.bo.Personnel;
 import fr.eni.clinique_veto.ihm.CVApp;
 import fr.eni.clinique_veto.ihm.HomeController;
-import fr.eni.clinique_veto.ihm.MenuController;
 
 public class PersonnelFrame extends JFrame {
 	private static final long serialVersionUID = 1444564582371527529L;
+
+	private JButton add, del, reset;
+	private PersonnelTable personnelTable;
 	
-	public PersonnelFrame(List<Personnel> prs) {
+	public PersonnelFrame() {
 		this.setTitle(CVApp.APP_TITLE + " - Gestion du personnel");
 		this.setSize(500, 500);
+		this.setLocationRelativeTo(null);
 		this.setAlwaysOnTop(true);
-		
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent evt) {
-				HomeController.get().closeMenu(PersonnelController.get());
-			}
-		});
-		
-		
-		
+				
 		JPanel container = new JPanel();
 		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 		
 		JPanel btnc = new JPanel();
 		
 		// Buttons
-		JButton add = new JButton("Ajouter");
-		JButton del = new JButton("Supprimer");
-		JButton reset = new JButton("Réinitialiser");
+		add = new JButton("Ajouter");
+		del = new JButton("Supprimer");
+		reset = new JButton("Réinitialiser");
+		
+		del.setEnabled(false);
+		reset.setEnabled(false);
 		
 		btnc.add(add);
 		btnc.add(del);
@@ -47,12 +45,24 @@ public class PersonnelFrame extends JFrame {
 		
 		container.add(btnc);
 		
+		add.addActionListener((e) -> PersonnelController.get().openAddPersonnel());
+		reset.addActionListener((e) -> PersonnelController.get().openResetPersonnel());
+		del.addActionListener((e) -> PersonnelController.get().openDeletePersonnel());
+		
 		// Table
-		PersonnelTable pt = new PersonnelTable(prs);
-		JScrollPane scroll = new JScrollPane(pt);
+		personnelTable = new PersonnelTable();
+		JScrollPane scroll = new JScrollPane(personnelTable);
 		container.add(scroll);
 		
 		getContentPane().add(container);
 	}
-
+	
+	public void enableActionButtons(boolean enabled) {
+		del.setEnabled(enabled);
+		reset.setEnabled(enabled);
+	}
+	
+	public PersonnelTable getPersonnelTable() {
+		return personnelTable;
+	}
 }

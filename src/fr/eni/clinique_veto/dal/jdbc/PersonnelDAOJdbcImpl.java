@@ -16,10 +16,12 @@ import fr.eni.clinique_veto.dal.PersonnelDAO;
 public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 	
 	private Connection cnx = null;
-	private static final String sqlDelete = "delete from Personnels where CodePers = ?";
-	private static final String sqlSelectAll = "select CodePers,Nom,MotPasse,Role from Personnels where Archive = false";
+	
+	private static final String sqlSelectAll = "select CodePers,Nom,MotPasse,Role from Personnels where Archive = 0";
 	private static final String sqlInsert = "insert into Personnels (Nom, MotPasse, Role, Archive) values(?,?,?,?)";
-	private static final String sqlUpdate = "update Personnels set Nom = ?, MotPasse = ?, Role = ?, Archive = ? where CodePers = ?";
+	private static final String sqlUpdate = "update Personnels set Nom = ?, MotPasse = ?, Role = ?, Archive = ?"
+			+ " where CodePers = ?";
+	private static final String sqlDelete = "delete from Personnels where CodePers = ?";
 	
 	public void insert(Personnel p) throws DALException {	
 		PreparedStatement rqt = null;
@@ -27,7 +29,6 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 		try{
 			
 			cnx = JDBCTools.getConnection();
-			rqt = cnx.prepareStatement(sqlUpdate);
 			rqt = cnx.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
 			rqt.setString(1, p.getNom());
 			rqt.setString(2, p.getMdp());
@@ -42,7 +43,7 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 			p.setId(index);
 			
 		}  catch (SQLException e) {
-			throw new DALException("insert failed - personnel = " + p.getId() , e);
+			throw new DALException("insert failed - personnel = " + p.getNom() , e);
 		} finally {
 			try {
 				if (rs != null){
@@ -69,7 +70,6 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 		try{
 			cnx = JDBCTools.getConnection();
 			rqt = cnx.prepareStatement(sqlUpdate);
-			rqt = cnx.prepareStatement(sqlUpdate);
 			rqt.setString(1, p.getNom());
 			rqt.setString(2, p.getMdp());
 			rqt.setString(3, p.getRole());
@@ -78,7 +78,9 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 			
 			rqt.executeUpdate();
 		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 			throw new DALException("update failed - personnel = " + p.getId() , e);
+			
 		} finally {
 			try {
 				if (rs != null){
@@ -110,8 +112,12 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 			Personnel p = null;
 			while(rs.next()){
 				p = new Personnel(
-						
+						rs.getInt("CodePers"),
+						rs.getString("Nom"),
+						rs.getString("MotPasse"),
+						rs.getString("Role")
 						);
+				ps.add(p);
 			}
 		} catch (SQLException e) {
 			throw new DALException("selectAll failed" , e);
@@ -141,7 +147,7 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 		ResultSet rs = null;
 		try{
 			cnx = JDBCTools.getConnection();
-			rqt = cnx.prepareStatement(sqlSelectAll);
+			rqt = cnx.prepareStatement(sqlDelete);
 			rqt.setInt(1, p.getId());
 			rqt.executeUpdate();
 		}  catch (SQLException e) {
@@ -164,4 +170,7 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 		}
 		
 	}
+
+
+
 }
