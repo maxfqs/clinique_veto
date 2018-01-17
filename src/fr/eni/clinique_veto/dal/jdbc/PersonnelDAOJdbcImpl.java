@@ -16,10 +16,11 @@ import fr.eni.clinique_veto.dal.PersonnelDAO;
 public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 	
 	private Connection cnx = null;
-	private static final String sqlDelete = "delete from Personnels where CodePers = ?";
+	
 	private static final String sqlSelectAll = "select CodePers,Nom,MotPasse,Role from Personnels where Archive = false";
 	private static final String sqlInsert = "insert into Personnels (Nom, MotPasse, Role, Archive) values(?,?,?,?)";
-	private static final String sqlUpdate = "update Personnels set Nom = ?, MotPasse = ?, Role = ?, Archive = ? where CodePers = ?";
+	private static final String sqlUpdate = "update Personnels set MotPasse = ? where CodePers = ? and Archive = false";
+	private static final String sqlDelete = "update Personnels set Archive = true where";
 	
 	public void insert(Personnel p) throws DALException {	
 		PreparedStatement rqt = null;
@@ -63,18 +64,14 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 	}
 	
 	
-	public void update(Personnel p) throws SQLException, DALException {
+	public void update(Personnel p, String str) throws SQLException, DALException {
 		PreparedStatement rqt = null;
 		ResultSet rs = null;
 		try{
 			cnx = JDBCTools.getConnection();
 			rqt = cnx.prepareStatement(sqlUpdate);
-			rqt = cnx.prepareStatement(sqlUpdate);
-			rqt.setString(1, p.getNom());
-			rqt.setString(2, p.getMdp());
-			rqt.setString(3, p.getRole());
-			rqt.setBoolean(4, p.isArchive());
-			rqt.setInt(5, p.getId());
+			rqt.setInt(2, p.getId());
+			rqt.setString(1, str);
 			
 			rqt.executeUpdate();
 		} catch (SQLException e) {
@@ -110,8 +107,12 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 			Personnel p = null;
 			while(rs.next()){
 				p = new Personnel(
-						
+						rs.getString("Nom"),
+						rs.getString("MotPasse"),
+						rs.getString("Role"),
+						false
 						);
+				ps.add(p);
 			}
 		} catch (SQLException e) {
 			throw new DALException("selectAll failed" , e);
