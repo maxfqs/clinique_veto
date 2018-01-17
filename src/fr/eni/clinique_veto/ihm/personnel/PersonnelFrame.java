@@ -20,16 +20,9 @@ public class PersonnelFrame extends JFrame {
 	public PersonnelFrame(List<Personnel> prs) {
 		this.setTitle(CVApp.APP_TITLE + " - Gestion du personnel");
 		this.setSize(500, 500);
+		this.setLocationRelativeTo(null);
 		this.setAlwaysOnTop(true);
-		
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent evt) {
-				HomeController.get().closeMenu(PersonnelController.get());
-			}
-		});
-		
-		
-		
+				
 		JPanel container = new JPanel();
 		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 		
