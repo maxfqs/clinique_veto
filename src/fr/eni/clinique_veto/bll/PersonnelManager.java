@@ -70,11 +70,14 @@ public class PersonnelManager {
 			throw new BLLException("Erreur lors de l'ajout d'un personnel");
 		}
 		
-		for(PersonnelObserver po : observers) po.onNewPersonnelAdded(p);
+		fireUpdate();
 	}
 	
 	public void updatePassword(Personnel p) throws BLLException {
 		update(p);
+		int i = personnelList.indexOf(p);
+		personnelList.set(i, p);
+		fireUpdate();
 	}
 	
 	public void archiver(Personnel p) throws BLLException {
@@ -86,7 +89,7 @@ public class PersonnelManager {
 		
 		personnelList.remove(p);
 		System.out.println(personnelList);
-		for(PersonnelObserver po : observers) po.onPersonnelRemoved();
+		fireUpdate();
 	}
 	
 	private void update(Personnel p) throws BLLException {
@@ -108,5 +111,9 @@ public class PersonnelManager {
 	
 	public void registerObserver(PersonnelObserver po) {
 		observers.add(po);
+	}
+	
+	private void fireUpdate() {
+		for(PersonnelObserver po : observers) po.onListUpdated();
 	}
 }

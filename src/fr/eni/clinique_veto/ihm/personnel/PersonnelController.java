@@ -70,20 +70,13 @@ public class PersonnelController implements MenuController, PersonnelObserver {
 	public void openDeletePersonnel() {
 		pDeleteController.create();
 	}
+
 	
-	private void onTableChange() {
+	@Override
+	public void onListUpdated() {
 		selectedPersonnel = null;
 		personnelFrame.enableActionButtons(false);
-		personnelFrame.getPersonnelTable().getModel().fireTableDataChanged();
+		personnelFrame.getPersonnelTable().getModel().fireTableDataChanged();		
 	}
-	
-	@Override
-	public void onNewPersonnelAdded(Personnel p) {
-		onTableChange();
-	}
-	
-	@Override
-	public void onPersonnelRemoved() {
-		onTableChange();
-	}
+
 }
