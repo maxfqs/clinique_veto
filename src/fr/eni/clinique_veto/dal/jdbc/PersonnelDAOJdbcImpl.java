@@ -141,7 +141,7 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 		ResultSet rs = null;
 		try{
 			cnx = JDBCTools.getConnection();
-			rqt = cnx.prepareStatement(sqlSelectAll);
+			rqt = cnx.prepareStatement(sqlDelete);
 			rqt.setInt(1, p.getId());
 			rqt.executeUpdate();
 		}  catch (SQLException e) {
