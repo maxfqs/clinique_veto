@@ -57,9 +57,9 @@ public class PersonnelFrame extends JFrame {
 		getContentPane().add(container);
 	}
 	
-	public void enableActionButtons() {
-		del.setEnabled(true);
-		reset.setEnabled(true);
+	public void enableActionButtons(boolean enabled) {
+		del.setEnabled(enabled);
+		reset.setEnabled(enabled);
 	}
 	
 	public PersonnelTable getPersonnelTable() {

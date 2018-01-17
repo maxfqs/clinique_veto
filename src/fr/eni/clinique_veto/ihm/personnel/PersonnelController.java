@@ -52,7 +52,7 @@ public class PersonnelController implements MenuController, PersonnelObserver {
 	
 	public void setSelectedPersonnel(Personnel p) {
 		selectedPersonnel = p;
-		personnelFrame.enableActionButtons();
+		personnelFrame.enableActionButtons(true);
 	}
 	
 	public Personnel getSelectedPersonnel() {
@@ -71,20 +71,19 @@ public class PersonnelController implements MenuController, PersonnelObserver {
 		pDeleteController.create();
 	}
 	
-	public void addPersonnel() {
-		
+	private void onTableChange() {
+		selectedPersonnel = null;
+		personnelFrame.enableActionButtons(false);
+		personnelFrame.getPersonnelTable().getModel().fireTableDataChanged();
 	}
 	
-	public void deletePersonnel() {
-		
-	}
-	
-	public void resetPersonnel() {
-		
-	}
-
 	@Override
 	public void onNewPersonnelAdded(Personnel p) {
-		personnelFrame.getPersonnelTable().getModel().fireTableDataChanged();
+		onTableChange();
+	}
+	
+	@Override
+	public void onPersonnelRemoved() {
+		onTableChange();
 	}
 }

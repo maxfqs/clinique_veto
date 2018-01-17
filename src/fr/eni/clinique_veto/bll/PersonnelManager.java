@@ -81,7 +81,12 @@ public class PersonnelManager {
 		// On fait rien pour le moment, en attente de AGENDA
 		if(p.getRole().equals("VET")) return;
 		
-		update(p);		
+		p.setArchive(true);
+		update(p);
+		
+		personnelList.remove(p);
+		System.out.println(personnelList);
+		for(PersonnelObserver po : observers) po.onPersonnelRemoved();
 	}
 	
 	private void update(Personnel p) throws BLLException {

@@ -54,5 +54,4 @@ public class PersonnelTableModel extends AbstractTableModel {
 		
 		return val;
 	}
-
 }

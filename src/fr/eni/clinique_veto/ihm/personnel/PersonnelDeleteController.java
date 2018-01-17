@@ -2,6 +2,9 @@ package fr.eni.clinique_veto.ihm.personnel;
 
 import javax.swing.JDialog;
 
+import fr.eni.clinique_veto.bll.BLLException;
+import fr.eni.clinique_veto.bll.PersonnelManager;
+import fr.eni.clinique_veto.bo.Personnel;
 import fr.eni.clinique_veto.ihm.DialogController;
 
 public class PersonnelDeleteController implements DialogController {
@@ -36,7 +39,14 @@ public class PersonnelDeleteController implements DialogController {
 	}
 	
 	public void valider() {
+		Personnel selected = PersonnelController.get().getSelectedPersonnel();
 		
+		try {
+			PersonnelManager.get().archiver(selected);
+		} catch (BLLException e) {
+			e.printStackTrace();
+		}
+		
+		destroy();
 	}
-
 }

@@ -22,8 +22,10 @@ public class PersonnelTable extends JTable {
 		getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				if(!e.getValueIsAdjusting()) {
-					PersonnelController.get().setSelectedPersonnel(pers.get(getSelectedRow()));
+				int row = getSelectedRow();
+				
+				if(!e.getValueIsAdjusting() && row > -1) {
+					PersonnelController.get().setSelectedPersonnel(pers.get(row));
 				}
 			}
 		});
