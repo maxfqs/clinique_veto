@@ -222,7 +222,7 @@ public class ClientsDAOImplJDBC {
 						rs.getByte("archive")
 						);		
 			};
-			if(!result) {throw new ClientDALException("Le client recherché n'existe pas");};
+			if(!result) {throw new ClientDALException("Le client recherchï¿½ n'existe pas");};
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -262,26 +262,26 @@ public class ClientsDAOImplJDBC {
 		String error = "";
 		
 		if(c.getNomClient().equals(null) || c.getNomClient().trim().length() == 0 ) {
-			error += " | la valeur renseignée pour le nom du client est incorrecte";
+			error += " | la valeur renseignï¿½e pour le nom du client est incorrecte";
 			okClient = false;
 		}
 		if(c.getPrenomClient().equals(null) || c.getPrenomClient().trim().length() == 0 ) {
-			error += " | la valeur renseignée pour le prénom du client est incorrecte";
+			error += " | la valeur renseignï¿½e pour le prï¿½nom du client est incorrecte";
 			okClient = false;
 		}
 		if(!c.getCodePostal().equals(null)) {
 			if(!c.getCodePostal().matches("\\d{5}")) {
-				error += " | la valeur renseignée pour le code postal est incorrecte";
+				error += " | la valeur renseignï¿½e pour le code postal est incorrecte";
 				okClient = false;
 			}
 		}
 		if((Integer)c.getArchive()== null || c.getArchive() != 0 && c.getArchive() != 1) {
-			error += " | la valeur de l'arhive renseignée est incorrecte";
+			error += " | la valeur de l'arhive renseignï¿½e est incorrecte";
 			okClient = false;
 		}
 		if(!c.getEmail().equals(null)) {
 			if(!VALID_EMAIL_ADDRESS_REGEX .matcher(c.getEmail()).find() ) {
-				error += " | l'email renseigné est incorrect";
+				error += " | l'email renseignï¿½ est incorrect";
 				okClient = false;
 			}
 		}
