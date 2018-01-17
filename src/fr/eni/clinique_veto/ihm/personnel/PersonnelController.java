@@ -13,6 +13,7 @@ public class PersonnelController implements MenuController {
 	public static PersonnelController instance;
 	private PersonnelFrame pf;
 	private PersonnelAddController pac;
+	private PersonnelResetController prc;
 	
 	private PersonnelController() {
 		// Temp
@@ -23,6 +24,7 @@ public class PersonnelController implements MenuController {
 		
 		pf = new PersonnelFrame(ps);
 		pac = PersonnelAddController.get();
+		prc = PersonnelResetController.get();
 		
 		pf.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent evt) {
@@ -49,6 +51,10 @@ public class PersonnelController implements MenuController {
 	
 	public void openAddPersonnel() {
 		pac.create();
+	}
+	
+	public void openResetPersonnel() {
+		prc.create();
 	}
 	
 	public void addPersonnel() {

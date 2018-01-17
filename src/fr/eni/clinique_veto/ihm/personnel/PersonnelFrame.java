@@ -40,6 +40,7 @@ public class PersonnelFrame extends JFrame {
 		container.add(btnc);
 		
 		add.addActionListener((e) -> PersonnelController.get().openAddPersonnel());
+		reset.addActionListener((e) -> PersonnelController.get().openResetPersonnel());
 		
 		
 		// Table
