@@ -14,16 +14,16 @@ import fr.eni.clinique_veto.ihm.MenuController;
 public class PersonnelController implements MenuController, PersonnelObserver {
 	public static PersonnelController instance;
 	private PersonnelFrame personnelFrame;
-	private PersonnelAddController pac;
-	private PersonnelResetController prc;
+	private PersonnelAddController pAddController;
+	private PersonnelResetController pResetController;
+	private PersonnelDeleteController pDeleteController;
 	private Personnel selectedPersonnel;
 	
 	private PersonnelController() {
-
-		
 		personnelFrame = new PersonnelFrame();
-		pac = PersonnelAddController.get();
-		prc = PersonnelResetController.get();
+		pAddController = PersonnelAddController.get();
+		pResetController = PersonnelResetController.get();
+		pDeleteController = PersonnelDeleteController.get();
 		
 		personnelFrame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent evt) {
@@ -60,11 +60,15 @@ public class PersonnelController implements MenuController, PersonnelObserver {
 	}
 	
 	public void openAddPersonnel() {
-		pac.create();
+		pAddController.create();
 	}
 	
 	public void openResetPersonnel() {
-		prc.create();
+		pResetController.create();
+	}
+	
+	public void openDeletePersonnel() {
+		pDeleteController.create();
 	}
 	
 	public void addPersonnel() {

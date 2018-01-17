@@ -47,7 +47,7 @@ public class PersonnelFrame extends JFrame {
 		
 		add.addActionListener((e) -> PersonnelController.get().openAddPersonnel());
 		reset.addActionListener((e) -> PersonnelController.get().openResetPersonnel());
-		
+		del.addActionListener((e) -> PersonnelController.get().openDeletePersonnel());
 		
 		// Table
 		personnelTable = new PersonnelTable();
