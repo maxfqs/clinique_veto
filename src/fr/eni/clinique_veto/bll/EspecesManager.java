@@ -44,4 +44,14 @@ public class EspecesManager {
 	public static String[] getRacesForEspece(String espece) {
 		return (String[]) especesMap.get(espece).toArray();
 	}
+	
+	public static boolean isValidEspece(String espece) {
+		return especesMap.containsKey(espece);
+	}
+	
+	public static boolean isValidRace(String espece, String race) {
+		if(!isValidEspece(espece)) return false;
+		
+		return especesMap.get(espece).contains(race);
+	}
 }

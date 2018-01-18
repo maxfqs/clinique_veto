@@ -1,12 +1,9 @@
 package fr.eni.clinique_veto.bo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import fr.eni.clinique_veto.bo.client.Client;
 
 public class Animal {
-	private final char[] SEXE = {'M', 'F', 'H'}; 
+	public static final char[] SEXE = {'M', 'F', 'H'}; 
 	
 	
 	private String race;
@@ -69,17 +66,6 @@ public class Animal {
 				+ ", nomAnimal=" + nomAnimal + ", sexe=" + sexe + ", archive=" + archive + ", couleur=" + couleur
 				+ ", codeClient=" + codeClient + ", tatouage=" + tatouage + ", antecedents=" + antecedents + "]";
 	}
-
-
-	public char[] getSEXE() {
-		return SEXE;
-	}
-
-
-
-
-	
-	
 	
 	public String getRace() {
 		return race;
