@@ -37,10 +37,11 @@ public class AnimalManager {
 		try {
 			this.animalList = new ArrayList<Animal>();
 			
-			List<Animal> all = animalDAO.selectAll();
-			for(Animal p : all) {
-				if(!p.isArchive()) animalList.add(p);
+			List<Animal> all = animalDAO.selectByClient(client.getCodeClient());
+			for(Animal a : all) {
+				if(!a.isArchive()) animalList.add(a);
 			}
+			
 		} catch (DALException | SQLException e) {
 			throw new BLLException("Erreur lors de l'initialisation du AnimalManager");
 		}
@@ -63,57 +64,56 @@ public class AnimalManager {
 		return retval;
 	}
 	
-	
-	public List<Animal> getAnimalsByClient(int data) {
-		List<Animal> la = new ArrayList<>();
-		try {
-			la.addAll(animalDAO.selectByClient(data));
-		} catch (SQLException | DALException e) {
-			e.printStackTrace();
-		}	
-		return la;
-	}
-	
-	
-	
 	public void addAnimal(Animal a) throws BLLException{
 		try {
 			validateAnimal(a);
 			animalDAO.insert(a);
 			animalList.add(a);
-		} catch (DALException e) {
+		} catch (Exception e) {
 			throw new BLLException("Erreur lors de l'ajout d'un Animal");
 		}
 		
 		fireUpdate();
 	}
 	
-	public void updatePassword(Animal a) throws BLLException {
-		update(a);
-		fireUpdate();
-	}
-	
-	public void archiver(Animal a) throws BLLException {
-		
+	public void archiver(int id) throws BLLException {
+		Animal a = getById(id);		
 		a.setArchive(true);
-		update(a);
+		
+		try {
+			animalDAO.update(a);
+		} catch (DALException e) {
+			throw new BLLException("Erreur lors de l'archivage de l'animal");
+		}
 		
 		animalList.remove(a);
 		fireUpdate();
 	}
 	
-	private void update(Animal a) throws BLLException {
-		if(!animalList.contains(a)) {
-			throw new BLLException("Impossible de maj cet Animal");
-		}		
+	public void update(Animal a) throws BLLException {
+		validateAnimal(a);
 		
 		try {
 			animalDAO.update(a);
+			updateAnimalList(a);
 		} catch (DALException e) {
-			throw new BLLException("Impossible de maj cet Animal");
+			throw new BLLException("Erreur lors de l'update de l'animal");
+		}
+				
+		fireUpdate();
+	}
+	
+	private void updateAnimalList(Animal o) throws BLLException {
+		try {
+			Animal a = getById(o.getCodeAnimal());
+			int i = animalList.indexOf(a);
+			animalList.set(i, o);
+		} catch (Exception e) {
+			throw new BLLException("Impossible de maj animalList avec animal: " + o.getCodeAnimal());
 		}
 	}
-
+	
+	
 	@SuppressWarnings("unlikely-arg-type")
 	private void validateAnimal(Animal a) throws BLLException{
 		String error = "Erreur à la validation de l'animal: ";
