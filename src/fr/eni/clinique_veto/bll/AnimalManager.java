@@ -14,16 +14,8 @@ import fr.eni.clinique_veto.dal.DAOFactory;
 
 
 public class AnimalManager {
-
-public static void main(String[] args){
-	Map<String,List<String>> map;
-	map = getEspecesMap();
-	System.out.println(map);
-}
 	
-	
-	private static Map<String,List<String>> especesMap;
-	
+	private static Map<String,List<String>> especesMap;	
 	private AnimalDAO animalDAO;
 	private List<Animal> animalList;
 	private List<AnimalObserver> observers;
@@ -33,7 +25,7 @@ public static void main(String[] args){
 		observers = new ArrayList<AnimalObserver>();
 		
 		try {
-			animalDAO = DAOFactory.getAnimalDAO(); // trouver une liste d'animaux par un numéro de client
+			animalDAO = DAOFactory.getAnimalDAO(); 
 			animalList = new ArrayList<Animal>();
 			
 			List<Animal> all = animalDAO.selectAll();
@@ -44,6 +36,7 @@ public static void main(String[] args){
 			throw new BLLException("Erreur lors de l'initialisation du AnimalManager");
 		}
 	}
+	
 	public static Map<String,List<String>> getEspecesMap(){
 		if(especesMap != null) return especesMap;
 		
@@ -87,6 +80,19 @@ public static void main(String[] args){
 		return retval;
 	}
 	
+	
+	public List<Animal> getAnimalsByClient(int data) {
+		List<Animal> la = new ArrayList<>();
+		try {
+			la.addAll(animalDAO.selectByClient(data));
+		} catch (SQLException | DALException e) {
+			e.printStackTrace();
+		}	
+		return la;
+	}
+	
+	
+	
 	public void addAnimal(Animal a) throws BLLException{
 		try {
 			validateAnimal(a);
@@ -110,7 +116,6 @@ public static void main(String[] args){
 		update(a);
 		
 		animalList.remove(a);
-		//System.out.println(AnimalList);
 		fireUpdate();
 	}
 	

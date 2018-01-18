@@ -34,6 +34,23 @@ public class AppliTestDALAnimal {
 		a1.setArchive(true);
 		animalDAO.update(a1);
 		System.out.println("L'animal " + a1.getNomAnimal() + " a été archiveé.");
+		
+		List<Animal> li = null;
+		try {
+			 li = animalDAO.selectByClient(8);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		System.out.println("\nLa liste des animaux du client a2 :\n------------------------");
+		afficherListAnimaux(li);
+	}
+	
+	public static void afficherListAnimaux(List<Animal> li){
+		for(Animal a : li){
+			System.out.println(a);
+		}
 	}
 	
 	public static void afficherAnimaux(AnimalDAO aDAO) throws SQLException{
