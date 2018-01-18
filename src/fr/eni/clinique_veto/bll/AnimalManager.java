@@ -38,7 +38,9 @@ public class AnimalManager {
 			this.animalList = new ArrayList<Animal>();
 			
 			List<Animal> all = animalDAO.selectByClient(client.getCodeClient());
+			
 			for(Animal a : all) {
+				a.setClient(client);
 				if(!a.isArchive()) animalList.add(a);
 			}
 			
@@ -77,10 +79,11 @@ public class AnimalManager {
 	}
 	
 	public void archiver(int id) throws BLLException {
-		Animal a = getById(id);		
-		a.setArchive(true);
-		
+		Animal a = null;	
+				
 		try {
+			a = getById(id);
+			a.setArchive(true);
 			animalDAO.update(a);
 		} catch (DALException e) {
 			throw new BLLException("Erreur lors de l'archivage de l'animal");
@@ -91,9 +94,8 @@ public class AnimalManager {
 	}
 	
 	public void update(Animal a) throws BLLException {
-		validateAnimal(a);
-		
 		try {
+			validateAnimal(a);
 			animalDAO.update(a);
 			updateAnimalList(a);
 		} catch (DALException e) {
