@@ -39,7 +39,7 @@ public class DAOFactory {
 	public static ClientDAO getClientDAO(){
 		ClientDAO ClientDAO=null;
 		try {
-			ClientDAO=(ClientDAO ) Class.forName("fr.eni.clinique_veto.dal.jdbc.ClientsDAOJdbcImpl").newInstance();
+			ClientDAO=(ClientDAO ) Class.forName("fr.eni.clinique_veto.dal.jdbc.ClientsDAOImplJDBC").newInstance();
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

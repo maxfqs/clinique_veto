@@ -54,7 +54,6 @@ public class AnimalFrame extends JDialog {
 		this.setLayout(new BorderLayout());
 		this.initComponent();
 		this.initListeners();
-		this.setVisible(true);
 	}
 	
 	public static AnimalFrame get() {

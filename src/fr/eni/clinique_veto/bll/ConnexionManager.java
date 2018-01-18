@@ -32,12 +32,17 @@ public class ConnexionManager {
 	}
 	
 	public void logUser(String nom, String mdp) throws BLLException {
+		Personnel user = null;
+		
 		try{
-			int userID = daoConnexion.getUserID(nom, mdp);
-			user = PersonnelManager.get().getById(userID);
+			user = daoConnexion.getUser(nom, mdp);
 		} catch(DALException e){
 			e.printStackTrace();
 			throw new BLLException("Erreur récupération nom ou mot de passe");
+		}
+		
+		if(user == null) {
+			throw new BLLException("L'utilisateur n'existe pas");
 		}
 		
 		for(ConnexionObserver co : observers) co.onUserLogIn(user);
