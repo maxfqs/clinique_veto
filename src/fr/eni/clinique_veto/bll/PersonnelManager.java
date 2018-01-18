@@ -79,14 +79,10 @@ public class PersonnelManager {
 	}
 	
 	public void archiver(Personnel p) throws BLLException {
-		// On fait rien pour le moment, en attente de AGENDA
-		if(p.getRole().equals("VET")) return;
-		
 		p.setArchive(true);
 		update(p);
 		
 		personnelList.remove(p);
-		System.out.println(personnelList);
 		fireUpdate();
 	}
 	
