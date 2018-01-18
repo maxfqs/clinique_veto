@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import javax.swing.JOptionPane;
+
+import fr.eni.clinique_veto.bo.Animal;
 import fr.eni.clinique_veto.bo.client.Client;
 import fr.eni.clinique_veto.dal.ClientDALException;
 import fr.eni.clinique_veto.dal.ClientDAO;
@@ -15,7 +18,10 @@ public class ClientManager {
 	
 	private static ClientManager instance;
 	private static ClientDAO dao;
-	
+	private AnimalManager animalManager;
+
+
+
 	private  List<Client> listeRechercheClient = new ArrayList<Client>();
 	private Client displayedClient;
 	
@@ -23,6 +29,15 @@ public class ClientManager {
 
 	private ClientManager() {
 		dao = DAOFactory.getClientDAO();
+		try {
+			animalManager = new AnimalManager();
+		} catch (BLLException e) {
+			JOptionPane.showMessageDialog(null,
+				    "Erreur lors de l'initialisation du programme, veuillez contacter l'administrateur",
+				    "fatal error",
+				    JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
 	}
 	
 	public static ClientManager get() {
@@ -47,9 +62,15 @@ public class ClientManager {
 		return retListe;
 	}
 	
+	public List<Animal> getAnimauxDisplayedClient(){
+		return animalManager.getAnimalsByClient(displayedClient.getCodeClient());
+	}
+	
 	public List<Client> getClients() {
 		return Collections.unmodifiableList(listeRechercheClient);
 	}
+	
+	
 
 
 	public void ajouterClient(Client c)throws BLLException  {	
@@ -125,6 +146,10 @@ public class ClientManager {
 
 	public void setDisplayedClient(Client displayedClient) {
 		this.displayedClient = displayedClient;
+	}
+	
+	public AnimalManager getAnimalManager() {
+		return animalManager;
 	}
 
 

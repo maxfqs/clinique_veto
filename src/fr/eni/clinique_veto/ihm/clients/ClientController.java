@@ -45,8 +45,17 @@ public class ClientController {
 	}
 
 
-	public void supprimerClient()  {	
-		if(ClientManager.get().getDisplayedClient()!= null) {
+	@SuppressWarnings("static-access")
+	public void supprimerClient()  {
+		
+		JOptionPane jop = new JOptionPane();			
+		int option = jop.showConfirmDialog(
+				null,
+				"Êtes vous sûr de vouloir supprimer le client?",
+				"Suppression d'un client", 
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		
+		if(option == JOptionPane.YES_OPTION && ClientManager.get().getDisplayedClient()!= null) {
 			try {
 				ClientManager.get().supprimerClient();
 				ClientsFrame.get().resetFields();
@@ -58,6 +67,7 @@ public class ClientController {
 					    JOptionPane.WARNING_MESSAGE);
 			}
 		}
+	
 	}
 	
 	public void annuler() {

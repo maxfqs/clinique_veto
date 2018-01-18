@@ -78,7 +78,6 @@ public class ClientsDAOImplJDBC implements ClientDAO {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		try {
-			verifierClient(c);
 			pst = this.conn.prepareStatement(AJOUT_CLIENT, Statement.RETURN_GENERATED_KEYS);
 			pst.setString(1, c.getNomClient());
 			pst.setString(2, c.getPrenomClient());
@@ -125,7 +124,6 @@ public class ClientsDAOImplJDBC implements ClientDAO {
 	public void modifierClient(Client c)throws ClientDALException {
 		PreparedStatement pst = null;
 		try {
-			verifierClient(c);
 			pst = this.conn.prepareStatement(UPDATE_CLIENT);
 			pst.setString(1, c.getNomClient());
 			pst.setString(2, c.getPrenomClient());
@@ -265,41 +263,7 @@ public class ClientsDAOImplJDBC implements ClientDAO {
 		}
 	}
 	
-	public void verifierClient(Client c)throws ClientDALException {
-		final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-		boolean okClient = true;
-		String error = "";
-		
-		if(c.getNomClient().equals(null) || c.getNomClient().trim().length() == 0 ) {
-			error += " | la valeur renseign�e pour le nom du client est incorrecte";
-			okClient = false;
-		}
-		if(c.getPrenomClient().equals(null) || c.getPrenomClient().trim().length() == 0 ) {
-			error += " | la valeur renseign�e pour le pr�nom du client est incorrecte";
-			okClient = false;
-		}
-		if(!c.getCodePostal().equals(null)) {
-			if(!c.getCodePostal().matches("\\d{5}")) {
-				error += " | la valeur renseign�e pour le code postal est incorrecte";
-				okClient = false;
-			}
-		}
-		if((Integer)c.getArchive()== null || c.getArchive() != 0 && c.getArchive() != 1) {
-			error += " | la valeur de l'arhive renseign�e est incorrecte";
-			okClient = false;
-		}
-		if(!c.getEmail().equals(null)) {
-			if(!VALID_EMAIL_ADDRESS_REGEX .matcher(c.getEmail()).find() ) {
-				error += " | l'email renseign� est incorrect";
-				okClient = false;
-			}
-		}
-		if(!okClient) {
-			throw new ClientDALException(error);
-		}
-		
-		
-	}
+
 	
 	
 	

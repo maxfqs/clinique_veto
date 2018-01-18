@@ -16,7 +16,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import fr.eni.clinique_veto.bll.AnimalManager;
 import fr.eni.clinique_veto.bll.ClientManager;
+import fr.eni.clinique_veto.bo.Animal;
 import fr.eni.clinique_veto.bo.AnimalTest;
 import fr.eni.clinique_veto.bo.client.Client;
 
@@ -92,13 +94,13 @@ public class ClientsFrame extends JFrame {
 
 	private void initComponentAnimaux() {
 		// partie pour tester à revoir
-		AnimalTest a2 = new AnimalTest("numero2", "nom2", "sexe2", "couleu2", "race2", "espece22", "tatouage2");
-		AnimalTest a3 = new AnimalTest("numero3", "nom3", "sexe3", "couleur3", "race3", "espece3", "tatouage3");
-		AnimalTest a1 = new AnimalTest("numero", "nom", "sexe", "couleur", "race", "espece", "tatouage");
-		List<AnimalTest> listeAnimaux = new ArrayList<>();
-		listeAnimaux.add(a1);
-		listeAnimaux.add(a2);
-		listeAnimaux.add(a3);
+//		AnimalTest a2 = new AnimalTest("numero2", "nom2", "sexe2", "couleu2", "race2", "espece22", "tatouage2");
+//		AnimalTest a3 = new AnimalTest("numero3", "nom3", "sexe3", "couleur3", "race3", "espece3", "tatouage3");
+//		AnimalTest a1 = new AnimalTest("numero", "nom", "sexe", "couleur", "race", "espece", "tatouage");
+//		List<AnimalTest> listeAnimaux = new ArrayList<>();
+//		listeAnimaux.add(a1);
+//		listeAnimaux.add(a2);
+//		listeAnimaux.add(a3);
 		//==========================
 		animauxPanel = new JPanel();
 		containerBtnAnimaux = new JPanel();
@@ -110,16 +112,17 @@ public class ClientsFrame extends JFrame {
 		containerBtnAnimaux.add(btnSupprAnimal);
 		containerBtnAnimaux.add(btnEditerAnimal);
 	
-		AnimauxTable table = new AnimauxTable(listeAnimaux);
-		table.setPreferredScrollableViewportSize(new Dimension(500,150));
-		JScrollPane scroll = new JScrollPane(table);
-		animauxPanel.add(scroll);
-		animauxPanel.add(containerBtnAnimaux);
-
-	
-		this.add(animauxPanel, BorderLayout.CENTER);
+//		AnimauxTable table = new AnimauxTable(listeAnimaux);
+//		table.setPreferredScrollableViewportSize(new Dimension(500,150));
+//		JScrollPane scroll = new JScrollPane(table);
+//		animauxPanel.add(scroll);
+//		animauxPanel.add(containerBtnAnimaux);
+//
+//	
+//		this.add(animauxPanel, BorderLayout.CENTER);
 		
 	}
+	
 
 
 	private void initComponentClient() {
@@ -230,6 +233,7 @@ public class ClientsFrame extends JFrame {
 	}
 
 	public void afficherClient(Client c) {
+
 		nomField.setText(c.getNomClient());;
 		prenomField.setText(c.getPrenomClient());;
 		adresse1Field.setText(c.getAdresse1());;
@@ -242,6 +246,8 @@ public class ClientsFrame extends JFrame {
 		remarqueField.setText(c.getRemarque());;
 		this.revalidate();
 	}
+	
+	
 	
 	public void resetFields() {
 		nomField.setText("");
@@ -271,6 +277,29 @@ public class ClientsFrame extends JFrame {
 				emailField.getText(),
 				remarqueField.getText(),
 				0);	
+	}
+
+	public void afficherAnimaux(List<Animal> list) {
+		
+//		animauxPanel = new JPanel();
+//		containerBtnAnimaux = new JPanel();
+		
+//		btnAjouterAnimal = new JButton("ajouter");
+//		btnSupprAnimal = new JButton("supprimer");
+//		btnEditerAnimal = new JButton("éditer");
+//		containerBtnAnimaux.add(btnAjouterAnimal);
+//		containerBtnAnimaux.add(btnSupprAnimal);
+//		containerBtnAnimaux.add(btnEditerAnimal);
+	animauxPanel.removeAll();
+		AnimauxTable table = new AnimauxTable(list);
+		table.setPreferredScrollableViewportSize(new Dimension(500,150));
+		JScrollPane scroll = new JScrollPane(table);
+		animauxPanel.add(scroll);
+		animauxPanel.add(containerBtnAnimaux);
+
+	
+		this.add(animauxPanel, BorderLayout.CENTER);
+		this.revalidate();
 	}
 	
 	
