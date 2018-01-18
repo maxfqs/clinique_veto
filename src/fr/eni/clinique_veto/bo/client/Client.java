@@ -3,6 +3,8 @@ package fr.eni.clinique_veto.bo.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.clinique_veto.bo.Animal;
+
 public class Client {
 
 
@@ -147,6 +149,7 @@ public class Client {
 		this.archive = archive;
 	}
 
+	
 	@Override
 	public String toString() {
 		return "Client [codeClient=" + codeClient + ", nomClient=" + nomClient + ", prenomClient=" + prenomClient

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.clinique_veto.bo.Personnel;
+import fr.eni.clinique_veto.bo.client.Client;
 import fr.eni.clinique_veto.bo.Animal;
 import fr.eni.clinique_veto.dal.AnimalDAO;
 import fr.eni.clinique_veto.dal.DALException;
@@ -20,7 +21,6 @@ public class AnimalDAOJdbcImpl implements AnimalDAO{
 	private static final String sqlUpdate = "update Animaux set NomAnimal = ?, Sexe = ?, Couleur = ?, " 
 			+ " Race = ?, Espece = ?, CodeClient = ?, Tatouage = ?, Antecedents = ?, Archive = ? where CodeAnimal = ?";
 	private static final String sqlInsert = "insert into Animaux(NomAnimal, Sexe, Couleur, Race, Espece, CodeClient, Tatouage, Antecedents, Archive) values(?,?,?,?,?,?,?,?,?)";
-	private static final String sqlDelete = "delete from Aimaux where CodeAnimal=?";
 	private static final String sqlSelectRaces = "select * from Races";
 	private static final String sqlSelectByClient = "select * from Animaux where CodeClient = ? and Archive = 0";
 
@@ -154,36 +154,6 @@ public class AnimalDAOJdbcImpl implements AnimalDAO{
 		
 		
 	}
-
-	public void delete(Animal a) throws DALException {
-
-		PreparedStatement rqt = null;
-		ResultSet rs = null;
-		try{
-			cnx = JDBCTools.getConnection();
-			rqt = cnx.prepareStatement(sqlDelete);
-			rqt.setInt(1, a.getCodeAnimal());
-			rqt.executeUpdate();
-		}  catch (SQLException e) {
-			throw new DALException("delete failed - personnel = " + a.getCodeAnimal() , e);
-		} finally {
-			try {
-				if (rs != null){
-					rs.close();
-				}
-				if (rqt != null){
-					rqt.close();
-				}
-				if(cnx!=null){
-					cnx.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-		}
-		
-	}
 	
 	public List<String[]> selectRaces() throws SQLException, DALException{
 		List<String[]> listeRaces = new ArrayList<>(); 
@@ -265,13 +235,7 @@ public class AnimalDAOJdbcImpl implements AnimalDAO{
 	}
 	
 	return la;
-}
-	
-	
-	@Override
-	public void delete(int id) throws DALException {
-		// TODO Auto-generated method stub
-		
 	}
+	
 		
 }
