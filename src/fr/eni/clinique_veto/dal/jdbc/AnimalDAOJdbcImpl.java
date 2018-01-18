@@ -221,7 +221,12 @@ public class AnimalDAOJdbcImpl implements AnimalDAO{
 	}
 		return listeRaces;
 	}
-
+	
+	public List<Animal> selectByClient(int codeClient){
+		
+		
+		return null;
+	}
 	
 	
 	@Override

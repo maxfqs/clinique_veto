@@ -16,5 +16,7 @@ public interface AnimalDAO {
 	public void delete(int id) throws DALException;
 	
 	public List<String[]> selectRaces() throws SQLException, DALException;
+	
+	public List<Animal> selectByClient(int data);
 
 }

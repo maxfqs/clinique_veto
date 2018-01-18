@@ -14,6 +14,13 @@ import fr.eni.clinique_veto.dal.DAOFactory;
 
 
 public class AnimalManager {
+
+public static void main(String[] args){
+	Map<String,List<String>> map;
+	map = getEspecesMap();
+	System.out.println(map);
+}
+	
 	
 	private static Map<String,List<String>> especesMap;
 	
