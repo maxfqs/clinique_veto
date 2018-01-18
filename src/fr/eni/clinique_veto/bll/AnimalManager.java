@@ -8,25 +8,31 @@ import java.util.List;
 import java.util.Map;
 
 import fr.eni.clinique_veto.bo.Animal;
+import fr.eni.clinique_veto.bo.client.Client;
 import fr.eni.clinique_veto.dal.AnimalDAO;
 import fr.eni.clinique_veto.dal.DALException;
 import fr.eni.clinique_veto.dal.DAOFactory;
 
 
 public class AnimalManager {
+	private static AnimalDAO animalDAO;
 	
-	private static Map<String,List<String>> especesMap;	
-	private AnimalDAO animalDAO;
+	private Client client;
 	private List<Animal> animalList;
 	private List<AnimalObserver> observers;
 	
 	
-	public AnimalManager() throws BLLException {		
-		observers = new ArrayList<AnimalObserver>();
+	static {
+		animalDAO = DAOFactory.getAnimalDAO();
+	}
+
+	
+	public AnimalManager(Client client) throws BLLException {		
+		this.client = client;
+		this.observers = new ArrayList<AnimalObserver>();
 		
 		try {
-			animalDAO = DAOFactory.getAnimalDAO(); 
-			animalList = new ArrayList<Animal>();
+			this.animalList = new ArrayList<Animal>();
 			
 			List<Animal> all = animalDAO.selectAll();
 			for(Animal p : all) {
@@ -36,31 +42,6 @@ public class AnimalManager {
 			throw new BLLException("Erreur lors de l'initialisation du AnimalManager");
 		}
 	}
-	
-	public static Map<String,List<String>> getEspecesMap(){
-		if(especesMap != null) return especesMap;
-		
-		especesMap = new HashMap<String,List<String>>();
-		List<String[]> result = null;
-		try {
-			result = DAOFactory.getAnimalDAO().selectRaces();
-			
-		} catch (SQLException | DALException e) {
-			e.printStackTrace();
-		}
-		for(String[] data : result){
-			String race = data[0];
-			String espece = data[1];
-			
-			if(especesMap.get(espece) == null){
-				especesMap.put(espece, new ArrayList<String>());
-			}
-			
-			especesMap.get(espece).add(race);
-		}
-		return especesMap;
-	}
-	
 	
 	
 	public List<Animal> getAnimals() {
