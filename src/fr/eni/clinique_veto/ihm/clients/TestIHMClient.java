@@ -12,8 +12,8 @@ public class TestIHMClient {
 	public static void main(String[] args) {
 
 		
-		ClientsFrame cf = new ClientsFrame();
-		cf.setVisible(true);
+		ClientsFrame.get().setVisible(true);
+	
 
 //		AjoutClientFrame aframe  =new AjoutClientFrame();
 //		aframe.setVisible(true);

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,9 +76,10 @@ public class ClientsDAOImplJDBC implements ClientDAO {
 	// ==> a ajouter exception DAL
 	public void ajouterClient(Client c)throws ClientDALException {
 		PreparedStatement pst = null;
+		ResultSet rs = null;
 		try {
 			verifierClient(c);
-			pst = this.conn.prepareStatement(AJOUT_CLIENT);
+			pst = this.conn.prepareStatement(AJOUT_CLIENT, Statement.RETURN_GENERATED_KEYS);
 			pst.setString(1, c.getNomClient());
 			pst.setString(2, c.getPrenomClient());
 			pst.setString(3, c.getAdresse1());
@@ -100,6 +102,12 @@ public class ClientsDAOImplJDBC implements ClientDAO {
 			pst.setInt(11, c.getArchive());
 
 			pst.executeUpdate();
+			
+			   rs = pst.getGeneratedKeys();	
+			   rs.next();
+			   int index = rs.getInt(1);			
+			   c.setCodeClient(index);
+			   
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new ClientDALException("erreur lors de l'insertion des nouveaux clients");

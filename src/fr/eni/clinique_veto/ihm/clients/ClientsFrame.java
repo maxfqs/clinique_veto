@@ -16,13 +16,17 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import fr.eni.clinique_veto.bll.ClientManager;
 import fr.eni.clinique_veto.bo.AnimalTest;
+import fr.eni.clinique_veto.bo.client.Client;
 
 public class ClientsFrame extends JFrame {
 
 	private static final int FRAME_WIDTH = 800;
 	private static final int FRAME_HEIGHT = 600;
 	private static final int TEXTFIELD_WIDTH = 12;
+	
+	private static ClientsFrame instance;
 	
 	// containers principaux
 	private JPanel containerBtn;
@@ -42,7 +46,6 @@ public class ClientsFrame extends JFrame {
 	private JTextField emailField;
 	private JTextArea remarqueField;
 	
-	private JTextField searchField;
 	
 	//partie btn
 	JButton btnRechercheClt;
@@ -56,7 +59,7 @@ public class ClientsFrame extends JFrame {
 	JButton btnEditerAnimal;
 	
 	
-	public ClientsFrame() {
+	private ClientsFrame() {
 		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new BorderLayout());
@@ -64,10 +67,17 @@ public class ClientsFrame extends JFrame {
 		this.initComponentAnimaux();
 		this.initListeners();
 	}
+	
+	public static ClientsFrame get() {
+		if(instance == null) {
+			instance = new ClientsFrame();
+		}
+		return instance;
+	}
 
 
 	private void initListeners() {
-		btnRechercheClt.addActionListener((e)-> ClientController.get().rechercheClient(searchField.getText()));
+		btnRechercheClt.addActionListener((e)-> ClientController.get().rechercheClient());
 		btnAjouterClt.addActionListener((e)-> ClientController.get().ajouterClient());
 		btnValiderClt.addActionListener((e)-> ClientController.get().updateClient());
 		btnAnnulerClt.addActionListener((e)-> ClientController.get().annuler());
@@ -206,8 +216,6 @@ public class ClientsFrame extends JFrame {
 		btnValiderClt = new JButton("valider");
 		btnAnnulerClt = new JButton("Annuler");
 			
-		searchField = new JTextField(10);
-		containerBtn.add(searchField);
 		containerBtn.add(btnRechercheClt);
 		containerBtn.add(btnAjouterClt);
 		containerBtn.add(btnSupprimerClt);
@@ -219,6 +227,50 @@ public class ClientsFrame extends JFrame {
 		this.add(containerInfosClient, BorderLayout.WEST);
 		
 	
+	}
+
+	public void afficherClient(Client c) {
+		nomField.setText(c.getNomClient());;
+		prenomField.setText(c.getPrenomClient());;
+		adresse1Field.setText(c.getAdresse1());;
+		adresse2Field.setText(c.getAdresse2());;
+		codePostalField.setText(c.getCodePostal());;
+		villeField.setText(c.getVille());;
+		numTelField.setText(c.getNumTel());;
+		assuranceField.setText(c.getAssurance());;
+		emailField.setText(c.getEmail());;
+		remarqueField.setText(c.getRemarque());;
+		this.revalidate();
+	}
+	
+	public void resetFields() {
+		nomField.setText("");
+		prenomField.setText("");
+		adresse1Field.setText("");
+		adresse2Field.setText("");
+		codePostalField.setText("");
+		villeField.setText("");
+		numTelField.setText("");
+		assuranceField.setText("");
+		emailField.setText("");
+		remarqueField.setText("");
+		this.revalidate();
+	}
+	
+	public Client getClientInfos() {
+		return new Client(
+				ClientManager.get().getDisplayedClient().getCodeClient(),
+				nomField.getText(),
+				prenomField.getText(),
+				adresse1Field.getText(),
+				adresse2Field.getText(),
+				codePostalField.getText(),
+				villeField.getText(), 
+				numTelField.getText(),
+				assuranceField.getText(), 
+				emailField.getText(),
+				remarqueField.getText(),
+				0);	
 	}
 	
 	

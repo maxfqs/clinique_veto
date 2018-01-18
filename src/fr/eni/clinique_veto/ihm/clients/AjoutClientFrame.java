@@ -1,7 +1,6 @@
 package fr.eni.clinique_veto.ihm.clients;
-import java.awt.Dialog;
-
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -10,11 +9,17 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import fr.eni.clinique_veto.bll.BLLException;
+import fr.eni.clinique_veto.bo.client.Client;
+import fr.eni.clinique_veto.dal.ClientDALException;
+
+@SuppressWarnings("serial")
 public class AjoutClientFrame extends JDialog {
 
 	private static AjoutClientFrame instance;
@@ -51,7 +56,6 @@ public class AjoutClientFrame extends JDialog {
 		this.setLayout(new BorderLayout());
 		this.initComponent();
 		this.initListeners();
-		this.setVisible(true);
 	}
 	
 	public static AjoutClientFrame get() {
@@ -62,9 +66,18 @@ public class AjoutClientFrame extends JDialog {
 	}
 
 
-
 	private void initListeners() {
-		btnAjouter.addActionListener((e)-> AjoutClientController.get().ajouterClient());
+		btnAjouter.addActionListener((e)-> {
+			Client c = recupereFields();
+			try {
+				AjoutClientController.get().ajouterClient(c);
+			} catch (BLLException | ClientDALException e1) {
+				JOptionPane.showMessageDialog(this,
+					    e1.getMessage(),
+					    "erreur",
+					    JOptionPane.WARNING_MESSAGE);
+			}
+		});
 		btnAnnuler.addActionListener((e)-> this.setVisible(false));
 	}
 
@@ -162,4 +175,32 @@ public class AjoutClientFrame extends JDialog {
 		this.add(containerForm, BorderLayout.CENTER);
 		
 	}
+	public void resetFields() {
+		nomField.setText("");
+		prenomField.setText("");
+		adresse1Field.setText("");
+		adresse2Field.setText("");
+		codePostalField.setText("");
+		villeField.setText("");
+		numTelField.setText("");
+		assuranceField.setText("");
+		emailField.setText("");
+		remarqueField.setText("");
+	}
+	
+	private Client recupereFields() {
+		return new Client(
+				nomField.getText(),
+				prenomField.getText(),
+				adresse1Field.getText(),
+				adresse2Field.getText(),
+				codePostalField.getText(),
+				villeField.getText(),
+				numTelField.getText(),
+				assuranceField.getText(),
+				emailField.getText(), 
+				remarqueField.getText(),
+				0);		
+	}
+
 }
