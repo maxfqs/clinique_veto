@@ -6,7 +6,6 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
-import fr.eni.clinique_veto.bo.AnimalTest;
 import fr.eni.clinique_veto.bo.client.Client;
 
 public class ClientTable extends JTable {

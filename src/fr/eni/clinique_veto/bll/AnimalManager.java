@@ -2,66 +2,52 @@ package fr.eni.clinique_veto.bll;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import fr.eni.clinique_veto.bo.Animal;
+import fr.eni.clinique_veto.bo.client.Client;
 import fr.eni.clinique_veto.dal.AnimalDAO;
 import fr.eni.clinique_veto.dal.DALException;
 import fr.eni.clinique_veto.dal.DAOFactory;
 
 
 public class AnimalManager {
+	private static AnimalDAO animalDAO;
 	
-	private static Map<String,List<String>> especesMap;	
-	private AnimalDAO animalDAO;
+	private Client client;
 	private List<Animal> animalList;
 	private List<AnimalObserver> observers;
 	
 	
-	public AnimalManager() throws BLLException {		
-		observers = new ArrayList<AnimalObserver>();
+	static {
+		animalDAO = DAOFactory.getAnimalDAO();
+	}
+
+	
+	public AnimalManager(Client client) throws BLLException {		
+		if(client == null) {
+			throw new BLLException("Param Client is null");
+		}
+		
+		this.client = client;
+		this.observers = new ArrayList<AnimalObserver>();
 		
 		try {
-			animalDAO = DAOFactory.getAnimalDAO(); 
-			animalList = new ArrayList<Animal>();
+			this.animalList = new ArrayList<Animal>();
 			
-			List<Animal> all = animalDAO.selectAll();
-			for(Animal p : all) {
-				if(!p.isArchive()) animalList.add(p);
+			List<Animal> all = animalDAO.selectByClient(client.getCodeClient());
+			
+			for(Animal a : all) {
+				a.setClient(client);
+				if(!a.isArchive()) animalList.add(a);
 			}
+			
 		} catch (DALException | SQLException e) {
 			throw new BLLException("Erreur lors de l'initialisation du AnimalManager");
 		}
 	}
-	
-	public static Map<String,List<String>> getEspecesMap(){
-		if(especesMap != null) return especesMap;
-		
-		especesMap = new HashMap<String,List<String>>();
-		List<String[]> result = null;
-		try {
-			result = DAOFactory.getAnimalDAO().selectRaces();
-			
-		} catch (SQLException | DALException e) {
-			e.printStackTrace();
-		}
-		for(String[] data : result){
-			String race = data[0];
-			String espece = data[1];
-			
-			if(especesMap.get(espece) == null){
-				especesMap.put(espece, new ArrayList<String>());
-			}
-			
-			especesMap.get(espece).add(race);
-		}
-		return especesMap;
-	}
-	
-	
 	
 	public List<Animal> getAnimals() {
 		return Collections.unmodifiableList(animalList);
@@ -80,61 +66,77 @@ public class AnimalManager {
 		return retval;
 	}
 	
-	
-	public List<Animal> getAnimalsByClient(int data) {
-		List<Animal> la = new ArrayList<>();
-		try {
-			la.addAll(animalDAO.selectByClient(data));
-		} catch (SQLException | DALException e) {
-			e.printStackTrace();
-		}	
-		return la;
-	}
-	
-	
-	
 	public void addAnimal(Animal a) throws BLLException{
 		try {
 			validateAnimal(a);
 			animalDAO.insert(a);
 			animalList.add(a);
-		} catch (DALException e) {
+		} catch (Exception e) {
 			throw new BLLException("Erreur lors de l'ajout d'un Animal");
 		}
 		
 		fireUpdate();
 	}
 	
-	public void updatePassword(Animal a) throws BLLException {
-		update(a);
-		fireUpdate();
-	}
-	
-	public void archiver(Animal a) throws BLLException {
-		
-		a.setArchive(true);
-		update(a);
+	public void archiver(int id) throws BLLException {
+		Animal a = null;	
+				
+		try {
+			a = getById(id);
+			a.setArchive(true);
+			animalDAO.update(a);
+		} catch (DALException e) {
+			throw new BLLException("Erreur lors de l'archivage de l'animal");
+		}
 		
 		animalList.remove(a);
 		fireUpdate();
 	}
 	
-	private void update(Animal a) throws BLLException {
-		if(!animalList.contains(a)) {
-			throw new BLLException("Impossible de maj cet Animal");
-		}		
-		
+	public void update(Animal a) throws BLLException {
 		try {
+			validateAnimal(a);
 			animalDAO.update(a);
+			updateAnimalList(a);
 		} catch (DALException e) {
-			throw new BLLException("Impossible de maj cet Animal");
+			throw new BLLException("Erreur lors de l'update de l'animal");
+		}
+				
+		fireUpdate();
+	}
+	
+	private void updateAnimalList(Animal o) throws BLLException {
+		try {
+			Animal a = getById(o.getCodeAnimal());
+			int i = animalList.indexOf(a);
+			animalList.set(i, o);
+		} catch (Exception e) {
+			throw new BLLException("Impossible de maj animalList avec animal: " + o.getCodeAnimal());
+		}
+	}
+	
+	
+	@SuppressWarnings("unlikely-arg-type")
+	private void validateAnimal(Animal a) throws BLLException{
+		String error = "Erreur à la validation de l'animal: ";
+		
+		if(client.getCodeClient() != a.getCodeClient()) {
+			throw new BLLException(error + "Code client différent du client enregistré par le manager");
+		}
+		
+		if(!EspecesManager.isValidEspece(a.getEspece())) {
+			throw new BLLException(error + "Espèce invalide");
+		}
+		
+		if(!EspecesManager.isValidRace(a.getEspece(), a.getRace())) {
+			throw new BLLException(error + "Race invalide");
+		}
+		
+		if(!Arrays.asList(Animal.SEXE).contains(a.getSexe())) {
+			throw new BLLException(error + "Sexe invalide");
 		}
 	}
 
-	
-	private void validateAnimal(Animal a) throws BLLException{
-		// Rï¿½gles mï¿½tiers ï¿½ coder.
-	}	
 	
 	public void registerObserver(AnimalObserver ao) {
 		observers.add(ao);

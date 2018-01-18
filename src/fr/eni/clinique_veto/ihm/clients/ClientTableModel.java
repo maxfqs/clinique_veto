@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import fr.eni.clinique_veto.bo.AnimalTest;
+
 import fr.eni.clinique_veto.bo.client.Client;
 
 public class ClientTableModel extends AbstractTableModel {
