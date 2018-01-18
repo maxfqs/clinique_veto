@@ -11,9 +11,9 @@ public class AppliTestDALAnimal {
 		
 		AnimalDAO animalDAO = DAOFactory.getAnimalDAO();
 		
-		Animal a1 = new Animal("toto",'M',"noir","chien méchant","Chien",5,null, null, false);
-		Animal a2 = new Animal("titi",'M',"noir","cheval méchant","Cheval",6,null, null, false);
-		Animal a3 = new Animal("tata",'F',"blanc","vache méchante","Vache",6,null, null, false);
+		Animal a1 = new Animal("toto",'M',"noir","chien méchant","Chien",1,null, null, false);
+		Animal a2 = new Animal("titi",'M',"noir","cheval méchant","Cheval",2,null, null, false);
+		Animal a3 = new Animal("tata",'F',"blanc","vache méchante","Vache",2,null, null, false);
 		
 		System.out.println("Ajout des animaux:\n-----------------------------");
 		
@@ -27,7 +27,7 @@ public class AppliTestDALAnimal {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 	public static void afficherAnimaux(AnimalDAO aDAO) throws SQLException{

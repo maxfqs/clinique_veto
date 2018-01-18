@@ -14,7 +14,7 @@ import fr.eni.clinique_veto.dal.AnimalDAO;
 import fr.eni.clinique_veto.dal.DALException;
 import fr.eni.clinique_veto.dal.JDBCTools;
 
-public abstract class AnimalDAOjdbcImpl implements AnimalDAO{
+public abstract class AnimalDAOJdbcImpl implements AnimalDAO{
 	private Connection cnx = null;
 	private static final String sqlSelectAll = "select CodeAnimal, NomAnimal, Sexe, Couleur, Race, Espece, CodeClient, Tatouage, Antecedents from Animaux where Archive = true";
 	private static final String sqlUpdate = "update Animaux set NomAnimal = ?, Sexe = ?, Couleur = ?, " 
