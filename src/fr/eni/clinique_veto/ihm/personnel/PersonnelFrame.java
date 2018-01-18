@@ -14,18 +14,13 @@ import fr.eni.clinique_veto.bo.Personnel;
 import fr.eni.clinique_veto.ihm.CVApp;
 import fr.eni.clinique_veto.ihm.HomeController;
 
-public class PersonnelFrame extends JFrame {
+public class PersonnelFrame extends JPanel {
 	private static final long serialVersionUID = 1444564582371527529L;
 
 	private JButton add, del, reset;
 	private PersonnelTable personnelTable;
 	
 	public PersonnelFrame() {
-		this.setTitle(CVApp.APP_TITLE + " - Gestion du personnel");
-		this.setSize(500, 500);
-		this.setLocationRelativeTo(null);
-		this.setAlwaysOnTop(true);
-				
 		JPanel container = new JPanel();
 		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 		
@@ -54,7 +49,7 @@ public class PersonnelFrame extends JFrame {
 		JScrollPane scroll = new JScrollPane(personnelTable);
 		container.add(scroll);
 		
-		getContentPane().add(container);
+		add(container);
 	}
 	
 	public void enableActionButtons(boolean enabled) {

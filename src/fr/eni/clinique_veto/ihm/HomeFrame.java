@@ -52,18 +52,9 @@ public class HomeFrame extends JFrame {
 		gp.add(gpi);
 		menu.add(gp);
 
-		
-		container = new JPanel();
-		container.setLayout(new GridBagLayout());
-		
-		GridBagConstraints gbc = new GridBagConstraints();
-		
-		
-		JToolBar toolBar = new JToolBar();
-		container.add(toolBar);
-		
-		getContentPane().add(container);
 		setJMenuBar(menu);
+		
+		getContentPane().add(PersonnelController.get().getPanel());
 	}
 
 }

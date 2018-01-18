@@ -1,14 +1,10 @@
 package fr.eni.clinique_veto.ihm.personnel;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.List;
+import javax.swing.JPanel;
 
 import fr.eni.clinique_veto.bll.PersonnelManager;
 import fr.eni.clinique_veto.bll.PersonnelObserver;
 import fr.eni.clinique_veto.bo.Personnel;
-import fr.eni.clinique_veto.ihm.HomeController;
 import fr.eni.clinique_veto.ihm.MenuController;
 
 public class PersonnelController implements MenuController, PersonnelObserver {
@@ -25,13 +21,9 @@ public class PersonnelController implements MenuController, PersonnelObserver {
 		pResetController = PersonnelResetController.get();
 		pDeleteController = PersonnelDeleteController.get();
 		
-		personnelFrame.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent evt) {
-				HomeController.get().closeMenu(instance);
-			}
-		});
 		
 		PersonnelManager.get().registerObserver(this);
+		hide();
 	}
 	
 	public static PersonnelController get() {
@@ -40,6 +32,10 @@ public class PersonnelController implements MenuController, PersonnelObserver {
 		}
 		
 		return instance;
+	}
+	
+	public JPanel getPanel() {
+		return personnelFrame;
 	}
 	
 	public void show() {
