@@ -19,7 +19,6 @@ import javax.swing.JTextField;
 import fr.eni.clinique_veto.bll.AnimalManager;
 import fr.eni.clinique_veto.bll.ClientManager;
 import fr.eni.clinique_veto.bo.Animal;
-import fr.eni.clinique_veto.bo.AnimalTest;
 import fr.eni.clinique_veto.bo.client.Client;
 
 public class ClientsFrame extends JFrame {

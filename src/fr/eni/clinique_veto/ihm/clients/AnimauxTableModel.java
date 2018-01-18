@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import fr.eni.clinique_veto.bo.Animal;
-import fr.eni.clinique_veto.bo.AnimalTest;
+
 
 public class AnimauxTableModel extends AbstractTableModel {
 

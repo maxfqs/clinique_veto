@@ -7,7 +7,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import fr.eni.clinique_veto.bo.Animal;
-import fr.eni.clinique_veto.bo.AnimalTest;
+
 
 public class AnimauxTable extends JTable {
 
