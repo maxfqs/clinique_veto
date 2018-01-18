@@ -46,7 +46,7 @@ public class PersonnelTableModel extends AbstractTableModel {
 			val = personnelList.get(row).getRole();
 			break;
 		case 2:
-			val = personnelList.get(row).getMdp();
+			val = "********";
 			break;			
 		default:
 			break;
