@@ -13,11 +13,12 @@ import fr.eni.clinique_veto.dal.JDBCTools;
 public class ConnexionDAOJdbcImpl implements ConnexionDAO{
 	private static final String sqlVerifierPersonnel = "select * from Personnels where Nom = ? and MotPasse = ?";
 	
-	public int getUserID(String nom, String mdp) throws DALException {
+	public Personnel getUser(String nom, String mdp) throws DALException {
 		Connection cnx = null;
 		PreparedStatement rqt = null;
 		ResultSet rs = null;
-		int userID = 0;
+		
+		Personnel user = null;
 		
 		try {
 			cnx = JDBCTools.getConnection();
@@ -27,14 +28,18 @@ public class ConnexionDAOJdbcImpl implements ConnexionDAO{
 
 			rs = rqt.executeQuery();
 			if (rs.next()){
-				userID = rs.getInt("CodePers");
+				user =  new Personnel(rs.getInt("CodePers"),						 
+		            rs.getString("Nom"),			 
+		            rs.getString("MotPasse"),			 
+		            rs.getString("Role")			 
+	            );			 
 			}
 
 		} catch (Exception e) {
 			throw new DALException("Nom ou Mot de Passe incorrect " , e);
 		}
 		
-		return userID;
+		return user;
 	}
 
 	
