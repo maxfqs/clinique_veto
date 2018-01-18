@@ -7,14 +7,7 @@ import fr.eni.clinique_veto.bo.client.Client;
 
 public class Animal {
 	private final char[] SEXE = {'M', 'F', 'H'}; 
-	private final String[] ESPECES = {"Chat", "Chien", "Vache", "Cheval", "Crorodile"};
-	private final String[][] RACES = {
-			{"chat gentil", "chat méchant"},
-			{"chien gentil", "chien méchant"},
-			{"vache gentile", "vache méchante"},
-			{"cheval gentil", "cheval méchant"},
-			{"crocodile gentil", "crocodile méchant"}
-	};
+	
 	
 	private String race;
 	private String espece;
@@ -83,14 +76,7 @@ public class Animal {
 	}
 
 
-	public String[] getESPECES() {
-		return ESPECES;
-	}
 
-
-	public String[][] getRACES() {
-		return RACES;
-	}
 
 	
 	
