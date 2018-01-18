@@ -14,9 +14,9 @@ import fr.eni.clinique_veto.dal.AnimalDAO;
 import fr.eni.clinique_veto.dal.DALException;
 import fr.eni.clinique_veto.dal.JDBCTools;
 
-public abstract class AnimalDAOJdbcImpl implements AnimalDAO{
+public class AnimalDAOJdbcImpl implements AnimalDAO{
 	private Connection cnx = null;
-	private static final String sqlSelectAll = "select CodeAnimal, NomAnimal, Sexe, Couleur, Race, Espece, CodeClient, Tatouage, Antecedents from Animaux where Archive = true";
+	private static final String sqlSelectAll = "select CodeAnimal, NomAnimal, Sexe, Couleur, Race, Espece, CodeClient, Tatouage, Antecedents from Animaux where Archive = 0";
 	private static final String sqlUpdate = "update Animaux set NomAnimal = ?, Sexe = ?, Couleur = ?, " 
 			+ " Race = ?, Espece = ?, CodeClient = ?, Tatouage = ?, Antecedents = ?, Archive = ? where CodeAnimal = ?";
 	private static final String sqlInsert = "insert into Animaux(NomAnimal, Sexe, Couleur, Race, Espece, CodeClient, Tatouage, Antecedents, Archive) values(?,?,?,?,?,?,?,?,?)";
@@ -27,15 +27,15 @@ public abstract class AnimalDAOJdbcImpl implements AnimalDAO{
 	public List<Animal> selectAll() throws DALException, SQLException {
 		List<Animal> la = new ArrayList<Animal>();
 		
-		Statement rqt = null;
-		ResultSet rs = null;
-		cnx = JDBCTools.getConnection();
-		try{
+			Statement rqt = null;
+			ResultSet rs = null;
+			cnx = JDBCTools.getConnection();
+			try{
 			cnx = JDBCTools.getConnection();
 			rqt = cnx.createStatement();
 			rs = rqt.executeQuery(sqlSelectAll);
 			Animal a = null;
-			while(rs.next()){
+			while(rs.next()){ 
 				a = new Animal(
 						rs.getInt("CodeAnimal"),
 						rs.getString("NomAnimal"),
@@ -45,9 +45,8 @@ public abstract class AnimalDAOJdbcImpl implements AnimalDAO{
 						rs.getString("Espece"),
 						rs.getInt("CodeClient"),
 						rs.getString("Tatouage"),
-						rs.getString("Antecedents"),
-						rs.getBoolean("Archive")
-						);
+						rs.getString("Antecedents")
+						);     
 				la.add(a);
 			}
 		} catch (SQLException e) {
@@ -116,7 +115,6 @@ public abstract class AnimalDAOJdbcImpl implements AnimalDAO{
 		PreparedStatement rqt = null;
 		ResultSet rs = null;
 		try{
-			
 			cnx = JDBCTools.getConnection();
 			rqt = cnx.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
 			rqt.setString(1, a.getNomAnimal());
@@ -187,6 +185,12 @@ public abstract class AnimalDAOJdbcImpl implements AnimalDAO{
 		}
 		
 	
+		
+	}
+
+	@Override
+	public void delete(int id) throws DALException {
+		// TODO Auto-generated method stub
 		
 	}
 		
