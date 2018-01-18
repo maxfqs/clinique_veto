@@ -22,7 +22,7 @@ public class AnimalDAOJdbcImpl implements AnimalDAO{
 	private static final String sqlInsert = "insert into Animaux(NomAnimal, Sexe, Couleur, Race, Espece, CodeClient, Tatouage, Antecedents, Archive) values(?,?,?,?,?,?,?,?,?)";
 	private static final String sqlDelete = "delete from Aimaux where CodeAnimal=?";
 	private static final String sqlSelectRaces = "select * from Races";
-	private static final String sqlSelectByClient = "select * from Animaux where CodeClient = ? and Archive = false";
+	private static final String sqlSelectByClient = "select * from Animaux where CodeClient = ? and Archive = 0";
 
 	public List<Animal> selectAll() throws DALException, SQLException {
 		List<Animal> la = new ArrayList<Animal>();

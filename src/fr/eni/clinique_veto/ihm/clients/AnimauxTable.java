@@ -6,7 +6,8 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
-import fr.eni.clinique_veto.bo.AnimalTest;
+import fr.eni.clinique_veto.bo.Animal;
+
 
 public class AnimauxTable extends JTable {
 
@@ -18,8 +19,8 @@ public class AnimauxTable extends JTable {
 	public static final int COL_ESPECE = 5;
 	public static final int COL_TATOUAGE = 6;
 	
-	public AnimauxTable(List<AnimalTest> listeAnimaux) {
-		super.setModel(new AnimauxTableModel(listeAnimaux));
+	public AnimauxTable(List<Animal> list) {
+		super.setModel(new AnimauxTableModel(list));
 		
         setPreferredScrollableViewportSize(new Dimension(500, 70));
         setFillsViewportHeight(true);

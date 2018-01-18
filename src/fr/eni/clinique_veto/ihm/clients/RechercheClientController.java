@@ -12,7 +12,7 @@ import fr.eni.clinique_veto.dal.ClientDALException;
 public class RechercheClientController {
 
 	private static RechercheClientController instance;
-	private int selectedClient = -1;
+
 	
 	public static RechercheClientController get() {
 		if(instance == null) {
@@ -46,6 +46,7 @@ public class RechercheClientController {
 		if( ClientManager.get().getDisplayedClient() != null) {
 			RechercheFrame.get().setVisible(false);
 			ClientsFrame.get().afficherClient(ClientManager.get().getDisplayedClient());
+			ClientsFrame.get().afficherAnimaux(ClientManager.get().getAnimauxDisplayedClient());
 		}else {
 			throw new BLLException("il n'y a pas d'élément sélectionné.");
 		}

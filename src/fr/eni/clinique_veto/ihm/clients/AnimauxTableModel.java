@@ -4,19 +4,20 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import fr.eni.clinique_veto.bo.AnimalTest;
+import fr.eni.clinique_veto.bo.Animal;
+
 
 public class AnimauxTableModel extends AbstractTableModel {
 
 
 	
 
-	private List<AnimalTest> listeAnimaux;
+	private List<Animal> listeAnimaux;
 
 	private String[] columnNames = { "Numéro", "Nom", "Sexe", "Couleur", "Race", "Espèce", "Tatouage" };
 
-	 public AnimauxTableModel(List<AnimalTest> catalogue) {
-	 this.listeAnimaux = catalogue;
+	 public AnimauxTableModel(List<Animal> list) {
+	 this.listeAnimaux = list;
 	 }
 
 	
@@ -41,10 +42,10 @@ public class AnimauxTableModel extends AbstractTableModel {
 		Object val = null;
 		switch (columnIndex) {
 		case AnimauxTable.COL_NUM:
-			val = listeAnimaux.get(rowIndex).getNumero();
+			val = listeAnimaux.get(rowIndex).getCodeAnimal();
 			break;
 		case AnimauxTable.COL_NOM:
-			val = listeAnimaux.get(rowIndex).getNom();
+			val = listeAnimaux.get(rowIndex).getNomAnimal();
 			break;
 		case AnimauxTable.COL_COULEUR:
 			val = listeAnimaux.get(rowIndex).getCouleur();
