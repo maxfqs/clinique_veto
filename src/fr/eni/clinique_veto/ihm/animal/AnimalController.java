@@ -8,6 +8,9 @@ public class AnimalController {
 	private AnimalDialog dialog;
 	private Animal selectedAnimal;
 	
+	
+	
+	
 	public static AnimalController get() {
 		if(instance == null) {
 			instance = new AnimalController();
@@ -23,7 +26,8 @@ public class AnimalController {
 		}
 		
 		if(dialog == null) {
-			dialog = new AnimalDialog(selectedAnimal);
+			dialog = new AnimalDialog();
+			displayAnimal();
 			dialog.setVisible(true);
 		}
 	}
@@ -35,6 +39,12 @@ public class AnimalController {
 			dialog = null;
 			selectedAnimal = null;
 		}
+	}
+	
+	private void displayAnimal() {
+		dialog.getNom().setText(selectedAnimal.getNomAnimal());
+		dialog.getCouleur().setText(selectedAnimal.getCouleur());
+		dialog.getTatoo().setText(selectedAnimal.getTatouage());
 	}
 	
 	public void valid() {
