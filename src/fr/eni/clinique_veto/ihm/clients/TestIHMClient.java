@@ -1,18 +1,13 @@
 package fr.eni.clinique_veto.ihm.clients;
 
-import java.util.List;
 
-
-import fr.eni.clinique_veto.bo.client.Client;
-import fr.eni.clinique_veto.dal.ClientDALException;
-import fr.eni.clinique_veto.dal.jdbc.ClientsDAOImplJDBC;
 
 public class TestIHMClient {
 
 	public static void main(String[] args) {
 
 		
-		ClientsFrame.get().setVisible(true);
+		ClientController.get().getClientsFrame().setVisible(true);
 	
 
 //		AjoutClientFrame aframe  =new AjoutClientFrame();

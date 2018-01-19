@@ -5,10 +5,14 @@ import java.util.List;
 
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
+import fr.eni.clinique_veto.bll.ClientManager;
 import fr.eni.clinique_veto.bo.Animal;
 
 
+@SuppressWarnings("serial")
 public class AnimauxTable extends JTable {
 
 	public static final int COL_NUM = 0;
@@ -19,8 +23,11 @@ public class AnimauxTable extends JTable {
 	public static final int COL_ESPECE = 5;
 	public static final int COL_TATOUAGE = 6;
 	
+	private AnimauxTableModel modelTable;
+	
 	public AnimauxTable(List<Animal> list) {
-		super.setModel(new AnimauxTableModel(list));
+		modelTable = new AnimauxTableModel(list);
+		super.setModel(modelTable);
 		
         setPreferredScrollableViewportSize(new Dimension(500, 70));
         setFillsViewportHeight(true);
@@ -39,5 +46,19 @@ public class AnimauxTable extends JTable {
 		
 		this.setRowHeight(30);
 		
+		getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				int row = getSelectedRow();
+				
+				if(!e.getValueIsAdjusting() && row > -1) {
+					ClientManager.get().getAnimalManager().setSelectedAnimal(list.get(row));
+				}
+			}
+		});
+	}
+
+	public AnimauxTableModel getModelTable() {
+		return modelTable;
 	}
 }

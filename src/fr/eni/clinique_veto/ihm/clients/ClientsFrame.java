@@ -5,35 +5,33 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import fr.eni.clinique_veto.bll.AnimalManager;
+import fr.eni.clinique_veto.bll.AnimalObserver;
 import fr.eni.clinique_veto.bll.ClientManager;
 import fr.eni.clinique_veto.bo.Animal;
 import fr.eni.clinique_veto.bo.client.Client;
 
-public class ClientsFrame extends JFrame {
+@SuppressWarnings("serial")
+public class ClientsFrame extends JPanel implements AnimalObserver {
 
 	private static final int FRAME_WIDTH = 800;
 	private static final int FRAME_HEIGHT = 600;
 	private static final int TEXTFIELD_WIDTH = 12;
-	
-	private static ClientsFrame instance;
 	
 	// containers principaux
 	private JPanel containerBtn;
 	private JPanel containerInfosClient;
 	private JPanel animauxPanel ;
 	private JPanel containerBtnAnimaux;
+	private AnimauxTable table;
 	
 	// => partie client
 	private JTextField nomField;
@@ -60,47 +58,29 @@ public class ClientsFrame extends JFrame {
 	JButton btnEditerAnimal;
 	
 	
-	private ClientsFrame() {
+	public ClientsFrame() {
 		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new BorderLayout());
 		this.initComponentClient();
 		this.initComponentAnimaux();
 		this.initListeners();
 	}
 	
-	public static ClientsFrame get() {
-		if(instance == null) {
-			instance = new ClientsFrame();
-		}
-		return instance;
-	}
-
 
 	private void initListeners() {
 		btnRechercheClt.addActionListener((e)-> ClientController.get().rechercheClient());
 		btnAjouterClt.addActionListener((e)-> ClientController.get().ajouterClient());
 		btnValiderClt.addActionListener((e)-> ClientController.get().updateClient());
 		btnAnnulerClt.addActionListener((e)-> ClientController.get().annuler());
-		btnSupprimerClt.addActionListener((e)->ClientController.get().supprimerClient());
-		
+		btnSupprimerClt.addActionListener((e)->ClientController.get().supprimerClient());	
 		btnAjouterAnimal.addActionListener((e)-> ClientController.get().ajouterAnimal());
 		btnSupprAnimal.addActionListener((e)-> ClientController.get().supprimerAnimal());
-		btnEditerAnimal.addActionListener((e)-> ClientController.get().editerAnimal());
-		
+		btnEditerAnimal.addActionListener((e)-> ClientController.get().editerAnimal());		
 	}
 
 
 	private void initComponentAnimaux() {
-		// partie pour tester à revoir
-//		AnimalTest a2 = new AnimalTest("numero2", "nom2", "sexe2", "couleu2", "race2", "espece22", "tatouage2");
-//		AnimalTest a3 = new AnimalTest("numero3", "nom3", "sexe3", "couleur3", "race3", "espece3", "tatouage3");
-//		AnimalTest a1 = new AnimalTest("numero", "nom", "sexe", "couleur", "race", "espece", "tatouage");
-//		List<AnimalTest> listeAnimaux = new ArrayList<>();
-//		listeAnimaux.add(a1);
-//		listeAnimaux.add(a2);
-//		listeAnimaux.add(a3);
-		//==========================
+
 		animauxPanel = new JPanel();
 		containerBtnAnimaux = new JPanel();
 		
@@ -111,18 +91,8 @@ public class ClientsFrame extends JFrame {
 		containerBtnAnimaux.add(btnSupprAnimal);
 		containerBtnAnimaux.add(btnEditerAnimal);
 	
-//		AnimauxTable table = new AnimauxTable(listeAnimaux);
-//		table.setPreferredScrollableViewportSize(new Dimension(500,150));
-//		JScrollPane scroll = new JScrollPane(table);
-//		animauxPanel.add(scroll);
-//		animauxPanel.add(containerBtnAnimaux);
-//
-//	
-//		this.add(animauxPanel, BorderLayout.CENTER);
-		
 	}
 	
-
 
 	private void initComponentClient() {
 		
@@ -279,26 +249,23 @@ public class ClientsFrame extends JFrame {
 	}
 
 	public void afficherAnimaux(List<Animal> list) {
-		
-//		animauxPanel = new JPanel();
-//		containerBtnAnimaux = new JPanel();
-		
-//		btnAjouterAnimal = new JButton("ajouter");
-//		btnSupprAnimal = new JButton("supprimer");
-//		btnEditerAnimal = new JButton("éditer");
-//		containerBtnAnimaux.add(btnAjouterAnimal);
-//		containerBtnAnimaux.add(btnSupprAnimal);
-//		containerBtnAnimaux.add(btnEditerAnimal);
-	animauxPanel.removeAll();
-		AnimauxTable table = new AnimauxTable(list);
+	
+		animauxPanel.removeAll();
+		table = new AnimauxTable(list);
 		table.setPreferredScrollableViewportSize(new Dimension(500,150));
 		JScrollPane scroll = new JScrollPane(table);
 		animauxPanel.add(scroll);
 		animauxPanel.add(containerBtnAnimaux);
-
 	
 		this.add(animauxPanel, BorderLayout.CENTER);
 		this.revalidate();
+	}
+
+	@Override
+	public void onListUpdated() {
+		table.getModelTable().fireTableDataChanged();
+		table.requestFocus();
+		table.changeSelection(ClientManager.get().getAnimauxDisplayedClient().size()-1,0,false, false);
 	}
 	
 	

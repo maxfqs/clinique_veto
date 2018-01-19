@@ -2,7 +2,6 @@ package fr.eni.clinique_veto.bll;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,6 +10,7 @@ import fr.eni.clinique_veto.bo.client.Client;
 import fr.eni.clinique_veto.dal.AnimalDAO;
 import fr.eni.clinique_veto.dal.DALException;
 import fr.eni.clinique_veto.dal.DAOFactory;
+import fr.eni.clinique_veto.ihm.clients.ClientController;
 
 
 public class AnimalManager {
@@ -19,7 +19,7 @@ public class AnimalManager {
 	private Client client;
 	private List<Animal> animalList;
 	private List<AnimalObserver> observers;
-	
+	private Animal selectedAnimal;
 	
 	static {
 		animalDAO = DAOFactory.getAnimalDAO();
@@ -33,7 +33,7 @@ public class AnimalManager {
 		
 		this.client = client;
 		this.observers = new ArrayList<AnimalObserver>();
-		
+		this.observers.add(ClientController.get().getClientsFrame());
 		try {
 			this.animalList = new ArrayList<Animal>();
 			
@@ -66,15 +66,16 @@ public class AnimalManager {
 		return retval;
 	}
 	
-	public void addAnimal(Animal a) throws BLLException{
+	public void addAnimal(Animal a) throws BLLException{		
 		try {
 			validateAnimal(a);
 			animalDAO.insert(a);
 			animalList.add(a);
-		} catch (Exception e) {
-			throw new BLLException("Erreur lors de l'ajout d'un Animal");
+			setSelectedAnimal(a);
+		} catch (DALException e) {
+			throw new BLLException("Erreur lors de l'ajout d'un animal");
 		}
-		
+	
 		fireUpdate();
 	}
 	
@@ -90,6 +91,7 @@ public class AnimalManager {
 		}
 		
 		animalList.remove(a);
+		selectedAnimal = null;
 		fireUpdate();
 	}
 	
@@ -115,28 +117,38 @@ public class AnimalManager {
 		}
 	}
 	
+	public void setSelectedAnimal(Animal a) {
+		if(animalList.contains(a)) {
+			selectedAnimal = a;
+			System.out.println("Selected animal = " + a.getNomAnimal());
+		}
+	}
 	
-	@SuppressWarnings("unlikely-arg-type")
+	public Animal getSelectedAnimal() {
+		return selectedAnimal;
+	}
+	
 	private void validateAnimal(Animal a) throws BLLException{
-		String error = "Erreur à la validation de l'animal: ";
-		
+		String error = "Erreur ï¿½ la validation de l'animal: ";
+	
 		if(client.getCodeClient() != a.getCodeClient()) {
-			throw new BLLException(error + "Code client différent du client enregistré par le manager");
+			throw new BLLException(error + "Code client diffï¿½rent du client enregistrï¿½ par le manager");
 		}
 		
 		if(!EspecesManager.isValidEspece(a.getEspece())) {
-			throw new BLLException(error + "Espèce invalide");
+			throw new BLLException(error + "Espï¿½ce invalide");
 		}
 		
 		if(!EspecesManager.isValidRace(a.getEspece(), a.getRace())) {
 			throw new BLLException(error + "Race invalide");
 		}
 		
-		if(!Arrays.asList(Animal.SEXE).contains(a.getSexe())) {
-			throw new BLLException(error + "Sexe invalide");
+		for (int i = 0; i < Animal.SEXE.length; i++) {
+			if(a.getSexe() == Animal.SEXE[i]) return;			
 		}
+		
+		throw new BLLException(error + "Sexe invalide");
 	}
-
 	
 	public void registerObserver(AnimalObserver ao) {
 		observers.add(ao);
