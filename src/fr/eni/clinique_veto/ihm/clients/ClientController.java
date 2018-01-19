@@ -4,6 +4,7 @@ import javax.swing.JOptionPane;
 
 import fr.eni.clinique_veto.bll.BLLException;
 import fr.eni.clinique_veto.bll.ClientManager;
+import fr.eni.clinique_veto.bo.Animal;
 
 
 public class ClientController {
@@ -84,7 +85,22 @@ public class ClientController {
 	}
 
 	public void supprimerAnimal() {
-		System.out.println("supprime animal");
+		Animal selected = ClientManager.get().getAnimalManager().getSelectedAnimal();
+
+		int dialogResult = JOptionPane.showConfirmDialog(
+			null,
+			"Etes-vous sûr de vouloir supprimer " + selected.getNomAnimal(),
+			"Title on Box",
+			JOptionPane.YES_NO_OPTION
+		);
+		
+		if(dialogResult == 0) {
+			try {
+				ClientManager.get().getAnimalManager().archiver(selected.getCodeAnimal());
+			} catch (BLLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void editerAnimal() {

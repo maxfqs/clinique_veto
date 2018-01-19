@@ -93,6 +93,7 @@ public class AnimalManager {
 		}
 		
 		animalList.remove(a);
+		selectedAnimal = null;
 		fireUpdate();
 	}
 	
