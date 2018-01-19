@@ -8,7 +8,7 @@ public class Test {
 	public static void main(String[] args) {
 		try {
 			AnimalController ac = AnimalController.get();
-			Animal anm = new Animal(0, "Firas", 'F', "Bleu", "Chien", "Caniche", 8, null, null, false);
+			Animal anm = new Animal(0, "Firas", 'F', "Bleu", "chien méchant", "Chien", 8, null, null, false);
 			Client c = null;
 			ac.create(c, anm);
 		} catch (IHMException e) {
