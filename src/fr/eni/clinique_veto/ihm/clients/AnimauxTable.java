@@ -19,8 +19,11 @@ public class AnimauxTable extends JTable {
 	public static final int COL_ESPECE = 5;
 	public static final int COL_TATOUAGE = 6;
 	
+	private AnimauxTableModel modelTable;
+	
 	public AnimauxTable(List<Animal> list) {
-		super.setModel(new AnimauxTableModel(list));
+		modelTable = new AnimauxTableModel(list);
+		super.setModel(modelTable);
 		
         setPreferredScrollableViewportSize(new Dimension(500, 70));
         setFillsViewportHeight(true);
@@ -38,6 +41,10 @@ public class AnimauxTable extends JTable {
 	
 		
 		this.setRowHeight(30);
-		
+
+	}
+
+	public AnimauxTableModel getModelTable() {
+		return modelTable;
 	}
 }

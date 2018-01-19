@@ -1,11 +1,6 @@
 package fr.eni.clinique_veto.ihm.clients;
 
-import java.util.List;
 
-
-import fr.eni.clinique_veto.bo.client.Client;
-import fr.eni.clinique_veto.dal.ClientDALException;
-import fr.eni.clinique_veto.dal.jdbc.ClientsDAOImplJDBC;
 
 public class TestIHMClient {
 

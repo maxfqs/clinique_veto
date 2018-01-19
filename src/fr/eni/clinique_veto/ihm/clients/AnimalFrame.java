@@ -17,6 +17,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import fr.eni.clinique_veto.bll.ClientManager;
+import fr.eni.clinique_veto.bo.Animal;
+
 public class AnimalFrame extends JDialog {
 
 	private static AnimalFrame instance;
@@ -65,7 +68,7 @@ public class AnimalFrame extends JDialog {
 
 
 	private void initListeners() {
-		btnAjouter.addActionListener((e)-> AnimalController.get().addAnimal());
+		btnAjouter.addActionListener((e)-> AnimalController.get().addAnimal(createAnimal()));
 		btnAnnuler.addActionListener((e)-> this.setVisible(false));
 	}
 
@@ -152,6 +155,30 @@ public class AnimalFrame extends JDialog {
 		this.add(containerBtn, BorderLayout.NORTH);
 		this.add(containerForm, BorderLayout.CENTER);
 		
+	}
+
+	private Animal createAnimal() {
+		char s;
+		return new Animal(
+				nomField.getText(),
+				s = female.isSelected()? 'F' : 'M', 
+				couleurField.getText(), 
+				raceField.getText(),
+				especeField.getText(),
+				ClientManager.get().getDisplayedClient().getCodeClient(),
+				tatouageField.getText(), 
+				antecedentsField.getText(),
+				false);
+				
+	}
+	
+	public void resetFields() {
+		nomField.setText("");
+		couleurField.setText("");
+		raceField.setText("");
+		especeField.setText("");
+		tatouageField.setText("");
+		antecedentsField.setText("");
 	}
 	
 }
