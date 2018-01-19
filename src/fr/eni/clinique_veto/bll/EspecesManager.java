@@ -43,7 +43,9 @@ public class EspecesManager {
 	}
 	
 	public static String[] getRacesForEspece(String espece) {
-		return (String[]) especesMap.get(espece).toArray();
+		List<String> races = especesMap.get(espece);
+		String[] sa = new String[races.size()];
+		return races.toArray(sa);
 	}
 	
 	public static boolean isValidEspece(String espece) {
