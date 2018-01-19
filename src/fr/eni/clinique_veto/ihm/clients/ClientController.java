@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import fr.eni.clinique_veto.bll.BLLException;
 import fr.eni.clinique_veto.bll.ClientManager;
 import fr.eni.clinique_veto.bo.Animal;
+import fr.eni.clinique_veto.ihm.ErrorDialog;
 import fr.eni.clinique_veto.ihm.MenuController;
 
 
@@ -47,10 +48,7 @@ public class ClientController implements MenuController {
 		try {
 			ClientManager.get().modifierClient(clientFrame.getClientInfos());
 		} catch (BLLException e) {
-			JOptionPane.showMessageDialog(null,
-				    e.getMessage(),
-				    "erreur",
-				    JOptionPane.WARNING_MESSAGE);
+			ErrorDialog.showError(e.getMessage());
 		}
 	}
 
@@ -71,10 +69,7 @@ public class ClientController implements MenuController {
 				clientFrame.resetFields();
 				ClientManager.get().setDisplayedClient(null);
 			} catch (BLLException e) {
-				JOptionPane.showMessageDialog(null,
-					    e.getMessage(),
-					    "erreur",
-					    JOptionPane.WARNING_MESSAGE);
+				ErrorDialog.showError(e.getMessage());
 			}
 		}
 	
@@ -91,6 +86,11 @@ public class ClientController implements MenuController {
 	public void supprimerAnimal() {
 		Animal selected = ClientManager.get().getAnimalManager().getSelectedAnimal();
 
+		if(selected == null) {
+			ErrorDialog.showError("Vous devez sélectionner un animal");
+			return;
+		}
+		
 		int dialogResult = JOptionPane.showConfirmDialog(
 			null,
 			"Etes-vous sûr de vouloir supprimer " + selected.getNomAnimal(),
@@ -110,10 +110,7 @@ public class ClientController implements MenuController {
 	public void editerAnimal() {
 		Animal selected = ClientManager.get().getAnimalManager().getSelectedAnimal();
 		if(selected == null) {
-			JOptionPane.showMessageDialog(null,
-				    "Vous devez selectionner un animal",
-				    "erreur",
-				    JOptionPane.WARNING_MESSAGE);
+			ErrorDialog.showError("Vous devez sélectionner un animal");
 		} else {
 			animalController.create(selected);
 		}
@@ -121,7 +118,6 @@ public class ClientController implements MenuController {
 
 	@Override
 	public void show() {
-		System.out.println("show clients");
 		clientFrame.setVisible(true);		
 	}
 
@@ -138,6 +134,4 @@ public class ClientController implements MenuController {
 	public ClientsFrame getClientsFrame() {
 		return clientFrame;
 	}
-
-
 }

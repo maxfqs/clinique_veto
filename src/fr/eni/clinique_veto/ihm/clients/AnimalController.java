@@ -5,11 +5,13 @@ import java.awt.event.ItemListener;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 import fr.eni.clinique_veto.bll.BLLException;
 import fr.eni.clinique_veto.bll.ClientManager;
 import fr.eni.clinique_veto.bll.EspecesManager;
 import fr.eni.clinique_veto.bo.Animal;
+import fr.eni.clinique_veto.ihm.ErrorDialog;
 
 public class AnimalController {
 	private static AnimalController instance;
@@ -129,7 +131,7 @@ public class AnimalController {
 		try {
 			ClientManager.get().getAnimalManager().addAnimal(a);
 		} catch (BLLException e) {
-			e.printStackTrace();
+			ErrorDialog.showError(e.getMessage());
 		}
 		destroy();
 	}
@@ -139,7 +141,7 @@ public class AnimalController {
 		try {
 			ClientManager.get().getAnimalManager().update(a);
 		} catch (BLLException e) {
-			e.printStackTrace();
+			ErrorDialog.showError(e.getMessage());
 		}
 		destroy();
 	}

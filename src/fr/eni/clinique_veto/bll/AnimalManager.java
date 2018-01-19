@@ -66,17 +66,15 @@ public class AnimalManager {
 		return retval;
 	}
 	
-	public void addAnimal(Animal a) throws BLLException{
-		
-			try {
-				validateAnimal(a);
-				animalDAO.insert(a);
-				animalList.add(a);
-				setSelectedAnimal(a);
-			} catch (DALException e) {
-				
-				e.printStackTrace();
-			}
+	public void addAnimal(Animal a) throws BLLException{		
+		try {
+			validateAnimal(a);
+			animalDAO.insert(a);
+			animalList.add(a);
+			setSelectedAnimal(a);
+		} catch (DALException e) {
+			throw new BLLException("Erreur lors de l'ajout d'un animal");
+		}
 	
 		fireUpdate();
 	}
