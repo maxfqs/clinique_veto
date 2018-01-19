@@ -38,7 +38,8 @@ public class EspecesManager {
 	}
 	
 	public static String[] getEspeces() {
-		return (String[]) especesMap.keySet().toArray();
+		String[] sa = new String[especesMap.size()];
+		return especesMap.keySet().toArray(sa);
 	}
 	
 	public static String[] getRacesForEspece(String espece) {
