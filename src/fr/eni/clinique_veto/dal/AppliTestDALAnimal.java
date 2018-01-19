@@ -11,9 +11,11 @@ public class AppliTestDALAnimal {
 		
 		AnimalDAO animalDAO = DAOFactory.getAnimalDAO();
 		
-		Animal a1 = new Animal("totiiii",'M',"noir","chien méchant","Chien",7	,null, null, false);
-		Animal a2 = new Animal("titi",'M',"noir","cheval méchant","Cheval",8,null, null, false);
-		Animal a3 = new Animal("tata",'F',"blanc","vache méchante","Vache",8,null, null, false);
+		Animal a1 = new Animal("totiiii",'M',"noir","chien méchant","Chien",1,null, null, false);
+		Animal a2 = new Animal("titi",'M',"noir","cheval méchant","Cheval",2,null, null, false);
+		Animal a3 = new Animal("tata",'F',"blanc","vache méchante","Vache",2,null, null, false);
+		Animal a4 = new Animal("maxF",'H',"blanc","chien méchant","Chien",3,null, null, false);
+		Animal a5 = new Animal("tata",'F',"blanc","vache méchante","Vache",3,null, null, false);
 		
 		System.out.println("Ajout des animaux:\n-----------------------------");
 		

@@ -1,12 +1,14 @@
 package fr.eni.clinique_veto.bo;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class RendezVous {
 	private Personnel pers;
 	private Date date;
 	private Animal animal;
-	
+	public RendezVous(){
+		
+	}
 	public RendezVous(Personnel pers, Date date, Animal animal) {
 		super();
 		this.pers = pers;
@@ -14,10 +16,13 @@ public class RendezVous {
 		this.animal = animal;
 	}
 	
+	
+	
 	@Override
 	public String toString() {
-		return "RendezVous [pers=" + pers + ", date=" + date + ", animal=" + animal + "]";
+		return "RendezVous [pers=" + pers + ", date=" + date + ", animal=" + animal +"]";
 	}
+	
 	
 	public Personnel getPers() {
 		return pers;
