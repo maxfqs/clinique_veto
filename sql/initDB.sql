@@ -49,6 +49,9 @@ insert into Personnels values('admin', 'admin', 'ADM', 0);
 -- Races
 insert into Races values('chien gentil', 'Chien');
 insert into Races values('chien méchant', 'Chien');
+insert into Races values('chien malin', 'Chien');
+insert into Races values('chien con-con', 'Chien');
+insert into Races values('chien pervers', 'Chien');
 insert into Races values('chat gentil', 'Chat');
 insert into Races values('chat méchant', 'Chat');
 insert into Races values('cheval gentil', 'Cheval');

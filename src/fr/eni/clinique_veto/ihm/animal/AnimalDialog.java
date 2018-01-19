@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -13,6 +14,7 @@ import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class AnimalDialog extends JDialog {
+	private JComboBox<String> especes, races;
 	private JTextField nom, couleur, tatoo;
 	
 	
@@ -30,6 +32,9 @@ public class AnimalDialog extends JDialog {
 		nom = new JTextField(15);
 		couleur = new JTextField(15);
 		tatoo = new JTextField(15);
+		
+		especes = new JComboBox<String>();
+		races = new JComboBox<String>();
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 5);
@@ -49,6 +54,18 @@ public class AnimalDialog extends JDialog {
 		container.add(new JLabel("Couleur: "), gbc);
 		gbc.gridx = 1;
 		container.add(couleur, gbc);
+		
+		// ESPECES RACES
+		gbc.gridx = 0;
+		gbc.gridy = row++;
+		container.add(new JLabel("Espèces: "), gbc);
+		gbc.gridx = 1;
+		container.add(especes, gbc);
+		gbc.gridx = 2;
+		container.add(new JLabel("Races: "), gbc);
+		gbc.gridx = 3;
+		container.add(races, gbc);
+		
 		
 		// TATOO
 		gbc.gridx = 0;
@@ -78,4 +95,6 @@ public class AnimalDialog extends JDialog {
 	public JTextField getNom() { return nom; }
 	public JTextField getCouleur() { return couleur; }
 	public JTextField getTatoo() { return tatoo; }
+	public JComboBox<String> getEspeces() {return especes; }
+	public JComboBox<String> getRaces() {return races; }
 }

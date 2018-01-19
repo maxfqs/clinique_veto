@@ -11,7 +11,8 @@ import fr.eni.clinique_veto.dal.DALException;
 import fr.eni.clinique_veto.dal.DAOFactory;
 
 public class EspecesManager {
-	private static Map<String,List<String>> especesMap;	
+	private static Map<String,List<String>> especesMap;
+	private static String[] especesArray;
 	private static AnimalDAO animalDAO;
 	
 	static {
@@ -38,8 +39,11 @@ public class EspecesManager {
 	}
 	
 	public static String[] getEspeces() {
+		if(especesArray != null) return especesArray;
+		
 		String[] sa = new String[especesMap.size()];
-		return especesMap.keySet().toArray(sa);
+		especesArray = especesMap.keySet().toArray(sa);
+		return especesArray;
 	}
 	
 	public static String[] getRacesForEspece(String espece) {
