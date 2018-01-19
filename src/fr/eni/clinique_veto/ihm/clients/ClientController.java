@@ -1,19 +1,23 @@
 package fr.eni.clinique_veto.ihm.clients;
 
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import fr.eni.clinique_veto.bll.BLLException;
 import fr.eni.clinique_veto.bll.ClientManager;
 import fr.eni.clinique_veto.bo.Animal;
+import fr.eni.clinique_veto.ihm.MenuController;
 
 
-public class ClientController {
+public class ClientController implements MenuController {
 	private static ClientController instance;
 	private AnimalController animalController;
-	
+	private ClientsFrame clientFrame;
 	
 	private ClientController() {
 		animalController = AnimalController.get();
+		clientFrame = new ClientsFrame();
+		hide();
 	}
 	
 	public static ClientController get() {
@@ -41,7 +45,7 @@ public class ClientController {
 
 	public void updateClient() {
 		try {
-			ClientManager.get().modifierClient(ClientsFrame.get().getClientInfos());
+			ClientManager.get().modifierClient(clientFrame.getClientInfos());
 		} catch (BLLException e) {
 			JOptionPane.showMessageDialog(null,
 				    e.getMessage(),
@@ -64,7 +68,7 @@ public class ClientController {
 		if(option == JOptionPane.YES_OPTION && ClientManager.get().getDisplayedClient()!= null) {
 			try {
 				ClientManager.get().supprimerClient();
-				ClientsFrame.get().resetFields();
+				clientFrame.resetFields();
 				ClientManager.get().setDisplayedClient(null);
 			} catch (BLLException e) {
 				JOptionPane.showMessageDialog(null,
@@ -77,7 +81,7 @@ public class ClientController {
 	}
 	
 	public void annuler() {
-		ClientsFrame.get().afficherClient(ClientManager.get().getDisplayedClient());
+		clientFrame.afficherClient(ClientManager.get().getDisplayedClient());
 	}
 
 	public void ajouterAnimal() {
@@ -90,8 +94,8 @@ public class ClientController {
 		int dialogResult = JOptionPane.showConfirmDialog(
 			null,
 			"Etes-vous sûr de vouloir supprimer " + selected.getNomAnimal(),
-			"Title on Box",
-			JOptionPane.YES_NO_OPTION
+			"Confirmation",
+			JOptionPane.WARNING_MESSAGE
 		);
 		
 		if(dialogResult == 0) {
@@ -104,9 +108,35 @@ public class ClientController {
 	}
 
 	public void editerAnimal() {
-		animalController.create(
-			ClientManager.get().getAnimalManager().getSelectedAnimal()
-		);
+		Animal selected = ClientManager.get().getAnimalManager().getSelectedAnimal();
+		if(selected == null) {
+			JOptionPane.showMessageDialog(null,
+				    "Vous devez selectionner un animal",
+				    "erreur",
+				    JOptionPane.WARNING_MESSAGE);
+		} else {
+			animalController.create(selected);
+		}
+	}
+
+	@Override
+	public void show() {
+		System.out.println("show clients");
+		clientFrame.setVisible(true);		
+	}
+
+	@Override
+	public void hide() {
+		clientFrame.setVisible(false);		
+	}
+
+	@Override
+	public JPanel getPanel() {
+		return clientFrame;
+	}
+	
+	public ClientsFrame getClientsFrame() {
+		return clientFrame;
 	}
 
 

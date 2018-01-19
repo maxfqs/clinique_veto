@@ -8,7 +8,6 @@ import java.awt.Insets;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -21,13 +20,11 @@ import fr.eni.clinique_veto.bo.Animal;
 import fr.eni.clinique_veto.bo.client.Client;
 
 @SuppressWarnings("serial")
-public class ClientsFrame extends JFrame implements AnimalObserver {
+public class ClientsFrame extends JPanel implements AnimalObserver {
 
 	private static final int FRAME_WIDTH = 800;
 	private static final int FRAME_HEIGHT = 600;
 	private static final int TEXTFIELD_WIDTH = 12;
-	
-	private static ClientsFrame instance;
 	
 	// containers principaux
 	private JPanel containerBtn;
@@ -61,22 +58,14 @@ public class ClientsFrame extends JFrame implements AnimalObserver {
 	JButton btnEditerAnimal;
 	
 	
-	private ClientsFrame() {
+	public ClientsFrame() {
 		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new BorderLayout());
 		this.initComponentClient();
 		this.initComponentAnimaux();
 		this.initListeners();
 	}
 	
-	public static ClientsFrame get() {
-		if(instance == null) {
-			instance = new ClientsFrame();
-		}
-		return instance;
-	}
-
 
 	private void initListeners() {
 		btnRechercheClt.addActionListener((e)-> ClientController.get().rechercheClient());

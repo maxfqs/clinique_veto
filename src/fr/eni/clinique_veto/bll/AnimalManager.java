@@ -10,7 +10,7 @@ import fr.eni.clinique_veto.bo.client.Client;
 import fr.eni.clinique_veto.dal.AnimalDAO;
 import fr.eni.clinique_veto.dal.DALException;
 import fr.eni.clinique_veto.dal.DAOFactory;
-import fr.eni.clinique_veto.ihm.clients.ClientsFrame;
+import fr.eni.clinique_veto.ihm.clients.ClientController;
 
 
 public class AnimalManager {
@@ -33,7 +33,7 @@ public class AnimalManager {
 		
 		this.client = client;
 		this.observers = new ArrayList<AnimalObserver>();
-		this.observers.add(ClientsFrame.get());
+		this.observers.add(ClientController.get().getClientsFrame());
 		try {
 			this.animalList = new ArrayList<Animal>();
 			
