@@ -19,7 +19,7 @@ public class AjoutClientController {
 	public void ajouterClient(Client c) throws BLLException, ClientDALException {
 		ClientManager.get().ajouterClient(c);
 		ClientManager.get().setDisplayedClient(c);
-		ClientsFrame.get().afficherClient(c);
+		ClientController.get().getClientsFrame().afficherClient(c);
 		AjoutClientFrame.get().setVisible(false);
 	}
 

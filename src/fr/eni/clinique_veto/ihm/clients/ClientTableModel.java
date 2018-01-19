@@ -7,6 +7,7 @@ import javax.swing.table.AbstractTableModel;
 
 import fr.eni.clinique_veto.bo.client.Client;
 
+@SuppressWarnings("serial")
 public class ClientTableModel extends AbstractTableModel {
 
 

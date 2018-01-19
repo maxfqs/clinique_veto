@@ -1,15 +1,26 @@
 package fr.eni.clinique_veto.ihm.clients;
 
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import fr.eni.clinique_veto.bll.BLLException;
 import fr.eni.clinique_veto.bll.ClientManager;
+import fr.eni.clinique_veto.bo.Animal;
+import fr.eni.clinique_veto.ihm.ErrorDialog;
+import fr.eni.clinique_veto.ihm.MenuController;
 
 
-public class ClientController {
-
+public class ClientController implements MenuController {
 	private static ClientController instance;
-
+	private AnimalController animalController;
+	private ClientsFrame clientFrame;
+	
+	private ClientController() {
+		animalController = AnimalController.get();
+		clientFrame = new ClientsFrame();
+		hide();
+	}
+	
 	public static ClientController get() {
 		if (instance == null) {
 			instance = new ClientController();
@@ -35,12 +46,9 @@ public class ClientController {
 
 	public void updateClient() {
 		try {
-			ClientManager.get().modifierClient(ClientsFrame.get().getClientInfos());
+			ClientManager.get().modifierClient(clientFrame.getClientInfos());
 		} catch (BLLException e) {
-			JOptionPane.showMessageDialog(null,
-				    e.getMessage(),
-				    "erreur",
-				    JOptionPane.WARNING_MESSAGE);
+			ErrorDialog.showError(e.getMessage());
 		}
 	}
 
@@ -58,39 +66,72 @@ public class ClientController {
 		if(option == JOptionPane.YES_OPTION && ClientManager.get().getDisplayedClient()!= null) {
 			try {
 				ClientManager.get().supprimerClient();
-				ClientsFrame.get().resetFields();
+				clientFrame.resetFields();
 				ClientManager.get().setDisplayedClient(null);
 			} catch (BLLException e) {
-				JOptionPane.showMessageDialog(null,
-					    e.getMessage(),
-					    "erreur",
-					    JOptionPane.WARNING_MESSAGE);
+				ErrorDialog.showError(e.getMessage());
 			}
 		}
 	
 	}
 	
 	public void annuler() {
-		ClientsFrame.get().afficherClient(ClientManager.get().getDisplayedClient());
+		clientFrame.afficherClient(ClientManager.get().getDisplayedClient());
 	}
 
 	public void ajouterAnimal() {
-		if (!AnimalFrame.get().isVisible()) {
-			AnimalFrame.get().setVisible(true);
-		}
-		System.out.println("ajouter animal");
+		animalController.create();
 	}
 
 	public void supprimerAnimal() {
-		System.out.println("supprime animal");
+		Animal selected = ClientManager.get().getAnimalManager().getSelectedAnimal();
+
+		if(selected == null) {
+			ErrorDialog.showError("Vous devez sélectionner un animal");
+			return;
+		}
+		
+		int dialogResult = JOptionPane.showConfirmDialog(
+			null,
+			"Etes-vous sûr de vouloir supprimer " + selected.getNomAnimal(),
+			"Confirmation",
+			JOptionPane.WARNING_MESSAGE
+		);
+		
+		if(dialogResult == 0) {
+			try {
+				ClientManager.get().getAnimalManager().archiver(selected.getCodeAnimal());
+			} catch (BLLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void editerAnimal() {
-		if (!AnimalFrame.get().isVisible()) {
-			AnimalFrame.get().setVisible(true);
+		Animal selected = ClientManager.get().getAnimalManager().getSelectedAnimal();
+		if(selected == null) {
+			ErrorDialog.showError("Vous devez sélectionner un animal");
+		} else {
+			animalController.create(selected);
 		}
-		System.out.println("Ã©diter animal");
 	}
 
+	@Override
+	public void show() {
+		clientFrame.setVisible(true);		
+	}
 
+	@Override
+	public void hide() {
+		clientFrame.setVisible(false);		
+	}
+
+	@Override
+	public JPanel getPanel() {
+		return clientFrame;
+	}
+	
+	public ClientsFrame getClientsFrame() {
+		return clientFrame;
+	}
 }

@@ -29,15 +29,7 @@ public class ClientManager {
 
 	private ClientManager() {
 		dao = DAOFactory.getClientDAO();
-		try {
-			animalManager = new AnimalManager();
-		} catch (BLLException e) {
-			JOptionPane.showMessageDialog(null,
-				    "Erreur lors de l'initialisation du programme, veuillez contacter l'administrateur",
-				    "fatal error",
-				    JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
-		}
+
 	}
 	
 	public static ClientManager get() {
@@ -63,7 +55,7 @@ public class ClientManager {
 	}
 	
 	public List<Animal> getAnimauxDisplayedClient(){
-		return animalManager.getAnimalsByClient(displayedClient.getCodeClient());
+		return animalManager.getAnimals();
 	}
 	
 	public List<Client> getClients() {
@@ -146,6 +138,15 @@ public class ClientManager {
 
 	public void setDisplayedClient(Client displayedClient) {
 		this.displayedClient = displayedClient;
+		try {
+			animalManager = new AnimalManager(displayedClient);
+		} catch (BLLException e) {
+			JOptionPane.showMessageDialog(null,
+				    "Erreur lors de l'initialisation du programme, veuillez contacter l'administrateur",
+				    "fatal error",
+				    JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
 	}
 	
 	public AnimalManager getAnimalManager() {

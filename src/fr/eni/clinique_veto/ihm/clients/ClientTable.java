@@ -8,6 +8,7 @@ import javax.swing.ListSelectionModel;
 
 import fr.eni.clinique_veto.bo.client.Client;
 
+@SuppressWarnings("serial")
 public class ClientTable extends JTable {
 
 

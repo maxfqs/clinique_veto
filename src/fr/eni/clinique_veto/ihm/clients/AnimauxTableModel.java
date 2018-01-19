@@ -7,6 +7,7 @@ import javax.swing.table.AbstractTableModel;
 import fr.eni.clinique_veto.bo.Animal;
 
 
+@SuppressWarnings("serial")
 public class AnimauxTableModel extends AbstractTableModel {
 
 

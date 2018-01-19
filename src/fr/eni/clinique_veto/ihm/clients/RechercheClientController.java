@@ -45,8 +45,8 @@ public class RechercheClientController {
 	public void afficherClient()throws BLLException {
 		if( ClientManager.get().getDisplayedClient() != null) {
 			RechercheFrame.get().setVisible(false);
-			ClientsFrame.get().afficherClient(ClientManager.get().getDisplayedClient());
-			ClientsFrame.get().afficherAnimaux(ClientManager.get().getAnimauxDisplayedClient());
+			ClientController.get().getClientsFrame().afficherClient(ClientManager.get().getDisplayedClient());
+			ClientController.get().getClientsFrame().afficherAnimaux(ClientManager.get().getAnimauxDisplayedClient());
 		}else {
 			throw new BLLException("il n'y a pas d'élément sélectionné.");
 		}
