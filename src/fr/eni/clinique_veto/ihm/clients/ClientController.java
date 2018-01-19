@@ -4,12 +4,18 @@ import javax.swing.JOptionPane;
 
 import fr.eni.clinique_veto.bll.BLLException;
 import fr.eni.clinique_veto.bll.ClientManager;
+import fr.eni.clinique_veto.ihm.animal.AnimalController;
 
 
 public class ClientController {
-
 	private static ClientController instance;
-
+	private AnimalController animalController;
+	
+	
+	private ClientController() {
+		animalController = AnimalController.get();
+	}
+	
 	public static ClientController get() {
 		if (instance == null) {
 			instance = new ClientController();
@@ -75,10 +81,7 @@ public class ClientController {
 	}
 
 	public void ajouterAnimal() {
-		if (!AnimalFrame.get().isVisible()) {
-			AnimalFrame.get().setVisible(true);
-		}
-		System.out.println("ajouter animal");
+		animalController.create();
 	}
 
 	public void supprimerAnimal() {
@@ -86,10 +89,9 @@ public class ClientController {
 	}
 
 	public void editerAnimal() {
-		if (!AnimalFrame.get().isVisible()) {
-			AnimalFrame.get().setVisible(true);
-		}
-		System.out.println("éditer animal");
+		animalController.create(
+			ClientManager.get().getAnimalManager().getSelectedAnimal()
+		);
 	}
 
 

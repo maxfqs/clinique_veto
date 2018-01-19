@@ -2,6 +2,7 @@ package fr.eni.clinique_veto.bll;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class AnimalManager {
 	private Client client;
 	private List<Animal> animalList;
 	private List<AnimalObserver> observers;
-	private Animal animalSelected;
+	private Animal selectedAnimal;
 	
 	static {
 		animalDAO = DAOFactory.getAnimalDAO();
@@ -72,7 +73,7 @@ public class AnimalManager {
 				validateAnimal(a);
 				animalDAO.insert(a);
 				animalList.add(a);
-				this.animalSelected = animalList.get(animalList.size()-1);
+				setSelectedAnimal(a);
 			} catch (DALException e) {
 				
 				e.printStackTrace();
@@ -118,8 +119,17 @@ public class AnimalManager {
 		}
 	}
 	
+	public void setSelectedAnimal(Animal a) {
+		if(animalList.contains(a)) {
+			selectedAnimal = a;
+			System.out.println("Selected animal = " + a.getNomAnimal());
+		}
+	}
 	
-	@SuppressWarnings("unlikely-arg-type")
+	public Animal getSelectedAnimal() {
+		return selectedAnimal;
+	}
+	
 	private void validateAnimal(Animal a) throws BLLException{
 		String error = "Erreur � la validation de l'animal: ";
 	
@@ -135,11 +145,12 @@ public class AnimalManager {
 			throw new BLLException(error + "Race invalide");
 		}
 		
-//		if(!Arrays.asList(Animal.SEXE).contains(a.getSexe())) {
-//			throw new BLLException(error + "Sexe invalide");
-//		}
+		for (int i = 0; i < Animal.SEXE.length; i++) {
+			if(a.getSexe() == Animal.SEXE[i]) return;			
+		}
+		
+		throw new BLLException(error + "Sexe invalide");
 	}
-
 	
 	public void registerObserver(AnimalObserver ao) {
 		observers.add(ao);

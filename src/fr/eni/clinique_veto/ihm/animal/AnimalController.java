@@ -6,10 +6,10 @@ import java.awt.event.ItemListener;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
+import fr.eni.clinique_veto.bll.BLLException;
+import fr.eni.clinique_veto.bll.ClientManager;
 import fr.eni.clinique_veto.bll.EspecesManager;
 import fr.eni.clinique_veto.bo.Animal;
-import fr.eni.clinique_veto.bo.client.Client;
-import fr.eni.clinique_veto.ihm.IHMException;
 
 public class AnimalController {
 	private static AnimalController instance;
@@ -24,22 +24,21 @@ public class AnimalController {
 		return instance;
 	}
 	
-	public void create(Client client, Animal animal) throws IHMException {
-		if(animal == null) {
-			throw new IHMException("Erreur à la création, animal est null");
-		}
-
-		selectedAnimal = animal;
-		
-		if(dialog == null) {
-			dialog = new AnimalDialog();
-			
-			initCbox();
-			displayAnimal(animal);
-
-			dialog.setVisible(true);			
-		}
+	public void create() {
+		dialog = new AnimalDialog(true);
+		initCbox();
+		initDisplay(null);
+		dialog.setVisible(true);
 	}
+	
+	public void create(Animal a) {
+		selectedAnimal = a;
+		dialog = new AnimalDialog(false);
+		initCbox();
+		initDisplay(a);
+		dialog.setVisible(true);
+	}
+
 
 	public void destroy() {
 		if(dialog != null) {
@@ -50,14 +49,23 @@ public class AnimalController {
 		}
 	}
 	
-	private void displayAnimal(Animal a) {
-		dialog.getClient().setText("Pas encore implémenter");
-		dialog.getNom().setText(a.getNomAnimal());
-		dialog.getCouleur().setText(a.getCouleur());
-		dialog.getTatoo().setText(a.getTatouage());
-		dialog.getEspeces().setSelectedItem(a.getEspece());
-		dialog.getRaces().setSelectedItem(a.getRace());
-		dialog.getSexes().setSelectedItem(Character.toString(a.getSexe()));
+	private void initDisplay(Animal a) {
+		dialog.getClient().setText(
+				ClientManager.get().getDisplayedClient().getNomClient()
+		);
+		
+		dialog.getSexes().setSelectedIndex(1);
+		dialog.getEspeces().setSelectedIndex(1);
+		dialog.getRaces().setSelectedIndex(1);
+		
+		if(a != null) {
+			dialog.getNom().setText(a.getNomAnimal());
+			dialog.getCouleur().setText(a.getCouleur());
+			dialog.getTatoo().setText(a.getTatouage());
+			dialog.getEspeces().setSelectedItem(a.getEspece());
+			dialog.getRaces().setSelectedItem(a.getRace());
+			dialog.getSexes().setSelectedItem(Character.toString(a.getSexe()));
+		}
 	}
 	
 	private void initCbox() {
@@ -91,27 +99,48 @@ public class AnimalController {
 		dialog.getSexes().setModel(sModel);
 	}	
 	
-//	private Animal getAnimal() {
-//		return new Animal(
-//			selectedAnimal.getCodeAnimal(), 
-//			dialog.getNom().getText(),
-//			selectedAnimal.getSexe(),
-//			dialog.getCouleur().getText(),
-//			selectedAnimal.getRace(), 
-//			selectedAnimal.getEspece(),
-//			selectedClient.getCodeClient(),
-//			dialog.getTatoo().getText(),
-//			selectedAnimal.getAntecedents(),
-//			false);
-//		
-//		return null;
-//	}
+	private Animal getAnimal() {
+		Animal a = new Animal();
+		
+		a.setCodeClient(
+			ClientManager.get().getDisplayedClient().getCodeClient()
+		);
+		
+		a.setNomAnimal(dialog.getNom().getText());
+		a.setCouleur(dialog.getCouleur().getText());
+		a.setTatouage(dialog.getTatoo().getText());
+		a.setEspece((String) dialog.getEspeces().getSelectedItem());
+		a.setRace((String) dialog.getRaces().getSelectedItem());
+		a.setSexe(
+			((String) dialog.getSexes().getSelectedItem()).charAt(0)
+		);
+		
+		if(selectedAnimal != null) {
+			a.setCodeAnimal(selectedAnimal.getCodeAnimal());
+			a.setAntecedents(selectedAnimal.getAntecedents());
+		}
+		
+		return a;
+	}
 	
-	public void valid() {
-		if(dialog == null) return;
-		
-		// Client doit retourner son animal manager
-		
+	
+	public void addAnimal() {
+		Animal a = getAnimal();
+		try {
+			ClientManager.get().getAnimalManager().addAnimal(a);
+		} catch (BLLException e) {
+			e.printStackTrace();
+		}
+		destroy();
+	}
+	
+	public void updateAnimal() {
+		Animal a = getAnimal();
+		try {
+			ClientManager.get().getAnimalManager().update(a);
+		} catch (BLLException e) {
+			e.printStackTrace();
+		}
 		destroy();
 	}
 	

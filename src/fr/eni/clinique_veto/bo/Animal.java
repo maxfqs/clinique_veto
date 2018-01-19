@@ -18,6 +18,10 @@ public class Animal {
 	private String tatouage;
 	private String antecedents;
 	
+	public Animal() {
+		
+	}
+	
 	public Animal(int codeAnimal, String nomAnimal, char sexe, String couleur, String race, String espece, int codeClient, String tatouage, 
 			String antecedents, boolean archive) {
 		super();

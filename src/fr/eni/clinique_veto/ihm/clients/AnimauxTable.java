@@ -5,8 +5,12 @@ import java.util.List;
 
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
+import fr.eni.clinique_veto.bll.ClientManager;
 import fr.eni.clinique_veto.bo.Animal;
+import fr.eni.clinique_veto.ihm.personnel.PersonnelController;
 
 
 public class AnimauxTable extends JTable {
@@ -41,7 +45,17 @@ public class AnimauxTable extends JTable {
 	
 		
 		this.setRowHeight(30);
-
+		
+		getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				int row = getSelectedRow();
+				
+				if(!e.getValueIsAdjusting() && row > -1) {
+					ClientManager.get().getAnimalManager().setSelectedAnimal(list.get(row));
+				}
+			}
+		});
 	}
 
 	public AnimauxTableModel getModelTable() {

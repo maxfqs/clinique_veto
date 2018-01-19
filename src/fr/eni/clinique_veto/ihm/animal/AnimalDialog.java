@@ -20,7 +20,7 @@ public class AnimalDialog extends JDialog {
 	private JTextField nom, couleur, tatoo;
 	private JLabel client;
 	
-	public AnimalDialog() {
+	public AnimalDialog(boolean isAddDialog) {
 		setSize(500, 300);
 		setLocationRelativeTo(null);
 		setAlwaysOnTop(true);
@@ -91,10 +91,16 @@ public class AnimalDialog extends JDialog {
 		
 		// ACTION BUTTONS
 		JButton cancel = new JButton("Annuler");
-		JButton valid = new JButton("Valider");
-		
 		cancel.addActionListener((e) -> controller.destroy());
-		valid.addActionListener((e) -> controller.valid());
+		
+		JButton valid;		
+		if(isAddDialog) {
+			valid = new JButton("Ajouter");
+			valid.addActionListener((e) -> controller.addAnimal());
+		} else {
+			valid = new JButton("Enregistrer");
+			valid.addActionListener((e) -> controller.updateAnimal());
+		}
 		
 		gbc.gridwidth = 2;
 		gbc.gridx = 0;

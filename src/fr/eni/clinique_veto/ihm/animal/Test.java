@@ -6,13 +6,13 @@ import fr.eni.clinique_veto.ihm.IHMException;
 
 public class Test {
 	public static void main(String[] args) {
-		try {
-			AnimalController ac = AnimalController.get();
-			Animal anm = new Animal(0, "Firas", 'F', "Bleu", "chien méchant", "Chien", 8, null, null, false);
-			Client c = null;
-			ac.create(c, anm);
-		} catch (IHMException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			AnimalController ac = AnimalController.get();
+//			Animal anm = new Animal(0, "Firas", 'F', "Bleu", "chien méchant", "Chien", 8, null, null, false);
+//			Client c = null;
+////			ac.create(c, anm);
+//		} catch (IHMException e) {
+//			e.printStackTrace();
+//		}
 	}
 }
