@@ -1,4 +1,4 @@
-package fr.eni.clinique_veto.ihm.animal;
+package fr.eni.clinique_veto.ihm.clients;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;

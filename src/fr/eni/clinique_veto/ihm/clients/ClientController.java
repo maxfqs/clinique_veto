@@ -4,7 +4,6 @@ import javax.swing.JOptionPane;
 
 import fr.eni.clinique_veto.bll.BLLException;
 import fr.eni.clinique_veto.bll.ClientManager;
-import fr.eni.clinique_veto.ihm.animal.AnimalController;
 
 
 public class ClientController {

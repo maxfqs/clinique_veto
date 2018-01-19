@@ -1,4 +1,4 @@
-package fr.eni.clinique_veto.ihm.animal;
+package fr.eni.clinique_veto.ihm.clients;
 
 import java.awt.Dialog;
 import java.awt.GridBagConstraints;
@@ -11,8 +11,6 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import fr.eni.clinique_veto.bo.Animal;
 
 @SuppressWarnings("serial")
 public class AnimalDialog extends JDialog {

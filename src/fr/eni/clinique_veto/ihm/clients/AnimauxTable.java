@@ -10,9 +10,9 @@ import javax.swing.event.ListSelectionListener;
 
 import fr.eni.clinique_veto.bll.ClientManager;
 import fr.eni.clinique_veto.bo.Animal;
-import fr.eni.clinique_veto.ihm.personnel.PersonnelController;
 
 
+@SuppressWarnings("serial")
 public class AnimauxTable extends JTable {
 
 	public static final int COL_NUM = 0;

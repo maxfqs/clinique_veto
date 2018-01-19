@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -21,6 +20,7 @@ import fr.eni.clinique_veto.bll.ClientManager;
 import fr.eni.clinique_veto.bo.Animal;
 import fr.eni.clinique_veto.bo.client.Client;
 
+@SuppressWarnings("serial")
 public class ClientsFrame extends JFrame implements AnimalObserver {
 
 	private static final int FRAME_WIDTH = 800;
