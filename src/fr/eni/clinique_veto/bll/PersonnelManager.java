@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 import fr.eni.clinique_veto.bo.Personnel;
+import fr.eni.clinique_veto.bo.PersonnelRole;
 import fr.eni.clinique_veto.dal.DALException;
 import fr.eni.clinique_veto.dal.DAOFactory;
 import fr.eni.clinique_veto.dal.PersonnelDAO;
@@ -100,10 +101,11 @@ public class PersonnelManager {
 	}
 
 	
-	private void validatePersonnel(Personnel p) throws BLLException{
-		if(p.getRole() == null || !Arrays.asList(Personnel.ROLES).contains(p.getRole()) ) {
+	private void validatePersonnel(Personnel p) throws BLLException{		
+		String role = p.getRole();		
+		if(role == null || !PersonnelRole.isValidRole(role) ) {
 			throw new BLLException(BLLError.INVALID_PERSONNEL_ROLE);
-		}		
+		}
 	}	
 	
 	public void registerObserver(ManagerListObserver o) {

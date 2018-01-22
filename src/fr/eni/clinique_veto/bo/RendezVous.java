@@ -1,11 +1,13 @@
 package fr.eni.clinique_veto.bo;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class RendezVous {
 	private Personnel pers;
 	private Date date;
 	private Animal animal;
+	private String hour;
 	public RendezVous(){
 		
 	}
@@ -14,9 +16,19 @@ public class RendezVous {
 		this.pers = pers;
 		this.date = date;
 		this.animal = animal;
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(this.date);
+		int hour =  cal.get(cal.HOUR_OF_DAY);
+		int minutes = cal.get(cal.MINUTE);
+		this.hour = hour+"h"+minutes;
 	}
 	
-	
+	public String getHour(){
+		
+	return this.hour;
+	}
+
 	
 	@Override
 	public String toString() {
