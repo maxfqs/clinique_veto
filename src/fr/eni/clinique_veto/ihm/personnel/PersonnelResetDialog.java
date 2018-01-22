@@ -1,12 +1,10 @@
 package fr.eni.clinique_veto.ihm.personnel;
 
-import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -24,7 +22,7 @@ public class PersonnelResetDialog extends JDialog {
 		setAlwaysOnTop(true);
 		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		
-		String title = "Réinitialiser le mot de passe de " + 
+		String title = "Rï¿½initialiser le mot de passe de " + 
 				PersonnelController.get().getSelectedPersonnel().getNom();
 		
 		
