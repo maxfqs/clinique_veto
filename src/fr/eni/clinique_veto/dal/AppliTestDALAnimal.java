@@ -11,9 +11,11 @@ public class AppliTestDALAnimal {
 		
 		AnimalDAO animalDAO = DAOFactory.getAnimalDAO();
 		
-		Animal a1 = new Animal("totiiii",'M',"noir","chien méchant","Chien",7	,null, null, false);
-		Animal a2 = new Animal("titi",'M',"noir","cheval méchant","Cheval",8,null, null, false);
-		Animal a3 = new Animal("tata",'F',"blanc","vache méchante","Vache",8,null, null, false);
+		Animal a1 = new Animal("totiiii",'M',"noir","chien m�chant","Chien",1,null, null, false);
+		Animal a2 = new Animal("titi",'M',"noir","cheval m�chant","Cheval",2,null, null, false);
+		Animal a3 = new Animal("tata",'F',"blanc","vache m�chante","Vache",2,null, null, false);
+		Animal a4 = new Animal("maxF",'H',"blanc","chien m�chant","Chien",3,null, null, false);
+		Animal a5 = new Animal("tata",'F',"blanc","vache m�chante","Vache",3,null, null, false);
 		
 		System.out.println("Ajout des animaux:\n-----------------------------");
 		
@@ -45,6 +47,11 @@ public class AppliTestDALAnimal {
 		
 		System.out.println("\nLa liste des animaux du client a2 :\n------------------------");
 		afficherListAnimaux(li);
+		
+		System.out.println("\nTrouver un animal par son codeAnimal\n------------------------------");
+		System.out.println("Je cherche le nom de l'animal dont le code = 4");
+		String nomAnimal = animalDAO.getAnimalById(4).getNomAnimal();
+		System.out.println("le nom de l'animal est: " + nomAnimal);
 	}
 	
 	public static void afficherListAnimaux(List<Animal> li){

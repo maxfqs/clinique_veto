@@ -144,6 +144,7 @@ public class Client {
 		this.archive = archive;
 	}
 
+	
 	@Override
 	public String toString() {
 		return "Client [codeClient=" + codeClient + ", nomClient=" + nomClient + ", prenomClient=" + prenomClient

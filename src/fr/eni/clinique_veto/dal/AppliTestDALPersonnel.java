@@ -11,18 +11,24 @@ public class AppliTestDALPersonnel {
 		
 		PersonnelDAO personnelDAO = DAOFactory.getPersonnelDAO();
 		
-		Personnel p1 = new Personnel("pers1", "passe1", "SEC", false);
+		Personnel p1 = new Personnel("pers1", "passe1", "VET", false);
 		Personnel p2 = new Personnel("pers2", "passe2", "VET", false);
-		Personnel p3 = new Personnel("pers3", "passe3", "ASS", false);
+		Personnel p3 = new Personnel("pers3", "passe3", "SEC", false);
+		Personnel p4 = new Personnel("pers4", "passe4", "ASS", false);
+		Personnel p5 = new Personnel("pers5", "passe5", "SEC", false);
 		
 		System.out.println("Ajout des personnels... ");
 		
 		personnelDAO.insert(p1);
 		System.out.println("Ajuot de personnel " + p1.getNom());
 		personnelDAO.insert(p2);
-		System.out.println("Ajuot de personnel " + p1.getNom());
+		System.out.println("Ajuot de personnel " + p2.getNom());
 		personnelDAO.insert(p3);
-		System.out.println("Ajuot de personnel " + p1.getNom());
+		System.out.println("Ajuot de personnel " + p3.getNom());
+		personnelDAO.insert(p4);
+		System.out.println("Ajuot de personnel " + p4.getNom());
+		personnelDAO.insert(p5);
+		System.out.println("Ajuot de personnel " + p5.getNom());
 		
 		System.out.println("\nAffichage de la base de donn�e\n----------------------");
 		afficherPersonnels(personnelDAO);
@@ -38,7 +44,7 @@ public class AppliTestDALPersonnel {
 		System.out.println("Le mot de passe de l'utilisateur " + p1.getNom() + " a été initialisé");
 		System.out.println("\nSupprimer un personnel\n-----------------------");
 		try {
-			personnelDAO.delete(p2);
+			personnelDAO.delete(p5);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

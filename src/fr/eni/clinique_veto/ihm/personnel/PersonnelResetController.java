@@ -4,6 +4,7 @@ import fr.eni.clinique_veto.bll.BLLException;
 import fr.eni.clinique_veto.bll.PersonnelManager;
 import fr.eni.clinique_veto.bo.Personnel;
 import fr.eni.clinique_veto.ihm.DialogController;
+import fr.eni.clinique_veto.ihm.ErrorDialog;
 
 public class PersonnelResetController implements DialogController {
 	private static PersonnelResetController instance;
@@ -47,7 +48,7 @@ public class PersonnelResetController implements DialogController {
 		try {
 			PersonnelManager.get().updatePassword(p);
 		} catch (BLLException e) {
-			e.printStackTrace();
+			ErrorDialog.showError(e.getError(), prd);
 		}
 		
 		destroy();

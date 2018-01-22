@@ -31,7 +31,7 @@ public class PersonnelAddDialog extends JDialog {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridwidth = 2;
-		container.add(new JLabel("Cr�ation d'un personnel"), gbc);
+		container.add(new JLabel("Création d'un personnel"), gbc);
 		
 		gbc.gridwidth = 1;
 		

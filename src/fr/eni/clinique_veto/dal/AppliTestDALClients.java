@@ -13,12 +13,13 @@ public class AppliTestDALClients {
 	List<Client> listeClients = new ArrayList<Client>();
 	
 	Client c1 = new Client("MaxDef", "prenomClient1", "adresse1", "adresse2", "50505", "ville1", "numTel215", "assurance", "email@gmail.com", "remarque",0);
-	Client c2 = new Client("nomClient2", "prenomClient2", "adresse2", "adresse3", "50505", "ville1", "numTel215", "assurance", "email2@gmail.com", "remarque2",0);
-
+	Client c2 = new Client("nomClient2", "prenomClient2", "adresse2", "adresse3", "50505", "ville1", "numTel216", "assurance", "email2@gmail.com", "remarque2",0);
+	Client c3 = new Client("nomClient3", "prenomClient3", "adresse1", "adresse2", "50505", "ville3", "numTel217", "assurance", "email3@gmail.com", "remarque3",0);
+	
 	try {
 		dao.ajouterClient(c1);
 		dao.ajouterClient(c2);
-
+		dao.ajouterClient(c3);
 	
 		listeClients = dao.trouverParNom("Max");
 		Client clientRecupere = null;

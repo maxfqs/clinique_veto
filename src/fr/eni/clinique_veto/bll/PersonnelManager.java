@@ -2,6 +2,7 @@ package fr.eni.clinique_veto.bll;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -67,7 +68,7 @@ public class PersonnelManager {
 			personnelDAO.insert(p);
 			personnelList.add(p);
 		} catch (DALException e) {
-			throw new BLLException("Erreur lors de l'ajout d'un personnel");
+			throw new BLLException(BLLError.FAILED_PERSONNEL_ADD);
 		}
 		
 		fireUpdate();
@@ -88,19 +89,21 @@ public class PersonnelManager {
 	
 	private void update(Personnel p) throws BLLException {
 		if(!personnelList.contains(p)) {
-			throw new BLLException("Impossible de maj ce personnel");
+			throw new BLLException(BLLError.FAILED_PERSONNEL_UPDATE);
 		}		
 		
 		try {
 			personnelDAO.update(p);
 		} catch (DALException | SQLException e) {
-			throw new BLLException("Impossible de maj ce personnel");
+			throw new BLLException(BLLError.FAILED_PERSONNEL_UPDATE);
 		}
 	}
 
 	
 	private void validatePersonnel(Personnel p) throws BLLException{
-		// R�gles m�tiers � coder.
+		if(p.getRole() == null || !Arrays.asList(Personnel.ROLES).contains(p.getRole()) ) {
+			throw new BLLException(BLLError.INVALID_PERSONNEL_ROLE);
+		}		
 	}	
 	
 	public void registerObserver(ManagerListObserver o) {
