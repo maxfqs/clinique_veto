@@ -45,7 +45,7 @@ public class AnimalManager {
 			}
 			
 		} catch (DALException | SQLException e) {
-			throw new BLLException("Erreur lors de l'initialisation du AnimalManager");
+			throw new BLLException(BLLError.DATABASE_ERROR);
 		}
 	}
 	
