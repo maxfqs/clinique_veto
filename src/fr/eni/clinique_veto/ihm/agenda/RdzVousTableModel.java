@@ -38,9 +38,9 @@ public class RdzVousTableModel extends AbstractTableModel {
 
 
 	// A REVOIR objet rendez vous pour données de la table
-//	@Override
-//	public Object getValueAt(int rowIndex, int columnIndex) {
-//		Object val = null;
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		Object val = null;
 //		switch (columnIndex) {
 //		case RdzVousTable.COL_HEURE:
 //			val = listeRdzVous.get(rowIndex).get;
@@ -56,8 +56,8 @@ public class RdzVousTableModel extends AbstractTableModel {
 //			break;
 //		
 //		}
-//		return val;
-//	}
+		return val;
+	}
 
 
 }
