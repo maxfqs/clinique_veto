@@ -4,6 +4,7 @@ import fr.eni.clinique_veto.bll.BLLException;
 import fr.eni.clinique_veto.bll.PersonnelManager;
 import fr.eni.clinique_veto.bo.Personnel;
 import fr.eni.clinique_veto.ihm.DialogController;
+import fr.eni.clinique_veto.ihm.ErrorDialog;
 
 public class PersonnelAddController implements DialogController {
 	public static PersonnelAddController instance;
@@ -47,7 +48,7 @@ public class PersonnelAddController implements DialogController {
 			PersonnelManager.get().addPersonnel(p);
 			destroy();
 		} catch (BLLException e) {
-			e.printStackTrace();
+			ErrorDialog.showError(e.getError(), paf);
 		}		
 	}
 }
