@@ -68,4 +68,21 @@ public class DAOFactory {
 		}
 		return AnimalDAO; 
 	}
+	
+	public static RendezVousDAO getRendezVousDAO()  {
+		RendezVousDAO rendezVousDAO = null;
+		try {
+			rendezVousDAO=(RendezVousDAO ) Class.forName("fr.eni.clinique_veto.dal.jdbc.RendezVousDAOJdbcImpl").newInstance();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return rendezVousDAO; 
+	}
 }
