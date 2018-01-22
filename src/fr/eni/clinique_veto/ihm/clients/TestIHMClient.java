@@ -18,6 +18,9 @@ public class TestIHMClient {
 //		
 //		RechercheFrame rframe = new RechercheFrame();
 //		rframe.setVisible(true);
+		
+		DossierMedicalDialog dmDial = new DossierMedicalDialog();
+		dmDial.setVisible(true);
 	}
 
 }
