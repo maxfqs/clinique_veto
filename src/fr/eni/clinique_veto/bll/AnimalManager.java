@@ -18,7 +18,7 @@ public class AnimalManager {
 	
 	private Client client;
 	private List<Animal> animalList;
-	private List<AnimalObserver> observers;
+	private List<ManagerListObserver> observers;
 	private Animal selectedAnimal;
 	
 	static {
@@ -32,7 +32,7 @@ public class AnimalManager {
 		}
 		
 		this.client = client;
-		this.observers = new ArrayList<AnimalObserver>();
+		this.observers = new ArrayList<ManagerListObserver>();
 		this.observers.add(ClientController.get().getClientsFrame());
 		try {
 			this.animalList = new ArrayList<Animal>();
@@ -150,11 +150,11 @@ public class AnimalManager {
 		throw new BLLException(error + "Sexe invalide");
 	}
 	
-	public void registerObserver(AnimalObserver ao) {
-		observers.add(ao);
+	public void registerObserver(ManagerListObserver o) {
+		observers.add(o);
 	}
 	
 	private void fireUpdate() {
-		for(AnimalObserver ao : observers) ao.onListUpdated();
+		for(ManagerListObserver o : observers) o.onListUpdated();
 	}
 }

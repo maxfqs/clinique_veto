@@ -15,10 +15,10 @@ public class PersonnelManager {
 	private static PersonnelManager instance;
 	private PersonnelDAO personnelDAO;
 	private List<Personnel> personnelList;
-	private List<PersonnelObserver> observers;
+	private List<ManagerListObserver> observers;
 	
 	private PersonnelManager() throws BLLException {		
-		observers = new ArrayList<PersonnelObserver>();
+		observers = new ArrayList<ManagerListObserver>();
 		
 		try {
 			personnelDAO = DAOFactory.getPersonnelDAO();
@@ -100,14 +100,14 @@ public class PersonnelManager {
 
 	
 	private void validatePersonnel(Personnel p) throws BLLException{
-		// Règles métiers à coder.
+		// Rï¿½gles mï¿½tiers ï¿½ coder.
 	}	
 	
-	public void registerObserver(PersonnelObserver po) {
-		observers.add(po);
+	public void registerObserver(ManagerListObserver o) {
+		observers.add(o);
 	}
 	
 	private void fireUpdate() {
-		for(PersonnelObserver po : observers) po.onListUpdated();
+		for(ManagerListObserver o : observers) o.onListUpdated();
 	}
 }

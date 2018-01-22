@@ -2,12 +2,12 @@ package fr.eni.clinique_veto.ihm.personnel;
 
 import javax.swing.JPanel;
 
+import fr.eni.clinique_veto.bll.ManagerListObserver;
 import fr.eni.clinique_veto.bll.PersonnelManager;
-import fr.eni.clinique_veto.bll.PersonnelObserver;
 import fr.eni.clinique_veto.bo.Personnel;
 import fr.eni.clinique_veto.ihm.MenuController;
 
-public class PersonnelController implements MenuController, PersonnelObserver {
+public class PersonnelController implements MenuController, ManagerListObserver {
 	public static PersonnelController instance;
 	private PersonnelFrame personnelFrame;
 	private PersonnelAddController pAddController;

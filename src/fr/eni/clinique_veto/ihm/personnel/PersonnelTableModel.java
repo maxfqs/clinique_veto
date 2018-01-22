@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import fr.eni.clinique_veto.bll.PersonnelObserver;
 import fr.eni.clinique_veto.bo.Personnel;
 
 public class PersonnelTableModel extends AbstractTableModel {
@@ -12,7 +11,7 @@ public class PersonnelTableModel extends AbstractTableModel {
 
 	private List<Personnel> personnelList;
 	private String[] colNames = {
-		"Nom", "Rôle", "Mot de passe"	
+		"Nom", "RÃ´le", "Mot de passe"	
 	};
 	
 	public PersonnelTableModel(List<Personnel> p) {
