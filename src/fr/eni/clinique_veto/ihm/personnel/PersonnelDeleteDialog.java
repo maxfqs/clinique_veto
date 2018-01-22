@@ -19,7 +19,7 @@ public class PersonnelDeleteDialog extends JDialog {
 		setAlwaysOnTop(true);
 		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 
-		String info = "Etes-vous s�r de vouloir supprimer " +
+		String info = "Etes-vous sûr de vouloir supprimer " +
 				PersonnelController.get().getSelectedPersonnel().getNom();
 		
 		JPanel container = new JPanel();

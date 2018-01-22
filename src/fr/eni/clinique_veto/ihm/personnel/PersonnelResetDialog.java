@@ -22,7 +22,7 @@ public class PersonnelResetDialog extends JDialog {
 		setAlwaysOnTop(true);
 		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		
-		String title = "R�initialiser le mot de passe de " + 
+		String title = "Réinitialiser le mot de passe de " + 
 				PersonnelController.get().getSelectedPersonnel().getNom();
 		
 		
