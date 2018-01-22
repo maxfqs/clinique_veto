@@ -8,7 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.clinique_veto.bo.Animal;
 import fr.eni.clinique_veto.bo.Personnel;
+import fr.eni.clinique_veto.bo.client.Client;
 import fr.eni.clinique_veto.dal.DALException;
 import fr.eni.clinique_veto.dal.JDBCTools;
 import fr.eni.clinique_veto.dal.PersonnelDAO;
@@ -22,6 +24,7 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 	private static final String sqlUpdate = "update Personnels set Nom = ?, MotPasse = ?, Role = ?, Archive = ?"
 			+ " where CodePers = ?";
 	private static final String sqlDelete = "delete from Personnels where CodePers = ?";
+	private static final String sqSelectNomById = "select Nom from Personnel where CodePers = ?";
 	
 	public void insert(Personnel p) throws DALException {	
 		PreparedStatement rqt = null;
