@@ -3,7 +3,6 @@ package fr.eni.clinique_veto.dal;
 import java.util.Date;
 import java.util.List;
 
-import fr.eni.clinique_veto.bo.Animal;
 import fr.eni.clinique_veto.bo.Personnel;
 import fr.eni.clinique_veto.bo.RendezVous;
 
