@@ -1,12 +1,10 @@
 package fr.eni.clinique_veto.ihm.personnel;
 
-import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -21,7 +19,7 @@ public class PersonnelDeleteDialog extends JDialog {
 		setAlwaysOnTop(true);
 		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 
-		String info = "Etes-vous sûr de vouloir supprimer " +
+		String info = "Etes-vous sï¿½r de vouloir supprimer " +
 				PersonnelController.get().getSelectedPersonnel().getNom();
 		
 		JPanel container = new JPanel();

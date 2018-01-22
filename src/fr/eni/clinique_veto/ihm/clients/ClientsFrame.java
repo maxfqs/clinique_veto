@@ -14,13 +14,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import fr.eni.clinique_veto.bll.AnimalObserver;
 import fr.eni.clinique_veto.bll.ClientManager;
+import fr.eni.clinique_veto.bll.ManagerListObserver;
 import fr.eni.clinique_veto.bo.Animal;
 import fr.eni.clinique_veto.bo.client.Client;
 
 @SuppressWarnings("serial")
-public class ClientsFrame extends JPanel implements AnimalObserver {
+public class ClientsFrame extends JPanel implements ManagerListObserver {
 
 	private static final int FRAME_WIDTH = 800;
 	private static final int FRAME_HEIGHT = 600;

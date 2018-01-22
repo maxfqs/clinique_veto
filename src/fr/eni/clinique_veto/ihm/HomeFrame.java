@@ -1,14 +1,10 @@
 package fr.eni.clinique_veto.ihm;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JToolBar;
 
 import fr.eni.clinique_veto.ihm.clients.ClientController;
 import fr.eni.clinique_veto.ihm.personnel.PersonnelController;
@@ -32,7 +28,7 @@ public class HomeFrame extends JFrame {
 		
 		// Fichier
 		JMenu menuFichier = new JMenu("Fichier");
-		JMenuItem itemLogOut = new JMenuItem("Déconnexion");
+		JMenuItem itemLogOut = new JMenuItem("Dï¿½connexion");
 		JMenuItem itemClose = new JMenuItem("Fermer");
 		
 		itemLogOut.addActionListener((e) -> homeController.logOut());

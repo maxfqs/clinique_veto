@@ -1,18 +1,9 @@
 package fr.eni.clinique_veto.ihm.personnel;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.List;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
-import fr.eni.clinique_veto.bo.Personnel;
-import fr.eni.clinique_veto.ihm.CVApp;
-import fr.eni.clinique_veto.ihm.HomeController;
 
 public class PersonnelFrame extends JPanel {
 	private static final long serialVersionUID = 1444564582371527529L;
@@ -29,7 +20,7 @@ public class PersonnelFrame extends JPanel {
 		// Buttons
 		add = new JButton("Ajouter");
 		del = new JButton("Supprimer");
-		reset = new JButton("Réinitialiser");
+		reset = new JButton("Rï¿½initialiser");
 		
 		del.setEnabled(false);
 		reset.setEnabled(false);

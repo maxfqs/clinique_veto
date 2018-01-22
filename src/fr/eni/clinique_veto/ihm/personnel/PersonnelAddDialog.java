@@ -1,12 +1,10 @@
 package fr.eni.clinique_veto.ihm.personnel;
 
-import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -33,7 +31,7 @@ public class PersonnelAddDialog extends JDialog {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridwidth = 2;
-		container.add(new JLabel("Création d'un personnel"), gbc);
+		container.add(new JLabel("Crï¿½ation d'un personnel"), gbc);
 		
 		gbc.gridwidth = 1;
 		
