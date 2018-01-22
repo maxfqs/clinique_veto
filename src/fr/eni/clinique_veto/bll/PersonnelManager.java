@@ -2,6 +2,7 @@ package fr.eni.clinique_veto.bll;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -100,7 +101,9 @@ public class PersonnelManager {
 
 	
 	private void validatePersonnel(Personnel p) throws BLLException{
-		// R�gles m�tiers � coder.
+		if(p.getRole() == null || !Arrays.asList(Personnel.ROLES).contains(p.getRole()) ) {
+			throw new BLLException("Rôle incorrect");
+		}		
 	}	
 	
 	public void registerObserver(ManagerListObserver o) {

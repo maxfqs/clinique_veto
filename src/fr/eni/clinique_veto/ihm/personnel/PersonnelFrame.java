@@ -20,7 +20,7 @@ public class PersonnelFrame extends JPanel {
 		// Buttons
 		add = new JButton("Ajouter");
 		del = new JButton("Supprimer");
-		reset = new JButton("R�initialiser");
+		reset = new JButton("Réinitialiser");
 		
 		del.setEnabled(false);
 		reset.setEnabled(false);
