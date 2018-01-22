@@ -13,5 +13,5 @@ public interface RendezVousDAO {
 	
 	List<RendezVous> getRDVs(Personnel p, Date date) throws DALException;
 	
-	void delete(Personnel p, Date date, Animal a) throws DALException;
+	void delete(RendezVous data) throws DALException;
 }

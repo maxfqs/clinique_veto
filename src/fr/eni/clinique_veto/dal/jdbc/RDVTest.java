@@ -22,7 +22,7 @@ public class RDVTest {
 		Personnel p = new Personnel();
 		p.setId(1);
 		Animal a = new Animal();
-		a.setCodeAnimal(1);
+		a.setCodeAnimal(3);
 		
 		RendezVous rdv = new RendezVous(p, new java.util.Date(), a);
 		RendezVousDAOJdbcImpl dao = new RendezVousDAOJdbcImpl();
@@ -35,7 +35,7 @@ public class RDVTest {
 		}
 
 		
-		
+		System.out.println(new java.util.Date());
 //		List<RendezVous> list = null;
 //		try {
 //			list = dao.getRDVs(p, new java.util.Date());

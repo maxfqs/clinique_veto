@@ -15,7 +15,9 @@ import java.util.List;
 import fr.eni.clinique_veto.bo.Animal;
 import fr.eni.clinique_veto.bo.Personnel;
 import fr.eni.clinique_veto.bo.RendezVous;
+import fr.eni.clinique_veto.dal.AnimalDAO;
 import fr.eni.clinique_veto.dal.DALException;
+import fr.eni.clinique_veto.dal.DAOFactory;
 import fr.eni.clinique_veto.dal.JDBCTools;
 import fr.eni.clinique_veto.dal.RendezVousDAO;
 
@@ -60,30 +62,32 @@ public class RendezVousDAOJdbcImpl implements RendezVousDAO{
 		}		
 	}
 	
-	public List<RendezVous> getRDVs(Personnel p, java.util.Date date) throws DALException {
-		// la date reçu doit être de format java.sql.Date
-		List<RendezVous> listeRdvs = new ArrayList<RendezVous>();
-		RendezVous rdv;
+	public List<RendezVous> getRDVs(Personnel p, Date date) throws DALException {
+		List<RendezVous> listeRDV = new ArrayList<>();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		int day = cal.get(cal.DAY_OF_MONTH);
 		PreparedStatement rqt = null;
 		ResultSet rs = null;
 		try{
 			cnx = JDBCTools.getConnection();
-//			rqt = cnx.prepareStatement(sqlSelectByVeto);
+			rqt = cnx.prepareStatement(sqlSelectByVeto);
 			
-//			rqt.setInt(1, p.getId());
-//			rqt.setDate(2, new java.sql.Date(date.getTime()));
+			rqt.setInt(1, p.getId());
+			rqt.setInt(2, day);
 			
-			Statement rq = cnx.createStatement();
-			rs = rq.executeQuery("select * from Agendas");
-
-			while(rs.next()) {
-				rdv = new RendezVous();
-				rdv.setPers(new Personnel());
-				rdv.setDate(rs.getDate("DateRdv"));
-				listeRdvs.add(rdv);
+			rs = rqt.executeQuery();
+			Animal a = null;
+			AnimalDAO animalDAO = DAOFactory.getAnimalDAO();
+			while(rs.next()){
+				a = animalDAO.getAnimalById(rs.getInt("CodeAnimal"));
+				java.sql.Timestamp t = new java.sql.Timestamp(rs.getTimestamp("DateRdv").getTime());
+				cal.setTimeInMillis( t.getTime());
+				java.util.Date dateJ = new java.sql.Date(cal.getTime().getTime());
+				listeRDV.add(new RendezVous(p, dateJ, a));
 			}
 		}  catch (SQLException e) {
-			throw new DALException("insert failed - RDV = " , e);
+			throw new DALException("getRDV failed" , e);
 		} finally {
 			try {
 				if (rs != null){
@@ -98,41 +102,42 @@ public class RendezVousDAOJdbcImpl implements RendezVousDAO{
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}		
-		return listeRdvs;
+		}	
+		return listeRDV;
+	} 
+	
 
+	public void delete(RendezVous rdv) throws DALException {
+		java.sql.Timestamp t = new java.sql.Timestamp(rdv.getDate().getTime());
+		PreparedStatement rqt = null;
+		ResultSet rs = null;
+		try{
+			cnx = JDBCTools.getConnection();
+			rqt = cnx.prepareStatement(sqlDelete);
+			
+			rqt.setInt(1, rdv.getAnimal().getCodeAnimal());
+			rqt.setTimestamp(2, t);
+			rqt.setInt(3, rdv.getPers().getId());
+			
+			rs = rqt.executeQuery();
+		}  catch (SQLException e) {
+			throw new DALException("Delete RDV failed" , e);
+		} finally {
+			try {
+				if (rs != null){
+					rs.close();
+				}
+				if (rqt != null){
+					rqt.close();
+				}
+				if(cnx!=null){
+					cnx.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}	
 	}
 
-	public void delete(Personnel p, java.util.Date date, Animal a) throws DALException {
-//		PreparedStatement rqt = null;
-//		ResultSet rs = null;
-//		try{
-//			
-//			cnx = JDBCTools.getConnection();
-//			rqt = cnx.prepareStatement(sqlDelete);
-//			
-//			rqt.setInt(1, a.getCodeAnimal());
-//			rqt.setDate(2, (Date) date);
-//			rqt.setInt(3,p.getId());
-//			
-//			rqt.executeUpdate();
-//			
-//		}  catch (SQLException e) {
-//			throw new DALException("deleteRDV failed - animal = " + a.getNomAnimal() , e);
-//		} finally {
-//			try {
-//				if (rs != null){
-//					rs.close();
-//				}
-//				if (rqt != null){
-//					rqt.close();
-//				}
-//				if(cnx!=null){
-//					cnx.close();
-//				}
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
-	}
+	
 }

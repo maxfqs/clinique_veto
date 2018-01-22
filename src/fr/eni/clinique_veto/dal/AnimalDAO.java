@@ -18,4 +18,5 @@ public interface AnimalDAO {
 	
 	public List<Animal> selectByClient(int data) throws SQLException, DALException;
 	
+	public Animal getAnimalById(int data)throws DALException;
 }
