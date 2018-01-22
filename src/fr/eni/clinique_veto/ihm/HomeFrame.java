@@ -28,7 +28,7 @@ public class HomeFrame extends JFrame {
 		
 		// Fichier
 		JMenu menuFichier = new JMenu("Fichier");
-		JMenuItem itemLogOut = new JMenuItem("D�connexion");
+		JMenuItem itemLogOut = new JMenuItem("Déconnexion");
 		JMenuItem itemClose = new JMenuItem("Fermer");
 		
 		itemLogOut.addActionListener((e) -> homeController.logOut());
