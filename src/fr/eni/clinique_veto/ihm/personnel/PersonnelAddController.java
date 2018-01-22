@@ -45,10 +45,9 @@ public class PersonnelAddController implements DialogController {
 		
 		try {
 			PersonnelManager.get().addPersonnel(p);
+			destroy();
 		} catch (BLLException e) {
 			e.printStackTrace();
-		}
-		
-		destroy();
+		}		
 	}
 }

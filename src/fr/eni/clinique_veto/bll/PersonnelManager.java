@@ -102,7 +102,7 @@ public class PersonnelManager {
 	
 	private void validatePersonnel(Personnel p) throws BLLException{
 		if(p.getRole() == null || !Arrays.asList(Personnel.ROLES).contains(p.getRole()) ) {
-			throw new BLLException("Rôle incorrect");
+			throw new BLLException(BLLError.INVALID_PERSONNEL_ROLE);
 		}		
 	}	
 	
