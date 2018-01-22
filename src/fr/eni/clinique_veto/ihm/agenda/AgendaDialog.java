@@ -2,6 +2,7 @@ package fr.eni.clinique_veto.ihm.agenda;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -41,6 +42,21 @@ public class AgendaDialog extends JDialog {
 		this.setSize(WIDTH, HEIGHT);
 		this.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
 		this.initComponent();
+		this.initListeners();
+	}
+
+	private void initListeners() {
+		datePicker.addActionListener((e)->{
+			java.util.Date date  = (java.util.Date) datePicker.getModel().getValue();
+			System.out.println(date);
+			System.out.println(comboVeto.getSelectedItem());
+		});
+		comboVeto.addActionListener((e)->{
+			System.out.println(comboVeto.getSelectedItem());
+			java.util.Date date  = (java.util.Date) datePicker.getModel().getValue();
+			System.out.println(date);
+		});
+		
 	}
 
 	private void initComponent() {

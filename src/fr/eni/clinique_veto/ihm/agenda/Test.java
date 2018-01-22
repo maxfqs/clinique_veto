@@ -4,11 +4,11 @@ public class Test {
 
 	public static void main(String[] args) {
 
-//		RdzVousDialog dial = new RdzVousDialog();
+		RdzVousDialog dial = new RdzVousDialog();
+	dial.setVisible(true);
+//		
+//		AgendaDialog dial = new AgendaDialog();
 //		dial.setVisible(true);
-		
-		AgendaDialog dial = new AgendaDialog();
-		dial.setVisible(true);
 
 	}
 
