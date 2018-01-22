@@ -33,7 +33,6 @@ public class ClientController implements MenuController {
 		if (!RechercheFrame.get().isVisible()) {
 			RechercheFrame.get().setVisible(true);
 		}
-		System.out.println("recherche client-> ");
 	}
 
 	public void ajouterClient() {
@@ -41,7 +40,6 @@ public class ClientController implements MenuController {
 		if (!AjoutClientFrame.get().isVisible()) {
 			AjoutClientFrame.get().setVisible(true);
 		}
-		System.out.println("ajout client");
 	}
 
 	public void updateClient() {
@@ -87,13 +85,13 @@ public class ClientController implements MenuController {
 		Animal selected = ClientManager.get().getAnimalManager().getSelectedAnimal();
 
 		if(selected == null) {
-			ErrorDialog.showError("Vous devez sélectionner un animal");
+			ErrorDialog.showError("Vous devez sï¿½lectionner un animal");
 			return;
 		}
 		
 		int dialogResult = JOptionPane.showConfirmDialog(
 			null,
-			"Etes-vous sûr de vouloir supprimer " + selected.getNomAnimal(),
+			"Etes-vous sï¿½r de vouloir supprimer " + selected.getNomAnimal(),
 			"Confirmation",
 			JOptionPane.WARNING_MESSAGE
 		);
@@ -110,7 +108,7 @@ public class ClientController implements MenuController {
 	public void editerAnimal() {
 		Animal selected = ClientManager.get().getAnimalManager().getSelectedAnimal();
 		if(selected == null) {
-			ErrorDialog.showError("Vous devez sélectionner un animal");
+			ErrorDialog.showError("Vous devez sÃ©lectionner un animal");
 		} else {
 			animalController.create(selected);
 		}

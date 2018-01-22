@@ -18,6 +18,10 @@ public enum BLLError {
 	FAILED_ANIMAL_ADD(304, "Erreur lors de l'ajout de cet animal"),
 	FAILED_ANIMAL_UPDATE(305, "Erreur lors de la sauvegarde de cet animal"),
 	
+	// 200 - Personnel
+	FAILED_CLIENT_ADD(201, "Erreur lors de l'ajout de ce client"),
+	FAILED_CLIENT_UPDATE(202, "Erreur lors de la sauvegarde du clientl"),
+	FAILED_CLIENT_GET(203, "Erreur lors de la recherche du client");
 	
 	
 	;

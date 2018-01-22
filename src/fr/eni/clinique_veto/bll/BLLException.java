@@ -16,6 +16,10 @@ public class BLLException extends Exception {
 	public BLLException(BLLError error) {
 		this.error = error;
 	}
+	public BLLException(BLLError error, String message) {
+		super(message);
+		this.error = error;
+	}
 	
 	public BLLError getError() {
 		return this.error;

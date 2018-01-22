@@ -48,7 +48,7 @@ public class ClientManager {
 		try {
 			retListe = 	dao.trouverParNom(nomClient);
 		} catch (ClientDALException e) {	
-				throw new ClientDALException(e);
+			throw new BLLException(BLLError.FAILED_CLIENT_GET);
 		}
 		listeRechercheClient = retListe;
 		return retListe;
@@ -69,8 +69,8 @@ public class ClientManager {
 			try {
 				verifierClient(c);
 				dao.ajouterClient(c);
-			} catch (ClientDALException e) {
-				throw new BLLException(e.getMessage());
+			} catch (ClientDALException | BLLException e) {
+				throw new BLLException(BLLError.FAILED_CLIENT_ADD, e.getMessage());
 			}
 	}
 	
@@ -79,8 +79,8 @@ public class ClientManager {
 		try {
 			verifierClient(c);
 			dao.modifierClient(c);
-		} catch (ClientDALException e) {
-			throw new BLLException(e.getMessage());
+		}  catch (ClientDALException | BLLException e) {
+			throw new BLLException(BLLError.FAILED_CLIENT_UPDATE, e.getMessage());
 		}
 	}
 	
@@ -88,7 +88,7 @@ public class ClientManager {
 			try {
 				dao.archiver(displayedClient.getCodeClient());
 			} catch (ClientDALException e) {
-				throw new BLLException(e.getMessage());
+				throw new BLLException(BLLError.FAILED_CLIENT_UPDATE);
 			}	
 	}
 	
@@ -98,31 +98,31 @@ public class ClientManager {
 		String error = "";
 		
 		if(c.getNomClient().equals(null) || c.getNomClient().trim().length() == 0 ) {
-			error += " | la valeur renseignée pour le nom du client est incorrecte";
+			error += "\n la valeur renseignée pour le nom du client est incorrecte";
 			okClient = false;
 		}
 		if(c.getPrenomClient().equals(null) || c.getPrenomClient().trim().length() == 0 ) {
-			error += " | la valeur renseign�e pour le prénom du client est incorrecte";
+			error += "\n la valeur renseignée pour le prénom du client est incorrecte";
 			okClient = false;
 		}
 		if(c.getAdresse1().equals(null) || c.getAdresse1().trim().length() == 0 ) {
-			error += " | la valeur renseign�e pour l'adresse du client est incorrecte";
+			error += "\n la valeur renseignée pour l'adresse du client est incorrecte";
 			okClient = false;
 		}
 		if(!c.getCodePostal().equals(null)) {
 			c.setCodePostal(c.getCodePostal().trim());
 			if(!c.getCodePostal().matches("\\d{5}")) {
-				error += " | la valeur renseignée pour le code postal est incorrecte";
+				error += "\n la valeur renseignée pour le code postal est incorrecte";
 				okClient = false;
 			}
 		}
 		if((Integer)c.getArchive()== null || c.getArchive() != 0 && c.getArchive() != 1) {
-			error += " | la valeur de l'arhive renseignée est incorrecte";
+			error += "\n la valeur de l'arhive renseignée est incorrecte";
 			okClient = false;
 		}
 		if(!c.getEmail().equals(null)) {
 			if(!VALID_EMAIL_ADDRESS_REGEX .matcher(c.getEmail()).find() ) {
-				error += " | l'email renseigné est incorrect";
+				error += "\n l'email renseigné est incorrect";
 				okClient = false;
 			}
 		}
