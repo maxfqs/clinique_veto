@@ -10,8 +10,8 @@ public class TestIHMClient {
 		ClientController.get().getClientsFrame().setVisible(true);
 	
 
-//		AjoutClientFrame aframe  =new AjoutClientFrame();
-//		aframe.setVisible(true);
+		AjoutClientFrame aframe  =new AjoutClientFrame();
+		aframe.setVisible(true);
 		
 //		AnimalFrame aniframe  =new AnimalFrame();
 //		aniframe.setVisible(true);
@@ -19,8 +19,8 @@ public class TestIHMClient {
 //		RechercheFrame rframe = new RechercheFrame();
 //		rframe.setVisible(true);
 		
-		DossierMedicalDialog dmDial = new DossierMedicalDialog();
-		dmDial.setVisible(true);
+//		DossierMedicalDialog dmDial = new DossierMedicalDialog();
+//		dmDial.setVisible(true);
 	}
 
 }

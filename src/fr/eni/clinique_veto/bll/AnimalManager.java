@@ -73,7 +73,7 @@ public class AnimalManager {
 			animalList.add(a);
 			setSelectedAnimal(a);
 		} catch (DALException e) {
-			throw new BLLException("Erreur lors de l'ajout d'un animal");
+			throw new BLLException(BLLError.FAILED_ANIMAL_ADD);
 		}
 	
 		fireUpdate();
@@ -101,7 +101,7 @@ public class AnimalManager {
 			animalDAO.update(a);
 			updateAnimalList(a);
 		} catch (DALException e) {
-			throw new BLLException("Erreur lors de l'update de l'animal");
+			throw new BLLException(BLLError.FAILED_ANIMAL_UPDATE);
 		}
 				
 		fireUpdate();
@@ -120,7 +120,6 @@ public class AnimalManager {
 	public void setSelectedAnimal(Animal a) {
 		if(animalList.contains(a)) {
 			selectedAnimal = a;
-			System.out.println("Selected animal = " + a.getNomAnimal());
 		}
 	}
 	
@@ -128,26 +127,24 @@ public class AnimalManager {
 		return selectedAnimal;
 	}
 	
-	private void validateAnimal(Animal a) throws BLLException{
-		String error = "Erreur � la validation de l'animal: ";
-	
+	private void validateAnimal(Animal a) throws BLLException{		
 		if(client.getCodeClient() != a.getCodeClient()) {
-			throw new BLLException(error + "Code client diff�rent du client enregistr� par le manager");
+			throw new BLLException(BLLError.INVALID_ANIMAL_CLIENT_ID);
 		}
 		
 		if(!EspecesManager.isValidEspece(a.getEspece())) {
-			throw new BLLException(error + "Esp�ce invalide");
+			throw new BLLException(BLLError.INVALID_ANIMAL_ESPECES);
 		}
 		
 		if(!EspecesManager.isValidRace(a.getEspece(), a.getRace())) {
-			throw new BLLException(error + "Race invalide");
+			throw new BLLException(BLLError.INVALID_ANIMAL_RACES);
 		}
 		
 		for (int i = 0; i < Animal.SEXE.length; i++) {
 			if(a.getSexe() == Animal.SEXE[i]) return;			
 		}
 		
-		throw new BLLException(error + "Sexe invalide");
+		throw new BLLException(BLLError.INVALID_ANIMAL_SEXES);
 	}
 	
 	public void registerObserver(ManagerListObserver o) {
