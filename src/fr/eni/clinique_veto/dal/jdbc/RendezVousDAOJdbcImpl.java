@@ -62,7 +62,7 @@ public class RendezVousDAOJdbcImpl implements RendezVousDAO{
 		}		
 	}
 	
-	public List<RendezVous> getRDVs(Personnel p, Date date) throws DALException {
+	public List<RendezVous> getVetoRdvForDay(Personnel p, Date date) throws DALException {
 		List<RendezVous> listeRDV = new ArrayList<>();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
@@ -83,8 +83,13 @@ public class RendezVousDAOJdbcImpl implements RendezVousDAO{
 				a = animalDAO.getAnimalById(rs.getInt("CodeAnimal"));
 				java.sql.Timestamp t = new java.sql.Timestamp(rs.getTimestamp("DateRdv").getTime());
 				cal.setTimeInMillis( t.getTime());
+				
+				
+				
 				java.util.Date dateJ = new java.sql.Date(cal.getTime().getTime());
-				listeRDV.add(new RendezVous(p, dateJ, a));
+				RendezVous r = new RendezVous(p, dateJ, a);
+
+				listeRDV.add(r);
 			}
 		}  catch (SQLException e) {
 			throw new DALException("getRDV failed" , e);

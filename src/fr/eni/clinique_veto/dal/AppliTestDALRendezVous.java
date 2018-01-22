@@ -94,7 +94,7 @@ public class AppliTestDALRendezVous {
 		
 		System.out.println("Afficher la liste de RDV pour la date : " + date1);
 		try {
-			List<RendezVous> listeRDV = rendezVousDAO.getRDVs(p1, date1);
+			List<RendezVous> listeRDV = rendezVousDAO.getVetoRdvForDay(p1, date1);
 			afficherListeRendezVous(listeRDV);
 		} catch (DALException e) {
 			// TODO Auto-generated catch block
