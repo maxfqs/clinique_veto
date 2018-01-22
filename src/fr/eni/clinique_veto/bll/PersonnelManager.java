@@ -68,7 +68,7 @@ public class PersonnelManager {
 			personnelDAO.insert(p);
 			personnelList.add(p);
 		} catch (DALException e) {
-			throw new BLLException("Erreur lors de l'ajout d'un personnel");
+			throw new BLLException(BLLError.FAILED_PERSONNEL_ADD);
 		}
 		
 		fireUpdate();
@@ -89,13 +89,13 @@ public class PersonnelManager {
 	
 	private void update(Personnel p) throws BLLException {
 		if(!personnelList.contains(p)) {
-			throw new BLLException("Impossible de maj ce personnel");
+			throw new BLLException(BLLError.FAILED_PERSONNEL_UPDATE);
 		}		
 		
 		try {
 			personnelDAO.update(p);
 		} catch (DALException | SQLException e) {
-			throw new BLLException("Impossible de maj ce personnel");
+			throw new BLLException(BLLError.FAILED_PERSONNEL_UPDATE);
 		}
 	}
 

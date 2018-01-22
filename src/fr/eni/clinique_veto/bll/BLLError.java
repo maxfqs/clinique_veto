@@ -3,7 +3,9 @@ package fr.eni.clinique_veto.bll;
 public enum BLLError {
 	
 	// 100 - Personnel
-	INVALID_PERSONNEL_ROLE(100, "Le rôle est incorrect");
+	INVALID_PERSONNEL_ROLE(100, "Le rôle est incorrect"),
+	FAILED_PERSONNEL_ADD(101, "Erreur lors de l'ajout de ce personnel"),
+	FAILED_PERSONNEL_UPDATE(102, "Erreur lors de la sauvegarde du personnel");
 	
 	
 	private final int code;
