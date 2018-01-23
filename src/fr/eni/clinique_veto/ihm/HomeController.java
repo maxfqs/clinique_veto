@@ -37,7 +37,6 @@ public class HomeController {
 	}
 	
 	public void selectMenu(MenuController mc) {
-		System.out.println(mc);
 		if(selectedMenu == null) {
 			mc.show();
 			selectedMenu = mc;
