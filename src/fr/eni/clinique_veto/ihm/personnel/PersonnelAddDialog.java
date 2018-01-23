@@ -5,16 +5,21 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import fr.eni.clinique_veto.bo.PersonnelRole;
+
 @SuppressWarnings("serial")
 public class PersonnelAddDialog extends JDialog {
 	
-	JTextField name, password, role;
+	JComboBox<String> role;
+	JTextField name, password;
 	
 	public PersonnelAddDialog() {
 		setSize(500, 300);
@@ -38,7 +43,12 @@ public class PersonnelAddDialog extends JDialog {
 		// Field
 		name = new JTextField(10);
 		password = new JTextField(10);
-		role = new JTextField(10);
+		role = new JComboBox<String>();
+		DefaultComboBoxModel<String> rModel = new DefaultComboBoxModel<String>(
+				PersonnelRole.getDescriptions()
+		);
+		role.setModel(rModel);
+		
 		
 		gbc.gridx = 0;
 		gbc.gridy = 1;
@@ -83,7 +93,12 @@ public class PersonnelAddDialog extends JDialog {
 		return password;
 	}
 
-	public JTextField getRoleField() {
+	public JComboBox<String> getRoleCBox() {
 		return role;
+	}
+	
+	public PersonnelRole getSelectedRole() {
+		String desc = (String) role.getSelectedItem();
+		return PersonnelRole.selectByDescription(desc);		
 	}
 }

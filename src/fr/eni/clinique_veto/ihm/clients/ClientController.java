@@ -85,13 +85,13 @@ public class ClientController implements MenuController {
 		Animal selected = ClientManager.get().getAnimalManager().getSelectedAnimal();
 
 		if(selected == null) {
-			ErrorDialog.showError("Vous devez s�lectionner un animal");
+			ErrorDialog.showError("Vous devez sélectionner un animal");
 			return;
 		}
 		
 		int dialogResult = JOptionPane.showConfirmDialog(
 			null,
-			"Etes-vous s�r de vouloir supprimer " + selected.getNomAnimal(),
+			"Etes-vous sûr de vouloir supprimer " + selected.getNomAnimal(),
 			"Confirmation",
 			JOptionPane.WARNING_MESSAGE
 		);

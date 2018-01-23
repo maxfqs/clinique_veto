@@ -3,6 +3,7 @@ package fr.eni.clinique_veto.ihm.personnel;
 import fr.eni.clinique_veto.bll.BLLException;
 import fr.eni.clinique_veto.bll.PersonnelManager;
 import fr.eni.clinique_veto.bo.Personnel;
+import fr.eni.clinique_veto.bo.PersonnelRole;
 import fr.eni.clinique_veto.ihm.DialogController;
 import fr.eni.clinique_veto.ihm.ErrorDialog;
 
@@ -42,7 +43,7 @@ public class PersonnelAddController implements DialogController {
 		Personnel p = new Personnel();
 		p.setNom(paf.getNameField().getText());
 		p.setMdp(paf.getPasswordField().getText());
-		p.setRole(paf.getRoleField().getText());
+		p.setRole(paf.getSelectedRole().getCode());
 		
 		try {
 			PersonnelManager.get().addPersonnel(p);

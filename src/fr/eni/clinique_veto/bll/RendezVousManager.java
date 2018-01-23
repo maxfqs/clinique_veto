@@ -1,12 +1,9 @@
 package fr.eni.clinique_veto.bll;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import fr.eni.clinique_veto.bo.Animal;
 import fr.eni.clinique_veto.bo.Personnel;
 import fr.eni.clinique_veto.bo.RendezVous;
 import fr.eni.clinique_veto.dal.DALException;
@@ -15,66 +12,49 @@ import fr.eni.clinique_veto.dal.RendezVousDAO;
 
 public class RendezVousManager {
 	private static RendezVousDAO rdvDAO;
-	private List<ManagerListObserver> observers;
-	private List<RendezVous> rdvList;
 	
 	static {
 		rdvDAO = DAOFactory.getRendezVousDAO();
 	}
 	
-	public RendezVousManager(Personnel p, Date date) throws BLLException {		
-		if (p.getRole() != "VET") throw new BLLException("Le personnel n'est pas un veto");
+	public static List<RendezVous> getVetoRdvForDate(Personnel p, Date d) throws BLLException {
+		if(p == null || d == null) {
+			throw new BLLException(BLLError.INVALID_REQUEST);
+		}
 		
-		this.observers = new ArrayList<ManagerListObserver>();
-
+		List<RendezVous> list = null;
 		try {
-			this.rdvList = new ArrayList<RendezVous>();
-			
-			rdvList.addAll(rdvDAO.getVetoRdvForDay(p, date));
-			
-			
-		} catch (DALException e) {
+			list = rdvDAO.getVetoRdvForDay(p, d);
+		} catch (Exception e) {
 			throw new BLLException(BLLError.DATABASE_ERROR);
+		}
+		
+		return list;
+	}
+	
+	public static void addRdv(Personnel p, Animal a, Date d) throws BLLException {
+		if(p == null || a == null || d == null) {
+			throw new BLLException(BLLError.INVALID_REQUEST);
+		}
+				
+		try {
+			RendezVous rdv = new RendezVous(p, d, a);
+			rdvDAO.insert(rdv);
+		} catch (DALException e) {
+			throw new BLLException(BLLError.FAILED_RDV_ADD);
 		}
 	}
 	
-	public List<RendezVous> getRdvList() {
-		return Collections.unmodifiableList(rdvList);
-	}
-	
-	public List<Integer> disponibleHour(int h){
-		List<Integer> lis = new ArrayList<>();
-			for(RendezVous Rdv : rdvList){
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(Rdv.getDate());
-				int hour =  cal.get(cal.HOUR_OF_DAY);
-				int minutes = cal.get(cal.MINUTE);
-				
-				if(h == hour && minutes < 46){
-					lis.add(minutes);
-					
-				}
-			}		
-		return lis;
-	}
-	
-	// à coder
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public void registerObserver(ManagerListObserver o) {
-		observers.add(o);
-	}
-	
-	private void fireUpdate() {
-		for(ManagerListObserver o : observers) o.onListUpdated();
-	}
-	
+	public static void removeRdv(Personnel p, Animal a, Date d) throws BLLException {
+		if(p == null || a == null || d == null) {
+			throw new BLLException(BLLError.INVALID_REQUEST);
+		}
+		
+		try {
+			RendezVous rdv = new RendezVous(p, d, a);
+			rdvDAO.delete(rdv);
+		} catch (DALException e) {
+			throw new BLLException(BLLError.FAILED_RDV_DELETE);
+		}
+	}	
 }

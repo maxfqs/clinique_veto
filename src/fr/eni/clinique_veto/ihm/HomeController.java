@@ -2,6 +2,7 @@ package fr.eni.clinique_veto.ihm;
 
 import fr.eni.clinique_veto.bll.ConnexionManager;
 import fr.eni.clinique_veto.bo.Personnel;
+import fr.eni.clinique_veto.bo.PersonnelRole;
 import fr.eni.clinique_veto.ihm.personnel.PersonnelController;
 
 public class HomeController {
@@ -26,8 +27,13 @@ public class HomeController {
 		return instance;
 	}
 	
-	public void createFrame() {
+	public void createFrame(Personnel user) {
 		hframe = new HomeFrame();
+		
+		if(user.getRole().equals(PersonnelRole.ADMIN.getCode())) {
+			hframe.addPersonnelMenu();
+		}
+		
 		hframe.setVisible(true);
 	}
 	
@@ -37,7 +43,6 @@ public class HomeController {
 	}
 	
 	public void selectMenu(MenuController mc) {
-		System.out.println(mc);
 		if(selectedMenu == null) {
 			mc.show();
 			selectedMenu = mc;

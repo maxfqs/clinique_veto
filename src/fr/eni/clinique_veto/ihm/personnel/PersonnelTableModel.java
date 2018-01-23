@@ -5,6 +5,7 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import fr.eni.clinique_veto.bo.Personnel;
+import fr.eni.clinique_veto.bo.PersonnelRole;
 
 public class PersonnelTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = -5819375907592880238L;
@@ -42,7 +43,8 @@ public class PersonnelTableModel extends AbstractTableModel {
 			val = personnelList.get(row).getNom();
 			break;
 		case 1:
-			val = personnelList.get(row).getRole();
+			String code = personnelList.get(row).getRole();
+			val = PersonnelRole.selectByCode(code).getDescription();
 			break;
 		case 2:
 			val = "********";
