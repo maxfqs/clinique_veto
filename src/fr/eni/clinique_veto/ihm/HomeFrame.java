@@ -38,9 +38,12 @@ public class HomeFrame extends JFrame {
 		menuFichier.add(itemClose);
 		
 		menu.add(menuFichier);
+	
 		
-		
-		// RDV - CLIENTS
+		setJMenuBar(menu);
+	}
+	
+	public void addClientMenu() {
 		JMenu menuRDV = new JMenu("Gestion des rendez-vous");
 		JMenuItem itemRDV = new JMenuItem("Prise des rendez-vous");
 		JMenuItem itemClient = new JMenuItem("Gestion des clients");
@@ -49,12 +52,9 @@ public class HomeFrame extends JFrame {
 		
 		menuRDV.add(itemRDV);
 		menuRDV.add(itemClient);
-		
 		menu.add(menuRDV);
-		setJMenuBar(menu);
 		
 		getContentPane().add(ClientController.get().getPanel());
-		
 	}
 	
 	public void addPersonnelMenu() {
