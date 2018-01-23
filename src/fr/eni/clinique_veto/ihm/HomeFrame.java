@@ -51,9 +51,13 @@ public class HomeFrame extends JFrame {
 		menuRDV.add(itemClient);
 		
 		menu.add(menuRDV);
+		setJMenuBar(menu);
 		
+		getContentPane().add(ClientController.get().getPanel());
 		
-		// Personnel
+	}
+	
+	public void addPersonnelMenu() {
 		JMenu gp = new JMenu("Gestion du personnel");
 		JMenuItem gpi = new JMenuItem("Ouvrir");
 		gpi.addActionListener((e) -> {
@@ -62,10 +66,7 @@ public class HomeFrame extends JFrame {
 		
 		gp.add(gpi);
 		menu.add(gp);
-
-		setJMenuBar(menu);
 		
-		getContentPane().add(ClientController.get().getPanel());
 		getContentPane().add(PersonnelController.get().getPanel());
 	}
 

@@ -29,7 +29,7 @@ public class CVApp implements ConnexionObserver {
 	@Override
 	public void onUserLogIn(Personnel p) {
 		loginController.closeFrame();
-		homeController.createFrame();
+		homeController.createFrame(p);
 	}
 	
 	@Override
