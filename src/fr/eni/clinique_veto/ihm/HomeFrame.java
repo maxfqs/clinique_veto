@@ -6,6 +6,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import fr.eni.clinique_veto.ihm.agenda.RdzVousController;
 import fr.eni.clinique_veto.ihm.clients.ClientController;
 import fr.eni.clinique_veto.ihm.personnel.PersonnelController;
 
@@ -47,13 +48,15 @@ public class HomeFrame extends JFrame {
 		JMenu menuRDV = new JMenu("Gestion des rendez-vous");
 		JMenuItem itemRDV = new JMenuItem("Prise des rendez-vous");
 		JMenuItem itemClient = new JMenuItem("Gestion des clients");
-
+		
+		itemRDV.addActionListener((e) -> HomeController.get().selectMenu(RdzVousController.get()));
 		itemClient.addActionListener((e) -> HomeController.get().selectMenu(ClientController.get()));
 		
 		menuRDV.add(itemRDV);
 		menuRDV.add(itemClient);
 		menu.add(menuRDV);
 		
+		getContentPane().add(RdzVousController.get().getPanel());
 		getContentPane().add(ClientController.get().getPanel());
 	}
 	

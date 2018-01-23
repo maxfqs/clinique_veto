@@ -27,7 +27,7 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 @SuppressWarnings("serial")
-public class RdzVousDialog extends JDialog {
+public class RdzVousDialog extends JPanel {
 	
 		private static int WIDTH = 750;
 		private static int HEIGHT = 700;
@@ -72,8 +72,6 @@ public class RdzVousDialog extends JDialog {
 		
 		public RdzVousDialog() {
 			this.setSize(WIDTH, HEIGHT);
-			this.setTitle("prise de rendez-vous");
-			this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 			this.setLayout(new BorderLayout());
 			this.initComponents();
 			this.initListeners();

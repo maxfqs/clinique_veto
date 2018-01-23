@@ -4,24 +4,32 @@ import java.util.List;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import fr.eni.clinique_veto.bll.BLLException;
 import fr.eni.clinique_veto.bll.ClientManager;
 import fr.eni.clinique_veto.bo.Animal;
 import fr.eni.clinique_veto.bo.client.Client;
 import fr.eni.clinique_veto.dal.ClientDALException;
+import fr.eni.clinique_veto.ihm.MenuController;
 import fr.eni.clinique_veto.ihm.clients.ClientController;
 import fr.eni.clinique_veto.ihm.clients.ClientsFrame;
 import fr.eni.clinique_veto.ihm.clients.RechercheFrame;
 import fr.eni.clinique_veto.ihm.clients.ResultsSearchClientDialog;
 
-public class RdzVousController {
+public class RdzVousController implements MenuController {
 
 	private static RdzVousController instance;
 	private Animal animal;
 	private Client client;
 	private JDialog clientDial;
 	private RdzVousDialog dial ;
+	
+	
+	public RdzVousController() {
+		this.dial = new RdzVousDialog();
+		hide();
+	}
 	
 	public static RdzVousController get() {
 		if(instance == null) {
@@ -78,8 +86,24 @@ public class RdzVousController {
 	}
 
 	public void displayRdzVsDialog() {
-		this.dial = new RdzVousDialog();
+		
 		this.dial.setVisible(true);	
+	}
+
+	@Override
+	public void show() {
+		this.dial.setVisible(true);	
+	}
+
+	@Override
+	public void hide() {
+		this.dial.setVisible(false);	
+		
+	}
+
+	@Override
+	public JPanel getPanel() {
+		return this.dial;
 	}
 
 }
