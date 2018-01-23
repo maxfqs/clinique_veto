@@ -4,6 +4,7 @@ public enum BLLError {
 	
 	// 000 - Misc
 	DATABASE_ERROR(1, "Une erreur est survenue lors de la connexion avec la base de données"),
+	INVALID_REQUEST(2, "Les paramètres envoyés ne sont pas correct"),
 	
 	// 100 - Personnel
 	INVALID_PERSONNEL_ROLE(100, "Le rôle est incorrect"),
@@ -23,6 +24,9 @@ public enum BLLError {
 	FAILED_ANIMAL_ADD(304, "Erreur lors de l'ajout de cet animal"),
 	FAILED_ANIMAL_UPDATE(305, "Erreur lors de la sauvegarde de cet animal"),	
 	
+	// 400 - Rendez Vous
+	FAILED_RDV_ADD(401, "Erreur lors de l'ajout de ce rendez-vous"),
+	FAILED_RDV_DELETE(402, "Erreur lors de la suppression de ce rendez-vous"),
 	;
 	
 	
