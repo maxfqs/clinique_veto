@@ -18,12 +18,13 @@ import fr.eni.clinique_veto.bll.ClientManager;
 import fr.eni.clinique_veto.bll.ManagerListObserver;
 import fr.eni.clinique_veto.bo.Animal;
 import fr.eni.clinique_veto.bo.client.Client;
+import fr.eni.clinique_veto.ihm.agenda.RdzVousController;
 
 @SuppressWarnings("serial")
 public class ClientsFrame extends JPanel implements ManagerListObserver {
 
-	private static final int FRAME_WIDTH = 800;
-	private static final int FRAME_HEIGHT = 600;
+	public static final int FRAME_WIDTH = 800;
+	public static final int FRAME_HEIGHT = 600;
 	private static final int TEXTFIELD_WIDTH = 12;
 	
 	// containers principaux
@@ -56,6 +57,8 @@ public class ClientsFrame extends JPanel implements ManagerListObserver {
 	JButton btnAjouterAnimal;
 	JButton btnSupprAnimal;
 	JButton btnEditerAnimal;
+
+	JButton btnValiderChoix;
 	
 	
 	public ClientsFrame() {
@@ -75,7 +78,8 @@ public class ClientsFrame extends JPanel implements ManagerListObserver {
 		btnSupprimerClt.addActionListener((e)->ClientController.get().supprimerClient());	
 		btnAjouterAnimal.addActionListener((e)-> ClientController.get().ajouterAnimal());
 		btnSupprAnimal.addActionListener((e)-> ClientController.get().supprimerAnimal());
-		btnEditerAnimal.addActionListener((e)-> ClientController.get().editerAnimal());		
+		btnEditerAnimal.addActionListener((e)-> ClientController.get().editerAnimal());
+		 btnValiderChoix.addActionListener((e)-> RdzVousController.get().validerChoixAnimal());
 	}
 
 
@@ -87,9 +91,11 @@ public class ClientsFrame extends JPanel implements ManagerListObserver {
 		btnAjouterAnimal = new JButton("ajouter");
 		btnSupprAnimal = new JButton("supprimer");
 		btnEditerAnimal = new JButton("éditer");
+		btnValiderChoix = new JButton("valider");
 		containerBtnAnimaux.add(btnAjouterAnimal);
 		containerBtnAnimaux.add(btnSupprAnimal);
 		containerBtnAnimaux.add(btnEditerAnimal);
+		containerBtnAnimaux.add(btnValiderChoix);
 	
 	}
 	

@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -31,18 +32,14 @@ public class RdzVousDialog extends JDialog {
 		private static int WIDTH = 750;
 		private static int HEIGHT = 700;
 		private static String[] LISTE_HEURES = {"06","07","08","09","10","11","12","13","14","15","16","17","18","19","20"};
-		private static String[] LISTE_MINUTES = {"00","05","10","15","20","25","30","35","40","45","50","55"};
+		private static String[] LISTE_MINUTES = {"00","15","30","45"};
 		
 		private JPanel northPanel;
 		private JPanel centerPanel;
 		private JPanel southPanel;
 		
 		private JPanel clientPanel;
-		private JPanel insClientPanel;
-		private JLabel clientLabel;
-		private JLabel animauxLabel;
-		private JButton addClient;
-		private JButton addAnimal;
+
 		
 		private JPanel vetoPanel;
 		private JLabel vetoLabel;
@@ -52,11 +49,16 @@ public class RdzVousDialog extends JDialog {
 		private JLabel dateLabel;
 		private JLabel heureLabel;
 		private JDatePickerImpl datePicker;
+		private JLabel nomClient;
+		private JLabel nomAnimal;
+		
+		private JLabel rechercheLabel;
+		private JTextField searchClient;
+		private JButton btnSearch;
 		
 		private JTable tableRdzVs;
 		
-		private JComboBox comboClient;
-		private JComboBox comboAnimal;
+
 		private JComboBox comboVeto;
 		private JComboBox comboHeure;
 		private JComboBox comboMin;
@@ -65,8 +67,6 @@ public class RdzVousDialog extends JDialog {
 		private JButton btnAnnuler;
 		
 		
-		private String[] listeClient = {"jean valjean", "hubert bonniseur de la bat", "didier cousteron"};
-		private String[] listeAnimaux = {"rex","medor","titi"};
 		private String[] listeVetos = {"dr mabuse", "dr jivago"};
 
 		
@@ -76,6 +76,14 @@ public class RdzVousDialog extends JDialog {
 			this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 			this.setLayout(new BorderLayout());
 			this.initComponents();
+			this.initListeners();
+		}
+
+
+		private void initListeners() {
+			btnSearch.addActionListener((e)->RdzVousController.get().chercherClient(searchClient.getText()));
+			btnValider.addActionListener((e)-> System.out.println("validé"));
+			btnAnnuler.addActionListener((e)->  this.setVisible(false));
 		}
 
 
@@ -89,25 +97,19 @@ public class RdzVousDialog extends JDialog {
 			clientPanel.setMaximumSize(new Dimension((WIDTH/3)-20,(WIDTH/3)-10));
 			clientPanel.setBorder(title);
 			
-			clientPanel.setLayout(new BoxLayout(clientPanel, BoxLayout.PAGE_AXIS));
-			clientLabel = new JLabel("<html><h3>client</h3></html>");
-			comboClient = new JComboBox(listeClient);
-			comboClient.setPreferredSize(new Dimension(50,20));
-			comboClient.setMaximumSize(new Dimension(200,30));
-			addClient = new JButton("ajouter client");
+
+			rechercheLabel = new JLabel("Rechercher par nom:");
+			searchClient  =new JTextField(10);
+			btnSearch = new JButton("chercher");
+			nomClient = new JLabel();
+			nomAnimal = new JLabel();
+		
+			clientPanel.add(rechercheLabel);
+			clientPanel.add(searchClient);
+			clientPanel.add(btnSearch);
+			clientPanel.add(nomClient);
+			clientPanel.add(nomAnimal);
 			
-			animauxLabel = new JLabel("<html><h3>animal</h3></html>");
-			comboAnimal = new JComboBox(listeAnimaux);
-			comboAnimal.setPreferredSize(new Dimension(50,20));
-			comboAnimal.setMaximumSize(new Dimension(200,30));		
-			addAnimal = new JButton("ajouter animal");
-			
-			clientPanel.add(clientLabel);
-			clientPanel.add(comboClient);
-			clientPanel.add(addClient);
-			clientPanel.add(animauxLabel);
-			clientPanel.add(comboAnimal);
-			clientPanel.add(addAnimal);
 			
 			title = BorderFactory.createTitledBorder("vétérinaire");	
 			vetoPanel = new JPanel();
@@ -175,7 +177,13 @@ public class RdzVousDialog extends JDialog {
 		
 		private void addTable() {
 			List<String> liste = new ArrayList<>();
-			
+		}
+		
+		public void setNomRendezVous(String pNomClient,String pNomAnimal) {
+			nomClient.setText("Nom du client : " + pNomClient);
+			nomAnimal.setText("Nom de l'animal : "+pNomAnimal );
+			System.out.println("Nom du client : " + pNomClient);
+
 		}
 		
 		private class DateLabelFormatter extends AbstractFormatter{
@@ -200,6 +208,8 @@ public class RdzVousDialog extends JDialog {
 			}
 			
 		}
+		
+	
 
 	
 }

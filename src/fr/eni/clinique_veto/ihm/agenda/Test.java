@@ -4,8 +4,10 @@ public class Test {
 
 	public static void main(String[] args) {
 
-		RdzVousDialog dial = new RdzVousDialog();
-	dial.setVisible(true);
+
+		RdzVousController control = new RdzVousController();
+		RdzVousController.get().displayRdzVsDialog();
+
 //		
 //		AgendaDialog dial = new AgendaDialog();
 //		dial.setVisible(true);
