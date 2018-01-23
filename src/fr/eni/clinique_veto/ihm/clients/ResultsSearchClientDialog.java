@@ -9,7 +9,6 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -18,11 +17,9 @@ import fr.eni.clinique_veto.bll.ClientManager;
 import fr.eni.clinique_veto.bo.client.Client;
 import fr.eni.clinique_veto.ihm.agenda.RdzVousController;
 
+public class ResultsSearchClientDialog extends JDialog {
 
-@SuppressWarnings("serial")
-public class RechercheFrame extends JDialog {
-
-	private static RechercheFrame instance;
+	private static ResultsSearchClientDialog instance;
 	
 	public static final int FRAME_WIDTH = 550;
 	public static final int FRAME_HEIGHT = 300;
@@ -34,10 +31,10 @@ public class RechercheFrame extends JDialog {
 
 	private JButton btnChercher;
 	private JButton validerBtn;
-	private static JTextField searchField;
+
 
 	
-	public RechercheFrame() {
+	public ResultsSearchClientDialog() {
 		this.setTitle("Recherche d'un client");
 		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -46,9 +43,9 @@ public class RechercheFrame extends JDialog {
 		this.initListeners();
 	}
 	
-	public static RechercheFrame get() {
+	public static ResultsSearchClientDialog get() {
 		if(instance == null) {
-			instance = new RechercheFrame();
+			instance = new ResultsSearchClientDialog();
 		}
 		reset();
 		return instance;
@@ -61,14 +58,13 @@ public class RechercheFrame extends JDialog {
 		if (clientTable != null) {
 			containerTable.remove(clientTable);
 		}
-		searchField.setText("");
 	}
 
 	private void initListeners() {
-		btnChercher.addActionListener((e) -> RechercheClientController.get().chercherClient(searchField.getText()));
 		validerBtn.addActionListener((e)-> {
 			try {
-				RechercheClientController.get().afficherClient();
+				RdzVousController.get().afficherClient();
+
 			} catch (BLLException e1) {
 				System.out.println(e1);
 				JOptionPane.showMessageDialog(this,
@@ -80,7 +76,7 @@ public class RechercheFrame extends JDialog {
 	}
 	
 	public void initListenersRdzVs() {
-		btnChercher.addActionListener((e) -> RdzVousController.get().chercherClient(searchField.getText()));
+	
 		validerBtn.addActionListener((e)-> {
 			try {
 				RdzVousController.get().afficherClient();
@@ -99,11 +95,7 @@ public class RechercheFrame extends JDialog {
 	private void initComponent() {
 		this.setLayout(new BorderLayout());
 		containerSearch = new JPanel();
-		btnChercher = new JButton("chercher");
 		validerBtn = new JButton("valider");
-		searchField = new JTextField(TEXTFIELD_WIDTH);
-		containerSearch.add(searchField);
-		containerSearch.add(btnChercher);
 		containerSearch.add(validerBtn);
 		containerTable = new JPanel();
 
