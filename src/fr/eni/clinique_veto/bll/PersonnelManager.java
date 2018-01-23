@@ -2,7 +2,6 @@ package fr.eni.clinique_veto.bll;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,6 +44,17 @@ public class PersonnelManager {
 		return instance;
 	}
 	
+	
+	public List<Personnel> getVeto() {
+		List<Personnel> list = new ArrayList<Personnel>();
+		for(Personnel p: personnelList) {
+			if(p.getRole().equals(PersonnelRole.VETERINAIRE.getCode())) {
+				list.add(p);
+			}
+		}
+		
+		return list;
+	}
 	
 	public List<Personnel> getPersonnels() {
 		return Collections.unmodifiableList(personnelList);
