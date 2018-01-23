@@ -8,33 +8,32 @@ public class RendezVous {
 	private Date date;
 	private Animal animal;
 	private String hour;
+	
 	public RendezVous(){
 		
 	}
+	
 	public RendezVous(Personnel pers, Date date, Animal animal) {
-		super();
 		this.pers = pers;
 		this.date = date;
 		this.animal = animal;
 		
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(this.date);
-		int hour =  cal.get(cal.HOUR_OF_DAY);
-		int minutes = cal.get(cal.MINUTE);
+		int hour =  cal.get(Calendar.HOUR_OF_DAY);
+		int minutes = cal.get(Calendar.MINUTE);
 		this.hour = hour+"h"+minutes;
 	}
 	
 	public String getHour(){
-		
-	return this.hour;
+		return this.hour;	
 	}
 
 	
 	@Override
 	public String toString() {
 		return "RendezVous [pers=" + pers + ", date=" + date + ", animal=" + animal +"]";
-	}
-	
+	}	
 	
 	public Personnel getPers() {
 		return pers;
@@ -53,7 +52,5 @@ public class RendezVous {
 	}
 	public void setAnimal(Animal animal) {
 		this.animal = animal;
-	}
-	
-	
+	}	
 }

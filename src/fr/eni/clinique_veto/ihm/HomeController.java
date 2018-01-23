@@ -29,9 +29,15 @@ public class HomeController {
 	
 	public void createFrame(Personnel user) {
 		hframe = new HomeFrame();
+		String role = user.getRole();
 		
-		if(user.getRole().equals(PersonnelRole.ADMIN.getCode())) {
+		
+		if(role.equals(PersonnelRole.ADMIN.getCode())) {
 			hframe.addPersonnelMenu();
+		} else if (role.equals(PersonnelRole.VETERINAIRE.getCode())) {
+			// agenda
+		} else { 
+			hframe.addClientMenu();
 		}
 		
 		hframe.setVisible(true);

@@ -23,6 +23,7 @@ import org.jdatepicker.impl.UtilDateModel;
 
 
 
+@SuppressWarnings("serial")
 public class AgendaDialog extends JDialog {
 
 	private static int WIDTH = 600;
