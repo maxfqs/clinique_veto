@@ -1,5 +1,6 @@
 package fr.eni.clinique_veto.ihm.agenda;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JDialog;
@@ -8,9 +9,13 @@ import javax.swing.JPanel;
 
 import fr.eni.clinique_veto.bll.BLLException;
 import fr.eni.clinique_veto.bll.ClientManager;
+import fr.eni.clinique_veto.bll.PersonnelManager;
+import fr.eni.clinique_veto.bll.RendezVousManager;
 import fr.eni.clinique_veto.bo.Animal;
+import fr.eni.clinique_veto.bo.Personnel;
 import fr.eni.clinique_veto.bo.client.Client;
 import fr.eni.clinique_veto.dal.ClientDALException;
+import fr.eni.clinique_veto.ihm.ErrorDialog;
 import fr.eni.clinique_veto.ihm.MenuController;
 import fr.eni.clinique_veto.ihm.clients.ClientController;
 import fr.eni.clinique_veto.ihm.clients.ClientsFrame;
@@ -20,14 +25,20 @@ import fr.eni.clinique_veto.ihm.clients.ResultsSearchClientDialog;
 public class RdzVousController implements MenuController {
 
 	private static RdzVousController instance;
+	private List<Personnel> listeVetos ;
 	private Animal animal;
 	private Client client;
+	private Personnel veto;
+	private Date date;
+	private String heure;
+	private String minutes;
 	private JDialog clientDial;
 	private RdzVousDialog dial ;
 	
 	
 	public RdzVousController() {
-		this.dial = new RdzVousDialog();
+		listeVetos = PersonnelManager.get().getVeto();
+		this.dial = new RdzVousDialog(listeVetos);
 		hide();
 	}
 	
@@ -105,5 +116,52 @@ public class RdzVousController implements MenuController {
 	public JPanel getPanel() {
 		return this.dial;
 	}
+
+	public void addRdzVous() {
+		if(heure == null || client == null) {
+			 ErrorDialog.showError("Merci de renseigner une heure et un client");
+		}else {
+			if(veto == null) {
+				veto = this.listeVetos.get(0);
+			}
+			if(date == null) {
+				Date date = new Date();
+				this.date = date;
+			}
+			if(minutes == null) {
+				this.minutes = "00";
+			}
+			try {
+				System.out.println(heure);
+				System.out.println(minutes);
+				System.out.println(veto);
+				System.out.println(animal);
+				System.out.println(date);
+				RendezVousManager.addRdv(veto, animal, date);
+			} catch (BLLException e) {
+				e.printStackTrace();
+			}
+		}
+	
+	}
+
+	public void setVeto(int index) {
+		this.veto = listeVetos.get(index);
+	}
+
+	public void setDate(Date pDate) {
+		this.date = pDate;
+	}
+
+	public void setHeure(String h) {
+		this.heure = h;
+	}
+
+	public void setMinutes(String m) {
+		this.minutes = m;
+	}
+
+
+
 
 }
