@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -13,9 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFormattedTextField.AbstractFormatter;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -26,12 +25,15 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
+import fr.eni.clinique_veto.bll.PersonnelManager;
+import fr.eni.clinique_veto.bo.Personnel;
+
 @SuppressWarnings("serial")
 public class RdzVousDialog extends JPanel {
 	
 		private static int WIDTH = 750;
 		private static int HEIGHT = 700;
-		private static String[] LISTE_HEURES = {"06","07","08","09","10","11","12","13","14","15","16","17","18","19","20"};
+		private static String[] LISTE_HEURES = {"07","08","09","10","11","12","13","14","15","16","17","18","19","20"};
 		private static String[] LISTE_MINUTES = {"00","15","30","45"};
 		
 		private JPanel northPanel;
@@ -60,19 +62,20 @@ public class RdzVousDialog extends JPanel {
 		
 
 		private JComboBox comboVeto;
-		private JComboBox comboHeure;
-		private JComboBox comboMin;
+		private JComboBox<String> comboHeure;
+		private JComboBox<String> comboMin;
 		
 		private JButton btnValider;
 		private JButton btnAnnuler;
 		
 		
-		private String[] listeVetos = {"dr mabuse", "dr jivago"};
-
+		private String[] listeVetos ;
+		private List<Personnel> arrListeVeto;
 		
-		public RdzVousDialog() {
+		public RdzVousDialog(List<Personnel> pListeVetos) {
 			this.setSize(WIDTH, HEIGHT);
 			this.setLayout(new BorderLayout());
+			arrListeVeto = pListeVetos;
 			this.initComponents();
 			this.initListeners();
 		}
@@ -80,9 +83,14 @@ public class RdzVousDialog extends JPanel {
 
 		private void initListeners() {
 			btnSearch.addActionListener((e)->RdzVousController.get().chercherClient(searchClient.getText()));
-			btnValider.addActionListener((e)-> System.out.println("validé"));
-			btnAnnuler.addActionListener((e)->  this.setVisible(false));
+			btnValider.addActionListener((e)-> RdzVousController.get().addRdzVous());
+			comboVeto.addActionListener((e)-> RdzVousController.get().setVeto(comboVeto.getSelectedIndex()));
+			datePicker.addActionListener((e)-> RdzVousController.get().setDate((Date)datePicker.getModel().getValue()));
+			comboHeure.addActionListener((e)-> RdzVousController.get().setHeure((String)comboHeure.getSelectedItem()));
+			comboMin.addActionListener((e)-> RdzVousController.get().setMinutes((String)comboMin.getSelectedItem()));
+			btnAnnuler.addActionListener((e)->  this.setVisible(false));		
 		}
+
 
 
 		private void initComponents() {
@@ -117,6 +125,10 @@ public class RdzVousDialog extends JPanel {
 			vetoPanel.setBorder(title);
 			
 			vetoLabel = new JLabel("<html><h3>vétérinaire</h3></html>");
+			listeVetos = new String[arrListeVeto.size()];
+			for(int i = 0; i<arrListeVeto.size() ; i++) {
+				listeVetos[i] = arrListeVeto.get(i).getNom();
+			}
 			comboVeto = new JComboBox(listeVetos);
 			comboVeto.setPreferredSize(new Dimension(50,20));
 			comboVeto.setMaximumSize(new Dimension(200,30));
@@ -206,6 +218,7 @@ public class RdzVousDialog extends JPanel {
 			}
 			
 		}
+	
 		
 	
 
