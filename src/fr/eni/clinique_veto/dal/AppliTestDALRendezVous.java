@@ -1,24 +1,24 @@
 package fr.eni.clinique_veto.dal;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Calendar;
 
 import fr.eni.clinique_veto.bo.Animal;
 import fr.eni.clinique_veto.bo.Personnel;
 import fr.eni.clinique_veto.bo.RendezVous;
 import fr.eni.clinique_veto.bo.client.Client;
-import fr.eni.clinique_veto.dal.jdbc.RendezVousDAOJdbcImpl;
 
 public class AppliTestDALRendezVous {
 	public static void main(String[] args){
 		
-	RendezVousDAO rendezVousDAO = new RendezVousDAOJdbcImpl();
+	RendezVousDAO rendezVousDAO = DAOFactory.getRendezVousDAO();
 		
 				// set the date of a given month
 				Calendar calendar = Calendar.getInstance();
 				calendar.set(Calendar.YEAR, 2018);
-			    calendar.set(Calendar.MONTH, Calendar.JANUARY);
+			    calendar.set(Calendar.MONTH, 1);
 			    calendar.set(Calendar.SECOND, 0);
 			    //set a date for a given hour
 				calendar.set(Calendar.DATE, 23);
@@ -37,8 +37,10 @@ public class AppliTestDALRendezVous {
 				calendar.set(Calendar.MINUTE, 45);
 				Date date3 = new Date(calendar.getTime().getTime());
 				//set a date for a given hour
+				//calendar.set(Calendar.YEAR, 2018);
+				//calendar.set(Calendar.MONTH, 1);
 				calendar.set(Calendar.DATE, 23);
-				calendar.set(Calendar.HOUR_OF_DAY, 9);
+				calendar.set(Calendar.HOUR_OF_DAY, 11);
 				calendar.set(Calendar.MINUTE, 0);
 				Date date4 = new Date(calendar.getTime().getTime());
 				//set a date for a given hour
@@ -69,32 +71,34 @@ public class AppliTestDALRendezVous {
 		Animal a5 = new Animal("maxD",'H',"blanc","cheval gentil","Cheval",3,null, null, false);
 		
 		p1.setId(1);
+		a3.setCodeAnimal(4);
 		a1.setCodeAnimal(3);
 		a4.setCodeAnimal(6);
-		a5.setCodeAnimal(7);
-		System.out.println(p1.getId());
-		System.out.println(date1);
-		System.out.println(a1.getCodeAnimal());
+		a5.setCodeAnimal(5);
 		
-		
+		RendezVous rdv4 = new RendezVous(p1, date4, a3);
 		RendezVous rdv1 = new RendezVous(p1, date1, a1);
 		RendezVous rdv2 = new RendezVous(p1, date2, a4);
 		RendezVous rdv3 = new RendezVous(p1, date3, a5);
+		
 		//RendezVous rdv4 = new RendezVous(p1, date1, a4);
 		
 		System.out.println("Ajout des rdvs:\n--------------------");
 		try {
+			rendezVousDAO.insert(rdv4);
 			rendezVousDAO.insert(rdv1);
 			rendezVousDAO.insert(rdv2);
-			rendezVousDAO.insert(rdv3);
+			rendezVousDAO.insert(rdv3); 
+			
 		} catch (DALException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		System.out.println("Afficher la liste de RDV pour la date : " + date1);
+		System.out.println("Afficher la liste de RDV pour la date : " + date3);
+		List<RendezVous> listeRDV = new ArrayList<RendezVous>();
 		try {
-			List<RendezVous> listeRDV = rendezVousDAO.getVetoRdvForDay(p1, date1);
+			listeRDV = rendezVousDAO.getVetoRdvForDay(p1, date3);
 			afficherListeRendezVous(listeRDV);
 		} catch (DALException e) {
 			// TODO Auto-generated catch block

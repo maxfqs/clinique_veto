@@ -25,11 +25,14 @@ public class AnimalDAOJdbcImpl implements AnimalDAO{
 	private static final String sqlSelectByClient = "select * from Animaux where CodeClient = ? and Archive = 0";
 	private static final String sqlSelectById = "select * from Animaux where CodeAnimal = ? and Archive = 0";
 	
+	public AnimalDAOJdbcImpl(Connection cnx){
+		this.cnx = cnx;	
+	}
+	
 	public Animal getAnimalById(int id) throws DALException{
 		PreparedStatement rqt = null;
 		ResultSet rs = null;
 		try{
-		cnx = JDBCTools.getConnection();
 		rqt = cnx.prepareStatement(sqlSelectById);
 		rqt.setInt(1, id);
 		rs = rqt.executeQuery();
@@ -50,32 +53,15 @@ public class AnimalDAOJdbcImpl implements AnimalDAO{
 		}
 	} catch (SQLException e) {
 		throw new DALException("selectAll failed" , e);
-	} finally {
-		try {
-			if (rs != null){
-				rs.close();
-			}
-			if (rqt != null){
-				rqt.close();
-			}
-			if(cnx!=null){
-				cnx.close();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-	}
+	} 
 	
 		return null;
 	}
 	public List<Animal> selectAll() throws DALException, SQLException {
 		List<Animal> la = new ArrayList<Animal>();
-		
 			Statement rqt = null;
 			ResultSet rs = null;
 			try{
-			cnx = JDBCTools.getConnection();
 			rqt = cnx.createStatement();
 			rs = rqt.executeQuery(sqlSelectAll);
 			Animal a = null;
@@ -95,23 +81,7 @@ public class AnimalDAOJdbcImpl implements AnimalDAO{
 			}
 		} catch (SQLException e) {
 			throw new DALException("selectAll failed" , e);
-		} finally {
-			try {
-				if (rs != null){
-					rs.close();
-				}
-				if (rqt != null){
-					rqt.close();
-				}
-				if(cnx!=null){
-					cnx.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-		}
-		
+		} 	
 		return la;
 	}
 	
@@ -119,7 +89,6 @@ public class AnimalDAOJdbcImpl implements AnimalDAO{
 		PreparedStatement rqt = null;
 		ResultSet rs = null;
 		try{
-			cnx = JDBCTools.getConnection();
 			rqt = cnx.prepareStatement(sqlUpdate);
 			rqt.setString(1, a.getNomAnimal());
 			rqt.setString(2, String.valueOf(a.getSexe()));
@@ -135,30 +104,13 @@ public class AnimalDAOJdbcImpl implements AnimalDAO{
 			rqt.executeUpdate();
 		} catch (SQLException e) {
 			throw new DALException("update failed - Animal = " + a.getCodeAnimal() , e);
-		} finally {
-			try {
-				if (rs != null){
-					rs.close();
-				}
-				if (rqt != null){
-					rqt.close();
-				}
-				if(cnx!=null){
-					cnx.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-		}
-		
+		} 
 	}
 	
 	public void insert(Animal a) throws DALException {
 		PreparedStatement rqt = null;
 		ResultSet rs = null;
 		try{
-			cnx = JDBCTools.getConnection();
 			rqt = cnx.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
 			rqt.setString(1, a.getNomAnimal());
 			rqt.setString(2, String.valueOf(a.getSexe()));
@@ -179,21 +131,6 @@ public class AnimalDAOJdbcImpl implements AnimalDAO{
 			
 		}  catch (SQLException e) {
 			throw new DALException("insert failed - animal = " + a.getNomAnimal() , e);
-		} finally {
-			try {
-				if (rs != null){
-					rs.close();
-				}
-				if (rqt != null){
-					rqt.close();
-				}
-				if(cnx!=null){
-					cnx.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
 		}
 		
 		
@@ -205,7 +142,6 @@ public class AnimalDAOJdbcImpl implements AnimalDAO{
 		Statement rqt = null;
 		ResultSet rs = null;
 		try{
-		cnx = JDBCTools.getConnection();
 		rqt = cnx.createStatement();
 		rs = rqt.executeQuery(sqlSelectRaces);
 		
@@ -215,22 +151,7 @@ public class AnimalDAOJdbcImpl implements AnimalDAO{
 		}
 	} catch (SQLException e) {
 		throw new DALException("selectAll failed" , e);
-	} finally {
-		try {
-			if (rs != null){
-				rs.close();
-			}
-			if (rqt != null){
-				rqt.close();
-			}
-			if(cnx!=null){
-				cnx.close();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-	}
+	} 
 		return listeRaces;
 	}
 	
@@ -240,7 +161,6 @@ public class AnimalDAOJdbcImpl implements AnimalDAO{
 		PreparedStatement rqt = null;
 		ResultSet rs = null;
 		try{
-		cnx = JDBCTools.getConnection();
 		rqt = cnx.prepareStatement(sqlSelectByClient);
 		rqt.setInt(1, codeClient);
 		rs = rqt.executeQuery();
@@ -261,23 +181,7 @@ public class AnimalDAOJdbcImpl implements AnimalDAO{
 		}
 	} catch (SQLException e) {
 		throw new DALException("selectByClient failed" , e);
-	} finally {
-		try {
-			if (rs != null){
-				rs.close();
-			}
-			if (rqt != null){
-				rqt.close();
-			}
-			if(cnx!=null){
-				cnx.close();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-	}
-	
+	} 
 	return la;
 	}
 	

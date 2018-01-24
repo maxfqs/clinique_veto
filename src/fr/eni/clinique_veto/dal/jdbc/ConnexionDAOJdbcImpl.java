@@ -12,9 +12,13 @@ import fr.eni.clinique_veto.dal.JDBCTools;
 
 public class ConnexionDAOJdbcImpl implements ConnexionDAO{
 	private static final String sqlVerifierPersonnel = "select * from Personnels where Nom = ? and MotPasse = ?";
+	private Connection cnx;
+	
+	public ConnexionDAOJdbcImpl(Connection cnx){
+		this.cnx = cnx;	
+	}
 	
 	public Personnel getUser(String nom, String mdp) throws DALException {
-		Connection cnx = null;
 		PreparedStatement rqt = null;
 		ResultSet rs = null;
 		

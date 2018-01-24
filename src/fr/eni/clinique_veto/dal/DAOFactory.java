@@ -1,88 +1,61 @@
 	package fr.eni.clinique_veto.dal;
 
-import fr.eni.clinique_veto.dal.ConnexionDAO;
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import fr.eni.clinique_veto.dal.jdbc.ClientsDAOImplJDBC;
+import fr.eni.clinique_veto.dal.jdbc.AnimalDAOJdbcImpl;
+import fr.eni.clinique_veto.dal.jdbc.ConnexionDAOJdbcImpl;
+import fr.eni.clinique_veto.dal.jdbc.PersonnelDAOJdbcImpl;
+import fr.eni.clinique_veto.dal.jdbc.RendezVousDAOJdbcImpl;
 
 public class DAOFactory {
-	public static ConnexionDAO getConnexionDAO()  {
-		ConnexionDAO ConnexionDAO=null;
-		try {
-			ConnexionDAO=(ConnexionDAO ) Class.forName("fr.eni.clinique_veto.dal.jdbc.ConnexionDAOJdbcImpl").newInstance();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	private static Connection cnx;
+	private static ConnexionDAO connexionDAO;
+	private static ClientDAO clientDAO;
+	private static AnimalDAO animalDAO;
+	private static RendezVousDAO rendezVousDAO;
+	private static PersonnelDAO personnelDAO;
+	
+		static {
+			 try {
+				cnx = JDBCTools.getConnection();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			 
+			 connexionDAO = new ConnexionDAOJdbcImpl(cnx);
+			 clientDAO = new ClientsDAOImplJDBC(cnx);
+			 animalDAO = new AnimalDAOJdbcImpl(cnx);
+			 rendezVousDAO = new RendezVousDAOJdbcImpl(cnx);
+			 personnelDAO = new PersonnelDAOJdbcImpl(cnx);
 		}
-		return ConnexionDAO; 
+		
+	
+
+	
+	
+	public static ConnexionDAO getConnexionDAO()  {
+		
+		return connexionDAO; 
 	}
 	public static PersonnelDAO getPersonnelDAO(){
-		PersonnelDAO PersonnelDAO=null;
-		try {
-			PersonnelDAO=(PersonnelDAO ) Class.forName("fr.eni.clinique_veto.dal.jdbc.PersonnelDAOJdbcImpl").newInstance();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return PersonnelDAO; 
+		
+		return personnelDAO; 
 	}
 	
 	public static ClientDAO getClientDAO(){
-		ClientDAO ClientDAO=null;
-		try {
-			ClientDAO=(ClientDAO ) Class.forName("fr.eni.clinique_veto.dal.jdbc.ClientsDAOImplJDBC").newInstance();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return ClientDAO; 
+		
+		return clientDAO; 
 	}
 	public static AnimalDAO getAnimalDAO()  {
-		AnimalDAO AnimalDAO=null;
-		try {
-			AnimalDAO=(AnimalDAO ) Class.forName("fr.eni.clinique_veto.dal.jdbc.AnimalDAOJdbcImpl").newInstance();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return AnimalDAO; 
+		
+		return animalDAO; 
 	}
 	
 	public static RendezVousDAO getRendezVousDAO()  {
-		RendezVousDAO rendezVousDAO = null;
-		try {
-			rendezVousDAO=(RendezVousDAO ) Class.forName("fr.eni.clinique_veto.dal.jdbc.RendezVousDAOJdbcImpl").newInstance();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		return rendezVousDAO; 
 	}
 }
