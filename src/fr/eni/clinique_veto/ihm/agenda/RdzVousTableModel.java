@@ -19,19 +19,16 @@ public class RdzVousTableModel extends AbstractTableModel {
 
 	@Override
 	public String getColumnName(int col) {
-		System.out.println("col name");
 		return columnNames[col];
 	}
 
 	@Override
 	public int getRowCount() {
-		System.out.println("row count");
 		return listeRdzVous.size();
 	}
 
 	@Override
 	public int getColumnCount() {
-		System.out.println("col count");
 		return columnNames.length;
 	}
 
@@ -45,7 +42,7 @@ public class RdzVousTableModel extends AbstractTableModel {
 			val = listeRdzVous.get(rowIndex).getHour();
 			break;
 		case RdzVousTable.COL_NOM:
-			val = listeRdzVous.get(rowIndex).getAnimal().getClient();
+			val = "test";
 			break;
 		case RdzVousTable.COL_ANIMAL:
 			val = listeRdzVous.get(rowIndex).getAnimal().getNomAnimal();
