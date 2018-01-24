@@ -17,19 +17,23 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTable;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.AbstractTableModel;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import fr.eni.clinique_veto.bll.PersonnelManager;
+import fr.eni.clinique_veto.bll.ClientManager;
+import fr.eni.clinique_veto.bll.ManagerListObserver;
 import fr.eni.clinique_veto.bo.Personnel;
+import fr.eni.clinique_veto.bo.RendezVous;
+
 
 @SuppressWarnings("serial")
-public class RdzVousDialog extends JPanel {
+public class RdzVousDialog extends JPanel  implements ManagerListObserver {
 	
 		private static int WIDTH = 750;
 		private static int HEIGHT = 700;
@@ -58,8 +62,8 @@ public class RdzVousDialog extends JPanel {
 		private JTextField searchClient;
 		private JButton btnSearch;
 		
-		private JTable tableRdzVs;
-		
+		private JPanel panelRdzVous;
+		private RdzVousTable tableRdzVs;
 
 		private JComboBox comboVeto;
 		private JComboBox<String> comboHeure;
@@ -84,8 +88,14 @@ public class RdzVousDialog extends JPanel {
 		private void initListeners() {
 			btnSearch.addActionListener((e)->RdzVousController.get().chercherClient(searchClient.getText()));
 			btnValider.addActionListener((e)-> RdzVousController.get().addRdzVous());
-			comboVeto.addActionListener((e)-> RdzVousController.get().setVeto(comboVeto.getSelectedIndex()));
-			datePicker.addActionListener((e)-> RdzVousController.get().setDate((Date)datePicker.getModel().getValue()));
+			comboVeto.addActionListener((e)->{
+				RdzVousController.get().setVeto(comboVeto.getSelectedIndex());
+				RdzVousController.get().getRendezVous();
+			});
+			datePicker.addActionListener((e)->{
+				RdzVousController.get().setDate((Date)datePicker.getModel().getValue());
+				RdzVousController.get().getRendezVous();
+			});
 			comboHeure.addActionListener((e)-> RdzVousController.get().setHeure((String)comboHeure.getSelectedItem()));
 			comboMin.addActionListener((e)-> RdzVousController.get().setMinutes((String)comboMin.getSelectedItem()));
 			btnAnnuler.addActionListener((e)->  this.setVisible(false));		
@@ -175,6 +185,10 @@ public class RdzVousDialog extends JPanel {
 			northPanel.add(vetoPanel);
 			northPanel.add(timePanel);
 			
+		
+			centerPanel = new JPanel();
+			panelRdzVous = new JPanel();
+			
 			southPanel = new JPanel();
 			btnAnnuler = new JButton("annuler");
 			btnValider = new JButton("valider");
@@ -185,15 +199,20 @@ public class RdzVousDialog extends JPanel {
 			this.add(southPanel, BorderLayout.SOUTH);
 		}
 		
-		private void addTable() {
-			List<String> liste = new ArrayList<>();
+		public void addTable(List<RendezVous> pListe) {
+			panelRdzVous.removeAll();
+			tableRdzVs = new RdzVousTable(pListe);
+			tableRdzVs.setPreferredScrollableViewportSize(new Dimension(500,150));
+			JScrollPane scroll = new JScrollPane(tableRdzVs);		
+			panelRdzVous.add(scroll);
+			this.add(panelRdzVous, BorderLayout.CENTER);
+			this.revalidate();
+			this.repaint();
 		}
 		
 		public void setNomRendezVous(String pNomClient,String pNomAnimal) {
 			nomClient.setText("Nom du client : " + pNomClient);
 			nomAnimal.setText("Nom de l'animal : "+pNomAnimal );
-			System.out.println("Nom du client : " + pNomClient);
-
 		}
 		
 		private class DateLabelFormatter extends AbstractFormatter{
@@ -217,6 +236,11 @@ public class RdzVousDialog extends JPanel {
 				return "";
 			}
 			
+		}
+
+		@Override
+		public void onListUpdated() {
+			((AbstractTableModel) tableRdzVs.getModel()).fireTableDataChanged();	
 		}
 	
 		

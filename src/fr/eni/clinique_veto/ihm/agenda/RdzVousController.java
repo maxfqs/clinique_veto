@@ -13,6 +13,7 @@ import fr.eni.clinique_veto.bll.PersonnelManager;
 import fr.eni.clinique_veto.bll.RendezVousManager;
 import fr.eni.clinique_veto.bo.Animal;
 import fr.eni.clinique_veto.bo.Personnel;
+import fr.eni.clinique_veto.bo.RendezVous;
 import fr.eni.clinique_veto.bo.client.Client;
 import fr.eni.clinique_veto.dal.ClientDALException;
 import fr.eni.clinique_veto.ihm.ErrorDialog;
@@ -26,6 +27,7 @@ public class RdzVousController implements MenuController {
 
 	private static RdzVousController instance;
 	private List<Personnel> listeVetos ;
+	private List<RendezVous> listeRdzVs;
 	private Animal animal;
 	private Client client;
 	private Personnel veto;
@@ -34,11 +36,14 @@ public class RdzVousController implements MenuController {
 	private String minutes;
 	private JDialog clientDial;
 	private RdzVousDialog dial ;
+
 	
 	
 	public RdzVousController() {
 		listeVetos = PersonnelManager.get().getVeto();
 		this.dial = new RdzVousDialog(listeVetos);
+		this.veto = listeVetos.get(0);
+		this.date =  new Date();
 		hide();
 	}
 	
@@ -118,18 +123,17 @@ public class RdzVousController implements MenuController {
 	}
 
 	public void addRdzVous() {
-		if(heure == null || client == null) {
-			 ErrorDialog.showError("Merci de renseigner une heure et un client");
+		if( client == null) {
+			 ErrorDialog.showError("Merci de renseigner un client");
 		}else {
 			if(veto == null) {
 				veto = this.listeVetos.get(0);
 			}
-			if(date == null) {
-				Date date = new Date();
-				this.date = date;
-			}
 			if(minutes == null) {
 				this.minutes = "00";
+			}
+			if(heure == null){
+				this.heure = "08";
 			}
 			try {
 				System.out.println(heure);
@@ -137,8 +141,11 @@ public class RdzVousController implements MenuController {
 				System.out.println(veto);
 				System.out.println(animal);
 				System.out.println(date);
-				RendezVousManager.addRdv(veto, animal, date);
+				RendezVousManager.addRdv(veto, animal, date, Integer.parseInt(heure), Integer.parseInt(minutes));
+				listeRdzVs = RendezVousManager.getVetoRdvForDate(veto, date);
+				dial.onListUpdated();
 			} catch (BLLException e) {
+				
 				e.printStackTrace();
 			}
 		}
@@ -159,6 +166,25 @@ public class RdzVousController implements MenuController {
 
 	public void setMinutes(String m) {
 		this.minutes = m;
+	}
+
+	public void getRendezVous() {
+		try {
+			
+			this.listeRdzVs = RendezVousManager.getVetoRdvForDate(veto, date);
+			System.out.println("rendez vous du " + date);
+			for(RendezVous r : listeRdzVs) {
+				System.out.println(r);
+			}
+			dial.addTable(listeRdzVs);
+		
+		} catch (BLLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public List<RendezVous> getListeRdzVous(){
+		return this.listeRdzVs;
 	}
 
 
