@@ -32,11 +32,35 @@ public class RendezVousManager {
 		return list;
 	}
 	
+	public List<RendezVous> getRdvList() {
+		return Collections.unmodifiableList(rdvList);
+	}
+	
+	public List<Integer> disponibleHour(int h){
+		List<Integer> lis = new ArrayList<>();
+		
+			for(RendezVous Rdv : rdvList){
+				if(rdvList.size() == 0){
+					lis.add(1); lis.add(15); lis.add(30); lis.add(45);
+				} else{
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(Rdv.getDate());
+					int hour =  cal.get(cal.HOUR_OF_DAY);
+					int minutes = cal.get(cal.MINUTE);
+					int c = 0;
+					while(h == hour && minutes <= 45){
+						if(minutes != c) lis.add(minutes);
+						c += 15;
+					}
+				}
 	public static void addRdv(Personnel p, Animal a, Date d) throws BLLException {
 		if(p == null || a == null || d == null) {
 			throw new BLLException(BLLError.INVALID_REQUEST);
 		}
 				
+			}
+			
+		return lis;
 		try {
 			RendezVous rdv = new RendezVous(p, d, a);
 			rdvDAO.insert(rdv);
