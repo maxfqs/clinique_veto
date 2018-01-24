@@ -45,7 +45,7 @@ public class RendezVousManager {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(d);
 			int day = cal.get(cal.DAY_OF_MONTH);
-			int month = cal.get(cal.MONTH) + 1;
+			int month = cal.get(cal.MONTH);
 			int year = cal.get(cal.YEAR);
 			cal.set(cal.YEAR, year);
 		    cal.set(cal.MONTH, month);
