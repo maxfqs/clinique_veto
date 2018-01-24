@@ -118,6 +118,7 @@ public class AppliTestDALRendezVous {
 	public static void afficherListeRendezVous(List<RendezVous> lr){
 		for(RendezVous rdv : lr){
 			System.out.println(rdv);
+			System.out.println(rdv.getClient().getNomClient());
 		}
 	}
 }
