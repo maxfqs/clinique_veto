@@ -53,6 +53,7 @@ public class ButtonEditor extends DefaultCellEditor {
 	        
 	    public void actionPerformed(ActionEvent event) {
 	
+    	RdzVousController.get().setSelectedRdzVs(this.table.getSelectedRow());
 	      RdzVousController.get().removeRdzVous();
 
 	    }
