@@ -1,5 +1,6 @@
 package fr.eni.clinique_veto.ihm.agenda;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,6 +41,7 @@ public class RdzVousController implements MenuController {
 	
 	
 	public RdzVousController() {
+		this.listeRdzVs =new ArrayList<RendezVous>();
 		listeVetos = PersonnelManager.get().getVeto();
 		this.dial = new RdzVousDialog(listeVetos);
 		this.veto = listeVetos.get(0);
@@ -136,16 +138,12 @@ public class RdzVousController implements MenuController {
 				this.heure = "07";
 			}
 			try {
-				System.out.println(heure);
-				System.out.println(minutes);
-				System.out.println(veto);
-				System.out.println(animal);
-				System.out.println(date);
 				RendezVousManager.addRdv(veto, animal, date, Integer.parseInt(heure), Integer.parseInt(minutes));
-				listeRdzVs = RendezVousManager.getVetoRdvForDate(veto, date);
+				listeRdzVs.clear();
+				listeRdzVs.addAll(RendezVousManager.getVetoRdvForDate(veto, date));
 				dial.onListUpdated();
 			} catch (BLLException e) {
-				
+				ErrorDialog.showError("Cet horaire n'est pas libre, merci d'en choisir un autre");
 				e.printStackTrace();
 			}
 		}
@@ -169,18 +167,13 @@ public class RdzVousController implements MenuController {
 	}
 
 	public void getRendezVous() {
-		try {
-			
-			this.listeRdzVs = RendezVousManager.getVetoRdvForDate(veto, date);
-			System.out.println("rendez vous du " + date);
-			for(RendezVous r : listeRdzVs) {
-				System.out.println(r);
-			}
-			dial.addTable(listeRdzVs);
-		
-		} catch (BLLException e) {
-			e.printStackTrace();
-		}
+			try {
+				listeRdzVs.clear();
+				listeRdzVs.addAll(RendezVousManager.getVetoRdvForDate(veto, date));
+			} catch (BLLException e) {
+				e.printStackTrace();
+			}	
+		dial.addTable(listeRdzVs);
 	}
 	
 	public List<RendezVous> getListeRdzVous(){

@@ -62,11 +62,11 @@ public class RendezVousDAOJdbcImpl implements RendezVousDAO{
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		int day = cal.get(cal.DAY_OF_MONTH);
-		int month = cal.get(cal.MONTH);
+		int month = cal.get(cal.MONTH)+1;
 		int year = cal.get(cal.YEAR);
 		PreparedStatement rqt = null;
 		ResultSet rs = null;
-		System.out.println(day + " " + month + " " + year);
+
 		try{
 			rqt = cnx.prepareStatement(sqlSelectByVeto);
 			
