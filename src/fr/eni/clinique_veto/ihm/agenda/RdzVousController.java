@@ -133,7 +133,7 @@ public class RdzVousController implements MenuController {
 				this.minutes = "00";
 			}
 			if(heure == null){
-				this.heure = "08";
+				this.heure = "07";
 			}
 			try {
 				System.out.println(heure);

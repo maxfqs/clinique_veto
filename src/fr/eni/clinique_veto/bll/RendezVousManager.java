@@ -45,7 +45,7 @@ public class RendezVousManager {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(d);
 			int day = cal.get(cal.DAY_OF_MONTH);
-			int month = cal.get(cal.MONTH) + 1;
+			int month = cal.get(cal.MONTH);
 			int year = cal.get(cal.YEAR);
 			cal.set(cal.YEAR, year);
 		    cal.set(cal.MONTH, month);
@@ -54,12 +54,8 @@ public class RendezVousManager {
 			cal.set(cal.DATE, day);
 			cal.set(cal.HOUR_OF_DAY, heure);
 			cal.set(cal.MINUTE, minutes);
-			
-			
-			
-			
-			
-			RendezVous rdv = new RendezVous(p, d, a);
+			Date date = new Date(cal.getTime().getTime());
+			RendezVous rdv = new RendezVous(p, date, a);
 				rdvDAO.insert(rdv);
 		} catch (DALException e) {
 			throw new BLLException(BLLError.FAILED_RDV_ADD);
