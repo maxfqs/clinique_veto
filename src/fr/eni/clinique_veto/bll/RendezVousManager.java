@@ -1,5 +1,8 @@
 package fr.eni.clinique_veto.bll;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +15,7 @@ import fr.eni.clinique_veto.dal.RendezVousDAO;
 
 public class RendezVousManager {
 	private static RendezVousDAO rdvDAO;
+	private static Integer[] availableMin = {0, 15, 30, 45};
 	
 	static {
 		rdvDAO = DAOFactory.getRendezVousDAO();
@@ -32,35 +36,11 @@ public class RendezVousManager {
 		return list;
 	}
 	
-	public List<RendezVous> getRdvList() {
-		return Collections.unmodifiableList(rdvList);
-	}
-	
-	public List<Integer> disponibleHour(int h){
-		List<Integer> lis = new ArrayList<>();
-		
-			for(RendezVous Rdv : rdvList){
-				if(rdvList.size() == 0){
-					lis.add(1); lis.add(15); lis.add(30); lis.add(45);
-				} else{
-					Calendar cal = Calendar.getInstance();
-					cal.setTime(Rdv.getDate());
-					int hour =  cal.get(cal.HOUR_OF_DAY);
-					int minutes = cal.get(cal.MINUTE);
-					int c = 0;
-					while(h == hour && minutes <= 45){
-						if(minutes != c) lis.add(minutes);
-						c += 15;
-					}
-				}
 	public static void addRdv(Personnel p, Animal a, Date d) throws BLLException {
 		if(p == null || a == null || d == null) {
 			throw new BLLException(BLLError.INVALID_REQUEST);
 		}
-				
-			}
-			
-		return lis;
+		
 		try {
 			RendezVous rdv = new RendezVous(p, d, a);
 			rdvDAO.insert(rdv);
@@ -80,5 +60,30 @@ public class RendezVousManager {
 		} catch (DALException e) {
 			throw new BLLException(BLLError.FAILED_RDV_DELETE);
 		}
-	}	
+	}
+	
+	public List<Integer> disponibleHour(List<RendezVous> rdvs, int h){
+		List<Integer> minutes = new ArrayList<Integer>();
+		
+		for(RendezVous Rdv : rdvs){
+			// Aucun rdv, toutes les plages dispo
+			if(rdvs.size() == 0){
+				minutes.addAll(Arrays.asList(availableMin));
+			} else{
+				// Trouve les plages dispo
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(Rdv.getDate());
+				
+				int hour =  cal.get(Calendar.HOUR_OF_DAY);
+				int m = cal.get(Calendar.MINUTE);
+				int c = 0;
+				while(h == hour && m <= 45){
+					if(m != c) minutes.add(m);
+					c += 15;
+				}
+			}				
+		}
+		
+		return minutes;
+	}
 }
