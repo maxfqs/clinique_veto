@@ -8,6 +8,7 @@ import fr.eni.clinique_veto.bo.RendezVous;
 
 public interface RendezVousDAO {
 	
+	
 	void insert(RendezVous rdv) throws DALException;
 	
 	List<RendezVous> getVetoRdvForDay(Personnel p, Date date) throws DALException;

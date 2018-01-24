@@ -36,14 +36,31 @@ public class RendezVousManager {
 		return list;
 	}
 	
-	public static void addRdv(Personnel p, Animal a, Date d) throws BLLException {
+	public static void addRdv(Personnel p, Animal a, Date d, int heure, int minutes) throws BLLException {
 		if(p == null || a == null || d == null) {
 			throw new BLLException(BLLError.INVALID_REQUEST);
 		}
 		
 		try {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(d);
+			int day = cal.get(cal.DAY_OF_MONTH);
+			int month = cal.get(cal.MONTH) + 1;
+			int year = cal.get(cal.YEAR);
+			cal.set(cal.YEAR, year);
+		    cal.set(cal.MONTH, month);
+		    cal.set(cal.SECOND, 0);
+		    //set a date for a given hour
+			cal.set(cal.DATE, day);
+			cal.set(cal.HOUR_OF_DAY, heure);
+			cal.set(cal.MINUTE, minutes);
+			
+			
+			
+			
+			
 			RendezVous rdv = new RendezVous(p, d, a);
-			rdvDAO.insert(rdv);
+				rdvDAO.insert(rdv);
 		} catch (DALException e) {
 			throw new BLLException(BLLError.FAILED_RDV_ADD);
 		}

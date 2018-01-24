@@ -65,12 +65,8 @@ public class ClientsDAOImplJDBC implements ClientDAO {
 			+ " WHERE CodeClient=?;"
 			+ " COMMIT"; 
 	
-	public ClientsDAOImplJDBC() {
-		try {
-			this.conn = JDBCTools.getConnection();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	public ClientsDAOImplJDBC(Connection conn) {
+		this.conn = conn;
 	}
 	
 	// ==> a ajouter exception DAL
@@ -110,14 +106,7 @@ public class ClientsDAOImplJDBC implements ClientDAO {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new ClientDALException("erreur lors de l'insertion des nouveaux clients");
-		}finally {
-			try {
-				if(pst!= null) {pst.close();};
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
-		
 	}
 	
 	// ==> a ajouter exception DAL
@@ -151,12 +140,6 @@ public class ClientsDAOImplJDBC implements ClientDAO {
 			
 		} catch (SQLException e) {
 			throw new ClientDALException("erreur lors de la modification du client");
-		}finally {		
-				try {
-					if(pst!= null) {pst.close();};
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
 		}
 	}
 	
@@ -190,12 +173,6 @@ public class ClientsDAOImplJDBC implements ClientDAO {
 			rs.close();
 		} catch (SQLException e) {
 			throw new ClientDALException("erreur lors de la recherche du client");
-		}finally {
-			try {
-				if(pst!= null) {pst.close();};
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 		return retListe;
 	}
@@ -233,12 +210,6 @@ public class ClientsDAOImplJDBC implements ClientDAO {
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			try {
-				if(pst!= null) {pst.close();};
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 		return retClient;
 	}
@@ -254,18 +225,7 @@ public class ClientsDAOImplJDBC implements ClientDAO {
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			throw new ClientDALException("erreur lors de l'archivage du client");
-		}finally {
-			try {
-				if(pst!= null) {pst.close();};
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 	}
-	
-
-	
-	
-	
-	
+		
 }

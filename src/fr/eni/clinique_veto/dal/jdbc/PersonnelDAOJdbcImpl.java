@@ -26,12 +26,14 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 	private static final String sqlDelete = "delete from Personnels where CodePers = ?";
 	private static final String sqSelectNomById = "select Nom from Personnel where CodePers = ?";
 	
+	public PersonnelDAOJdbcImpl(Connection cnx){
+		this.cnx = cnx;	
+	}
+	
 	public void insert(Personnel p) throws DALException {	
 		PreparedStatement rqt = null;
 		ResultSet rs = null;
 		try{
-			
-			cnx = JDBCTools.getConnection();
 			rqt = cnx.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
 			rqt.setString(1, p.getNom());
 			rqt.setString(2, p.getMdp());
@@ -47,23 +49,7 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 			
 		}  catch (SQLException e) {
 			throw new DALException("insert failed - personnel = " + p.getNom() , e);
-		} finally {
-			try {
-				if (rs != null){
-					rs.close();
-				}
-				if (rqt != null){
-					rqt.close();
-				}
-				if(cnx!=null){
-					cnx.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
 		}
-		
 	}
 	
 	
@@ -71,7 +57,6 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 		PreparedStatement rqt = null;
 		ResultSet rs = null;
 		try{
-			cnx = JDBCTools.getConnection();
 			rqt = cnx.prepareStatement(sqlUpdate);
 			rqt.setString(1, p.getNom());
 			rqt.setString(2, p.getMdp());
@@ -82,25 +67,8 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 			rqt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			throw new DALException("update failed - personnel = " + p.getId() , e);
-			
-		} finally {
-			try {
-				if (rs != null){
-					rs.close();
-				}
-				if (rqt != null){
-					rqt.close();
-				}
-				if(cnx!=null){
-					cnx.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
+			throw new DALException("update failed - personnel = " + p.getId() , e);		
 		}
-	
 	} 
 	
 	public List<Personnel> selectAll() throws SQLException, DALException {
@@ -109,7 +77,6 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 		ResultSet rs = null;
 		cnx = JDBCTools.getConnection();
 		try{
-			cnx = JDBCTools.getConnection();
 			rqt = cnx.createStatement();
 			rs = rqt.executeQuery(sqlSelectAll);
 			Personnel p = null;
@@ -124,23 +91,7 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 			}
 		} catch (SQLException e) {
 			throw new DALException("selectAll failed" , e);
-		} finally {
-			try {
-				if (rs != null){
-					rs.close();
-				}
-				if (rqt != null){
-					rqt.close();
-				}
-				if(cnx!=null){
-					cnx.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
 		}
-		
 		return ps;
 	}
 	
@@ -149,29 +100,12 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 		PreparedStatement rqt = null;
 		ResultSet rs = null;
 		try{
-			cnx = JDBCTools.getConnection();
 			rqt = cnx.prepareStatement(sqlDelete);
 			rqt.setInt(1, p.getId());
 			rqt.executeUpdate();
 		}  catch (SQLException e) {
 			throw new DALException("delete failed - personnel = " + p.getId() , e);
-		} finally {
-			try {
-				if (rs != null){
-					rs.close();
-				}
-				if (rqt != null){
-					rqt.close();
-				}
-				if(cnx!=null){
-					cnx.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-		}
-		
+		} 
 	}
 
 
