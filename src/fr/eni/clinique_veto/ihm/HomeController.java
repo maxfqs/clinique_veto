@@ -35,7 +35,7 @@ public class HomeController {
 		if(role.equals(PersonnelRole.ADMIN.getCode())) {
 			hframe.addPersonnelMenu();
 		} else if (role.equals(PersonnelRole.VETERINAIRE.getCode())) {
-			// agenda
+			hframe.addAgendaMenu();
 		} else { 
 			hframe.addClientMenu();
 		}
