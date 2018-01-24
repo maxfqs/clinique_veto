@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.clinique_veto.bo.client.Client;
+import fr.eni.clinique_veto.dal.ClientDAO;
+import fr.eni.clinique_veto.dal.DAOFactory;
 
 public class Test {
 	public static void main(String[] args) {
 
-	ClientsDAOImplJDBC dao = new ClientsDAOImplJDBC();
+	ClientDAO dao = DAOFactory.getClientDAO();
 	List<Client> listeClients = new ArrayList<Client>();
 	
 	Client c1 = new Client("MaxDef", "prenomClient1", "adresse1", "adresse2", "50505", "ville1", "numTel215", "assurance", "email@gmail.com", "remarque",0);
@@ -38,14 +40,14 @@ public class Test {
 			clientRecupere.setCodePostal("44100");
 			dao.modifierClient(clientRecupere);
 
-			System.out.println("\n===>description après modification");
+			System.out.println("\n===>description aprï¿½s modification");
 			System.out.println(clientRecupere.toString());
 			System.out.println("___________________________ _____________");
 			
-			System.out.println("archivage effectué :");
+			System.out.println("archivage effectuï¿½ :");
 			dao.archiver(clientRecupere.getCodeClient());
 			
-			System.out.println("Renvoie ClientDalException 'le client recherché n'existe pas 'car archivage effectué");
+			System.out.println("Renvoie ClientDalException 'le client recherchï¿½ n'existe pas 'car archivage effectuï¿½");
 			Client clientRecupere2 = dao.trouverParId(clientRecupere.getCodeClient());
 		
 		}

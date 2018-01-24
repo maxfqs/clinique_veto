@@ -9,7 +9,7 @@ import fr.eni.clinique_veto.dal.jdbc.ClientsDAOImplJDBC;
 public class AppliTestDALClients {
 	public static void main(String[] args) {
 
-	ClientsDAOImplJDBC dao = new ClientsDAOImplJDBC();
+	ClientDAO dao = DAOFactory.getClientDAO();
 	List<Client> listeClients = new ArrayList<Client>();
 	
 	Client c1 = new Client("MaxDef", "prenomClient1", "adresse1", "adresse2", "50505", "ville1", "numTel215", "assurance", "email@gmail.com", "remarque",0);
