@@ -32,7 +32,7 @@ public class ButtonEditor extends DefaultCellEditor {
 	    bListener.setTable(table);
 
 	    button.setText("supprimer");
-
+	
 	    return button;
 	  }
 
@@ -46,10 +46,9 @@ public class ButtonEditor extends DefaultCellEditor {
 	    public void setTable(JTable table){this.table = table;}
 	        
 	    public void actionPerformed(ActionEvent event) {
-	    	System.out.println(this.table.getSelectedRow());
-	    	RdzVousController.get().setSelectedRdzVs(this.table.getSelectedRow());
-	    	RdzVousController.get().removeRdzVous();
-	    
+	    	RdzVousController.get().removeRdzVous(((RdzVousTable)table).getSelected());
+            ((RdzVousTableModel)table.getModel()).fireTableRowsDeleted(this.row, this.row);
+             cancelCellEditing();
 	    }
 	  }     
 }

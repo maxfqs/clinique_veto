@@ -28,7 +28,6 @@ public class RechercheClientController {
 		try {
 			resultatRecherche = ClientManager.get().trouverClientParNom(nomClient);
 			if(resultatRecherche.size()>0) {
-				System.out.println("trouvé");
 				RechercheFrame.get().getTableOnSearch(resultatRecherche);
 			}else {
 				JOptionPane.showMessageDialog(null,

@@ -168,9 +168,9 @@ public class RdzVousController implements MenuController {
 		updateRdvTable();	
 	}
 	
-	public void removeRdzVous() {
+	public void removeRdzVous(RendezVous rdzVs) {
 		try {
-			RendezVousManager.removeRdv(selectedRdzVs.getPers(), selectedRdzVs.getAnimal(), selectedRdzVs.getDate());
+			RendezVousManager.removeRdv(rdzVs.getPers(), rdzVs.getAnimal(), rdzVs.getDate());
 			updateRdvTable();
 		} catch (BLLException e) {
 			e.printStackTrace();
