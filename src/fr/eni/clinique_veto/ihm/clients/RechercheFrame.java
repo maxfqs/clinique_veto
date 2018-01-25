@@ -79,21 +79,7 @@ public class RechercheFrame extends JDialog {
 		});
 	}
 	
-	public void initListenersRdzVs() {
-		btnChercher.addActionListener((e) -> RdzVousController.get().chercherClient(searchField.getText()));
-		validerBtn.addActionListener((e)-> {
-			try {
-				RdzVousController.get().afficherClient();
-			} catch (BLLException e1) {
-				System.out.println(e1);
-				JOptionPane.showMessageDialog(this,
-					    e1.getMessage(),
-					    "erreur",
-					    JOptionPane.ERROR_MESSAGE);
-			}
-		});
-	}
-	
+
 	
 
 	private void initComponent() {
