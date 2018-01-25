@@ -238,23 +238,7 @@ public class RdzVousDialog extends JPanel {
 			
 		}
 
-//		@Override
-//		public void onListUpdated() {
-//			((AbstractTableModel) tableRdzVs.getModel()).fireTableDataChanged();	
-//		}
-//		
-//		private void addListenerTable() {
-//			tableRdzVs.getSelectionModel().addListSelectionListener(new ListSelectionListener(){ 		
-//				@Override
-//				public void valueChanged(ListSelectionEvent arg0) {
-//
-////					RdzVousController.get().setSelectedRdzVs(tableRdzVs.getSelectedRow());
-////					Client clientToDisplay = ClientManager.get().getClients().get(clientTable.getSelectedRow());
-////					ClientManager.get().setDisplayedClient(clientToDisplay);
-//				}
-//		    });		
-//		}
-	
+
 		
 	
 
