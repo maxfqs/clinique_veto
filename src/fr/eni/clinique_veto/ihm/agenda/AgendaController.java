@@ -3,13 +3,15 @@ package fr.eni.clinique_veto.ihm.agenda;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
 
-import fr.eni.clinique_veto.bll.EspecesManager;
+import fr.eni.clinique_veto.bll.BLLException;
 import fr.eni.clinique_veto.bll.PersonnelManager;
+import fr.eni.clinique_veto.bll.RendezVousManager;
 import fr.eni.clinique_veto.bo.Personnel;
 import fr.eni.clinique_veto.bo.RendezVous;
 import fr.eni.clinique_veto.ihm.MenuController;
@@ -44,6 +46,19 @@ public class AgendaController implements MenuController {
 				if (e.getStateChange() != ItemEvent.SELECTED) return;
 				
 				Personnel v = vets.get(panel.getVetCBox().getSelectedIndex());
+				Date d = (Date) panel.getDatePicker().getModel().getValue();
+				
+				System.out.println(v);
+				System.out.println(d);
+				
+				List<RendezVous> data;
+				try {
+					data = RendezVousManager.getVetoRdvForDate(v, d);
+					panel.getRdvTable().updateData(data);
+					System.out.println(data);
+				} catch (BLLException e1) {
+					e1.printStackTrace();
+				}		
 			}
 		});		
 	}

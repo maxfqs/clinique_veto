@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -34,6 +35,7 @@ public class AgendaFrame extends JPanel {
 	private JComboBox<String> comboVeto;
 	private JDatePickerImpl datePicker;
 	private JButton dossierBtn;
+	private RdzVousTable rdvTable;
 	
 	public AgendaFrame() {
 		this.setSize(WIDTH, HEIGHT);
@@ -58,9 +60,7 @@ public class AgendaFrame extends JPanel {
 	private void initComponent() {
 		vetoPanel = new JPanel();
 		
-		// init false combo
-		String[] listeVeto = {"toto", "robert","william cramps"};
-		comboVeto = new JComboBox(listeVeto);
+		comboVeto = new JComboBox<String>();
 		comboVetoLabel = new JLabel("vétérinaire");
 		
 		UtilDateModel model = new UtilDateModel();
@@ -88,6 +88,9 @@ public class AgendaFrame extends JPanel {
 		this.add(northPanel, BorderLayout.NORTH);
 		
 		centerPanel = new JPanel();
+		rdvTable = new RdzVousTable();
+		JScrollPane scroll = new JScrollPane(rdvTable);
+		centerPanel.add(scroll);
 		this.add(centerPanel, BorderLayout.CENTER);
 		
 		southPanel = new JPanel();
@@ -100,6 +103,14 @@ public class AgendaFrame extends JPanel {
 	
 	public JComboBox<String> getVetCBox() {
 		return comboVeto;
+	}
+	
+	public RdzVousTable getRdvTable() {
+		return rdvTable;
+	}
+	
+	public JDatePickerImpl getDatePicker() {
+		return datePicker;
 	}
 	
 	private class DateLabelFormatter extends AbstractFormatter{
