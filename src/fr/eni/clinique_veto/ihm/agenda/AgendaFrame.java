@@ -95,6 +95,7 @@ public class AgendaFrame extends JPanel {
 		
 		southPanel = new JPanel();
 		dossierBtn = new JButton("Dossier médical");
+		dossierBtn.addActionListener((e) -> AgendaController.get().openMedicalFile());
 		
 		southPanel.add(dossierBtn);
 		this.add(southPanel, BorderLayout.SOUTH);

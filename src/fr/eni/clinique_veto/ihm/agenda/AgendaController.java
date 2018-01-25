@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import fr.eni.clinique_veto.bll.BLLException;
 import fr.eni.clinique_veto.bll.PersonnelManager;
 import fr.eni.clinique_veto.bll.RendezVousManager;
+import fr.eni.clinique_veto.bo.Animal;
 import fr.eni.clinique_veto.bo.Personnel;
 import fr.eni.clinique_veto.bo.RendezVous;
 import fr.eni.clinique_veto.ihm.MenuController;
@@ -73,6 +74,11 @@ public class AgendaController implements MenuController {
 		panel.getVetCBox().setModel(new DefaultComboBoxModel<String>(noms));
 	}
 	
+	public void openMedicalFile() {
+		Animal a = panel.getRdvTable().getSelected().getAnimal();
+		if(a == null) return;
+		System.out.println(a);
+	}
 	
 	@Override
 	public void show() {
