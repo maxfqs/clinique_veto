@@ -47,7 +47,7 @@ public class RdzVousTableModel extends AbstractTableModel {
 			val = listeRdzVous.get(rowIndex).getHour();
 			break;
 		case RdzVousTable.COL_NOM:
-			val = "test";
+			val = listeRdzVous.get(rowIndex).getClient().getNomClient();
 			break;
 		case RdzVousTable.COL_ANIMAL:
 			val = listeRdzVous.get(rowIndex).getAnimal().getNomAnimal();
