@@ -12,7 +12,7 @@ public class MainTest {
 		System.out.println("test");
 		CVApp.main(null);
 		try {
-			ConnexionManager.get().logUser("Firas", "firas");
+			ConnexionManager.get().logUser("vet", "vet");
 		} catch (BLLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
