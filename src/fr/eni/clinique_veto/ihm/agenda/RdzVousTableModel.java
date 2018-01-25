@@ -42,21 +42,24 @@ public class RdzVousTableModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Object val = null;
+		RendezVous rdv = listeRdzVous.get(rowIndex);
+		
 		switch (columnIndex) {
-		case RdzVousTable.COL_HEURE:
-			val = listeRdzVous.get(rowIndex).getHour();
-			break;
-		case RdzVousTable.COL_NOM:
-			val = listeRdzVous.get(rowIndex).getClient().getNomClient();
-			break;
-		case RdzVousTable.COL_ANIMAL:
-			val = listeRdzVous.get(rowIndex).getAnimal().getNomAnimal();
-			break;
-		case RdzVousTable.COL_RACE:
-			val = listeRdzVous.get(rowIndex).getAnimal().getRace();
-			break;
+			case RdzVousTable.COL_HEURE:
+				val = rdv.getHour();
+				break;
+			case RdzVousTable.COL_NOM:
+				val = rdv.getClient().getNomClient();
+				break;
+			case RdzVousTable.COL_ANIMAL:
+				val = rdv.getAnimal().getNomAnimal();
+				break;
+			case RdzVousTable.COL_RACE:
+				val = rdv.getAnimal().getRace();
+				break;
 		
 		}
+		
 		return val;
 	}
 
