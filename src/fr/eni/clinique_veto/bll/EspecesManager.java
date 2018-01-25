@@ -13,10 +13,9 @@ import fr.eni.clinique_veto.dal.DAOFactory;
 public class EspecesManager {
 	private static Map<String,List<String>> especesMap;
 	private static String[] especesArray;
-	private static AnimalDAO animalDAO;
 	
 	static {
-		animalDAO = DAOFactory.getAnimalDAO();
+		AnimalDAO animalDAO = DAOFactory.getAnimalDAO();
 		especesMap = new HashMap<String,List<String>>();
 		List<String[]> result = null;
 		
@@ -48,6 +47,11 @@ public class EspecesManager {
 	
 	public static String[] getRacesForEspece(String espece) {
 		List<String> races = especesMap.get(espece);
+		
+		if(races == null) {
+			return new String[0];
+		}
+		
 		String[] sa = new String[races.size()];
 		return races.toArray(sa);
 	}
