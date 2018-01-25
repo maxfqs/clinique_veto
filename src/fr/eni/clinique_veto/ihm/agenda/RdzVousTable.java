@@ -52,6 +52,8 @@ public class RdzVousTable extends JTable {
 		rdvs.addAll(data);
 		model.fireTableDataChanged();
 	}
-
 	
+	public RendezVous getSelected() {
+		return rdvs.get(getSelectedRow());
+	}	
 }

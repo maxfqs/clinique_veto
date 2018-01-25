@@ -28,7 +28,6 @@ public class RdzVousController implements MenuController {
 
 	private static RdzVousController instance;
 	private List<Personnel> listeVetos ;
-	private List<RendezVous> listeRdzVs;
 	private Animal animal;
 	private Client client;
 	private Personnel veto;
@@ -42,7 +41,6 @@ public class RdzVousController implements MenuController {
 	
 	
 	public RdzVousController() {
-		this.listeRdzVs =new ArrayList<RendezVous>();
 		listeVetos = PersonnelManager.get().getVeto();
 		this.dial = new RdzVousDialog(listeVetos);
 		this.veto = listeVetos.get(0);
@@ -140,9 +138,7 @@ public class RdzVousController implements MenuController {
 			}
 			try {
 				RendezVousManager.addRdv(veto, animal, date, Integer.parseInt(heure), Integer.parseInt(minutes));
-				listeRdzVs.clear();
-				listeRdzVs.addAll(RendezVousManager.getVetoRdvForDate(veto, date));
-				dial.onListUpdated();
+				updateRdvTable();
 			} catch (BLLException e) {
 				ErrorDialog.showError("Cet horaire n'est pas libre, merci d'en choisir un autre");
 				e.printStackTrace();
@@ -168,25 +164,13 @@ public class RdzVousController implements MenuController {
 	}
 
 	public void getRendezVous() {
-			try {
-				listeRdzVs.clear();
-				listeRdzVs.addAll(RendezVousManager.getVetoRdvForDate(veto, date));
-			} catch (BLLException e) {
-				e.printStackTrace();
-			}	
-		dial.addTable(listeRdzVs);
+		updateRdvTable();	
 	}
 	
-	public List<RendezVous> getListeRdzVous(){
-		return this.listeRdzVs;
-	}
-
 	public void removeRdzVous() {
 		try {
 			RendezVousManager.removeRdv(selectedRdzVs.getPers(), selectedRdzVs.getAnimal(), selectedRdzVs.getDate());
-			listeRdzVs.clear();
-			listeRdzVs.addAll(RendezVousManager.getVetoRdvForDate(veto, date));
-			dial.onListUpdated();
+
 		} catch (BLLException e) {
 			e.printStackTrace();
 		}
@@ -194,9 +178,17 @@ public class RdzVousController implements MenuController {
 	}
 
 	public void setSelectedRdzVs(int selectedRow) {
-		this.selectedRdzVs = this.listeRdzVs.get(selectedRow);
+		this.selectedRdzVs = dial.getRdvTable().getSelected();
 	}
-
+	
+	private void updateRdvTable() {
+		try {
+			List<RendezVous> data = RendezVousManager.getVetoRdvForDate(veto, date);
+			dial.getRdvTable().updateData(data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 
 

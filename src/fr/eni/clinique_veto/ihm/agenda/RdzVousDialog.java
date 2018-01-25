@@ -34,7 +34,7 @@ import fr.eni.clinique_veto.bo.RendezVous;
 
 
 @SuppressWarnings("serial")
-public class RdzVousDialog extends JPanel  implements ManagerListObserver {
+public class RdzVousDialog extends JPanel {
 	
 		private static int WIDTH = 750;
 		private static int HEIGHT = 700;
@@ -190,6 +190,12 @@ public class RdzVousDialog extends JPanel  implements ManagerListObserver {
 		
 			centerPanel = new JPanel();
 			panelRdzVous = new JPanel();
+			tableRdzVs = new RdzVousTable();
+			tableRdzVs.setPreferredScrollableViewportSize(new Dimension(500,150));
+			JScrollPane scroll = new JScrollPane(tableRdzVs);		
+			panelRdzVous.add(scroll);
+			this.add(panelRdzVous, BorderLayout.CENTER);
+			
 			
 			southPanel = new JPanel();
 			btnAnnuler = new JButton("annuler");
@@ -201,16 +207,8 @@ public class RdzVousDialog extends JPanel  implements ManagerListObserver {
 			this.add(southPanel, BorderLayout.SOUTH);
 		}
 		
-		public void addTable(List<RendezVous> pListe) {
-			panelRdzVous.removeAll();
-			tableRdzVs = new RdzVousTable(pListe);
-			tableRdzVs.setPreferredScrollableViewportSize(new Dimension(500,150));
-			JScrollPane scroll = new JScrollPane(tableRdzVs);		
-			panelRdzVous.add(scroll);
-			this.add(panelRdzVous, BorderLayout.CENTER);
-			this.revalidate();
-			this.repaint();
-			this.addListenerTable();	
+		public RdzVousTable getRdvTable() {
+			return tableRdzVs;
 		}
 		
 		public void setNomRendezVous(String pNomClient,String pNomAnimal) {
@@ -241,22 +239,22 @@ public class RdzVousDialog extends JPanel  implements ManagerListObserver {
 			
 		}
 
-		@Override
-		public void onListUpdated() {
-			((AbstractTableModel) tableRdzVs.getModel()).fireTableDataChanged();	
-		}
-		
-		private void addListenerTable() {
-			tableRdzVs.getSelectionModel().addListSelectionListener(new ListSelectionListener(){ 		
-				@Override
-				public void valueChanged(ListSelectionEvent arg0) {
-
-//					RdzVousController.get().setSelectedRdzVs(tableRdzVs.getSelectedRow());
-//					Client clientToDisplay = ClientManager.get().getClients().get(clientTable.getSelectedRow());
-//					ClientManager.get().setDisplayedClient(clientToDisplay);
-				}
-		    });		
-		}
+//		@Override
+//		public void onListUpdated() {
+//			((AbstractTableModel) tableRdzVs.getModel()).fireTableDataChanged();	
+//		}
+//		
+//		private void addListenerTable() {
+//			tableRdzVs.getSelectionModel().addListSelectionListener(new ListSelectionListener(){ 		
+//				@Override
+//				public void valueChanged(ListSelectionEvent arg0) {
+//
+////					RdzVousController.get().setSelectedRdzVs(tableRdzVs.getSelectedRow());
+////					Client clientToDisplay = ClientManager.get().getClients().get(clientTable.getSelectedRow());
+////					ClientManager.get().setDisplayedClient(clientToDisplay);
+//				}
+//		    });		
+//		}
 	
 		
 	
