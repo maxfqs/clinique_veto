@@ -29,22 +29,26 @@ public class RendezVous {
 		this.date = date;
 		this.animal = animal;
 		this.client = client;
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(this.date);
-		int hour =  cal.get(Calendar.HOUR_OF_DAY);
-		int minutes = cal.get(Calendar.MINUTE);
-		this.hour = hour+"h"+minutes;
+		this.setHour();
 	}
-		public RendezVous(Personnel pers, Date date, Animal animal) {
-			this.pers = pers;
-			this.date = date;
-			this.animal = animal;
-		
+	public RendezVous(Personnel pers, Date date, Animal animal) {
+		this.pers = pers;
+		this.date = date;
+		this.animal = animal;	
+		this.setHour();
+	}
+	
+	private void setHour() {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(this.date);
 		int hour =  cal.get(Calendar.HOUR_OF_DAY);
 		int minutes = cal.get(Calendar.MINUTE);
 		this.hour = hour+"h"+minutes;
+		
+		if(minutes == 0) {
+			System.out.println(minutes);
+			this.hour += "0";
+		}
 	}
 	
 	public String getHour(){
