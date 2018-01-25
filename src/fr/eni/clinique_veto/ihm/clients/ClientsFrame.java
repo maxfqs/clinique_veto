@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.List;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,6 +21,12 @@ import fr.eni.clinique_veto.bo.Animal;
 import fr.eni.clinique_veto.bo.client.Client;
 import fr.eni.clinique_veto.ihm.agenda.RdzVousController;
 
+/**
+ * 
+ * @author mdesfoux2018 coded with love
+ * thanks to my family , my dog, and my friends , big up to Firas the master and Herr Fouques Mein Fuhrer
+ *
+ */
 @SuppressWarnings("serial")
 public class ClientsFrame extends JPanel implements ManagerListObserver {
 
@@ -73,19 +80,19 @@ public class ClientsFrame extends JPanel implements ManagerListObserver {
 	private void initListeners() {
 		btnRechercheClt.addActionListener((e)-> ClientController.get().rechercheClient());
 		btnAjouterClt.addActionListener((e)-> ClientController.get().ajouterClient());
-		btnValiderClt.addActionListener((e)-> ClientController.get().updateClient());
 		btnAnnulerClt.addActionListener((e)-> ClientController.get().annuler());
 		btnSupprimerClt.addActionListener((e)->ClientController.get().supprimerClient());	
 		btnAjouterAnimal.addActionListener((e)-> ClientController.get().ajouterAnimal());
 		btnSupprAnimal.addActionListener((e)-> ClientController.get().supprimerAnimal());
 		btnEditerAnimal.addActionListener((e)-> ClientController.get().editerAnimal());
-		 btnValiderChoix.addActionListener((e)-> RdzVousController.get().validerChoixAnimal());
+		btnValiderChoix.addActionListener((e)-> RdzVousController.get().validerChoixAnimal());
 	}
 
 
 	private void initComponentAnimaux() {
 
 		animauxPanel = new JPanel();
+		animauxPanel.setLayout(new BoxLayout(animauxPanel, BoxLayout.Y_AXIS));
 		containerBtnAnimaux = new JPanel();
 		
 		btnAjouterAnimal = new JButton("ajouter");
@@ -191,13 +198,12 @@ public class ClientsFrame extends JPanel implements ManagerListObserver {
 		btnRechercheClt = new JButton("Rechercher");
 		btnAjouterClt = new JButton("ajouter");
 		btnSupprimerClt = new JButton("supprimer");
-		btnValiderClt = new JButton("valider");
+	
 		btnAnnulerClt = new JButton("Annuler");
 			
 		containerBtn.add(btnRechercheClt);
 		containerBtn.add(btnAjouterClt);
 		containerBtn.add(btnSupprimerClt);
-		containerBtn.add(btnValiderClt);
 		containerBtn.add(btnAnnulerClt);
 		
 		// ajout au frame principal
@@ -272,6 +278,17 @@ public class ClientsFrame extends JPanel implements ManagerListObserver {
 		table.getModelTable().fireTableDataChanged();
 		table.requestFocus();
 		table.changeSelection(ClientManager.get().getAnimauxDisplayedClient().size()-1,0,false, false);
+	}
+
+
+	public void setConfRdzVous() {
+		btnValiderClt = new JButton("valider");
+		containerBtnAnimaux.remove(btnAjouterAnimal);
+		containerBtnAnimaux.remove(btnSupprAnimal);
+		containerBtnAnimaux.remove(btnEditerAnimal);
+		containerBtn.add(btnValiderClt);
+		containerBtn.setVisible(false);	
+		btnValiderClt.addActionListener((e)-> ClientController.get().updateClient());
 	}
 	
 	
