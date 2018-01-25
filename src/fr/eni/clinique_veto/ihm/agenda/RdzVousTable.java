@@ -55,5 +55,6 @@ public class RdzVousTable extends JTable {
 	
 	public RendezVous getSelected() {
 		return rdvs.get(getSelectedRow());
-	}	
+	}
+	
 }

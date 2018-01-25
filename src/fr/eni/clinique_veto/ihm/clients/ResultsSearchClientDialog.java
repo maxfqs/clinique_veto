@@ -40,7 +40,7 @@ public class ResultsSearchClientDialog extends JDialog {
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	    setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		this.initComponent();
-		this.initListeners();
+		this.initListenersRdzVs();
 	}
 	
 	public static ResultsSearchClientDialog get() {
@@ -60,23 +60,10 @@ public class ResultsSearchClientDialog extends JDialog {
 		}
 	}
 
-	private void initListeners() {
-		validerBtn.addActionListener((e)-> {
-			try {
-				RdzVousController.get().afficherClient();
 
-			} catch (BLLException e1) {
-				System.out.println(e1);
-				JOptionPane.showMessageDialog(this,
-					    e1.getMessage(),
-					    "erreur",
-					    JOptionPane.ERROR_MESSAGE);
-			}
-		});
-	}
 	
 	public void initListenersRdzVs() {
-	
+
 		validerBtn.addActionListener((e)-> {
 			try {
 				RdzVousController.get().afficherClient();

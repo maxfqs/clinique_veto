@@ -21,6 +21,7 @@ import fr.eni.clinique_veto.ihm.ErrorDialog;
 import fr.eni.clinique_veto.ihm.MenuController;
 import fr.eni.clinique_veto.ihm.clients.ClientController;
 import fr.eni.clinique_veto.ihm.clients.ClientsFrame;
+import fr.eni.clinique_veto.ihm.clients.ClientsFrame_Impl_RdsVs;
 import fr.eni.clinique_veto.ihm.clients.RechercheFrame;
 import fr.eni.clinique_veto.ihm.clients.ResultsSearchClientDialog;
 
@@ -37,7 +38,7 @@ public class RdzVousController implements MenuController {
 	private JDialog clientDial;
 	private RdzVousDialog dial ;
 	private RendezVous selectedRdzVs;
-
+	private  ClientsFrame_Impl_RdsVs searchClientFrame;
 	
 	
 	public RdzVousController() {
@@ -45,6 +46,7 @@ public class RdzVousController implements MenuController {
 		this.dial = new RdzVousDialog(listeVetos);
 		this.veto = listeVetos.get(0);
 		this.date =  new Date();
+		this.searchClientFrame = new ClientsFrame_Impl_RdsVs();
 		hide();
 	}
 	
@@ -59,13 +61,12 @@ public class RdzVousController implements MenuController {
 		animal = ClientManager.get().getAnimalManager().getSelectedAnimal();
 		client = ClientManager.get().getDisplayedClient();
 		clientDial.setVisible(false);
+		this.searchClientFrame.setVisible(false);
 		dial.setNomRendezVous(client.getNomClient(), animal.getNomAnimal());
 	}
 	
 	
 	public void chercherClient(String nomClient) {
-
-		RechercheFrame.get().initListenersRdzVs();
 		List<Client> resultatRecherche;
 		try {
 			resultatRecherche = ClientManager.get().trouverClientParNom(nomClient);
@@ -88,15 +89,14 @@ public class RdzVousController implements MenuController {
 
 		if( ClientManager.get().getDisplayedClient() != null) {
 			ResultsSearchClientDialog.get().setVisible(false);
-			ClientController.get().setConfRdzVous();
-			ClientController.get().getClientsFrame().afficherClient(ClientManager.get().getDisplayedClient());
-			ClientController.get().getClientsFrame().afficherAnimaux(ClientManager.get().getAnimauxDisplayedClient());
+			this.searchClientFrame.afficherClient(ClientManager.get().getDisplayedClient());
+			this.searchClientFrame.afficherAnimaux(ClientManager.get().getAnimauxDisplayedClient());
 			if(clientDial == null) {
 				clientDial = new JDialog();
 			}
 			clientDial.setSize(ClientsFrame.FRAME_WIDTH, ClientsFrame.FRAME_HEIGHT);
-			clientDial.setContentPane(ClientController.get().getClientsFrame());
-			ClientController.get().show();
+			clientDial.setContentPane(this.searchClientFrame);
+			this.searchClientFrame.setVisible(true);
 			clientDial.setVisible(true);
 		}else {
 			throw new BLLException("il n'y a pas d'élément sélectionné.");
@@ -168,11 +168,12 @@ public class RdzVousController implements MenuController {
 		updateRdvTable();	
 	}
 	
-	public void removeRdzVous() {
+	public void removeRdzVous(RendezVous rdzVs) {
 		try {
-			RendezVousManager.removeRdv(selectedRdzVs.getPers(), selectedRdzVs.getAnimal(), selectedRdzVs.getDate());
+			RendezVousManager.removeRdv(rdzVs.getPers(), rdzVs.getAnimal(), rdzVs.getDate());
 			updateRdvTable();
 		} catch (BLLException e) {
+			ErrorDialog.showError("Erreur lors de la suppression de ce rendez vous");
 			e.printStackTrace();
 		}
 		
@@ -187,6 +188,7 @@ public class RdzVousController implements MenuController {
 			List<RendezVous> data = RendezVousManager.getVetoRdvForDate(veto, date);
 			dial.getRdvTable().updateData(data);
 		} catch (Exception e) {
+			ErrorDialog.showError("Erreur lors de la mise à jour de la table des rendez vous");
 			e.printStackTrace();
 		}
 	}
