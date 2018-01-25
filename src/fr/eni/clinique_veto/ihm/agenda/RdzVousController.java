@@ -102,13 +102,13 @@ public class RdzVousController implements MenuController {
 		}
 	}
 
-	public void displayRdzVsDialog() {
-		
+	public void displayRdzVsDialog() {	
 		this.dial.setVisible(true);	
 	}
 
 	@Override
 	public void show() {
+		this.getRendezVous();
 		this.dial.setVisible(true);	
 	}
 
