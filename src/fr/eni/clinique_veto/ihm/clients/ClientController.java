@@ -132,4 +132,9 @@ public class ClientController implements MenuController {
 	public ClientsFrame getClientsFrame() {
 		return clientFrame;
 	}
+
+	public void setConfRdzVous() {
+		clientFrame.setConfRdzVous();
+		
+	}
 }

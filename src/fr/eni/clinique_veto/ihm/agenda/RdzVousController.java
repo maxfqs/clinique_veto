@@ -88,6 +88,7 @@ public class RdzVousController implements MenuController {
 
 		if( ClientManager.get().getDisplayedClient() != null) {
 			ResultsSearchClientDialog.get().setVisible(false);
+			ClientController.get().setConfRdzVous();
 			ClientController.get().getClientsFrame().afficherClient(ClientManager.get().getDisplayedClient());
 			ClientController.get().getClientsFrame().afficherAnimaux(ClientManager.get().getAnimauxDisplayedClient());
 			if(clientDial == null) {
