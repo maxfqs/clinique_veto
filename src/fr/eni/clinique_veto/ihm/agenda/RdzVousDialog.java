@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -20,20 +19,21 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import fr.eni.clinique_veto.bll.ClientManager;
 import fr.eni.clinique_veto.bll.ManagerListObserver;
 import fr.eni.clinique_veto.bo.Personnel;
 import fr.eni.clinique_veto.bo.RendezVous;
 
 
 @SuppressWarnings("serial")
-public class RdzVousDialog extends JPanel  implements ManagerListObserver {
+public class RdzVousDialog extends JPanel {
 	
 		private static int WIDTH = 750;
 		private static int HEIGHT = 700;
@@ -98,7 +98,8 @@ public class RdzVousDialog extends JPanel  implements ManagerListObserver {
 			});
 			comboHeure.addActionListener((e)-> RdzVousController.get().setHeure((String)comboHeure.getSelectedItem()));
 			comboMin.addActionListener((e)-> RdzVousController.get().setMinutes((String)comboMin.getSelectedItem()));
-			btnAnnuler.addActionListener((e)->  this.setVisible(false));		
+			btnAnnuler.addActionListener((e)->  this.setVisible(false));	
+		
 		}
 
 
@@ -188,6 +189,12 @@ public class RdzVousDialog extends JPanel  implements ManagerListObserver {
 		
 			centerPanel = new JPanel();
 			panelRdzVous = new JPanel();
+			tableRdzVs = new RdzVousTable();
+			tableRdzVs.setPreferredScrollableViewportSize(new Dimension(500,150));
+			JScrollPane scroll = new JScrollPane(tableRdzVs);		
+			panelRdzVous.add(scroll);
+			this.add(panelRdzVous, BorderLayout.CENTER);
+			
 			
 			southPanel = new JPanel();
 			btnAnnuler = new JButton("annuler");
@@ -199,15 +206,8 @@ public class RdzVousDialog extends JPanel  implements ManagerListObserver {
 			this.add(southPanel, BorderLayout.SOUTH);
 		}
 		
-		public void addTable(List<RendezVous> pListe) {
-			panelRdzVous.removeAll();
-			tableRdzVs = new RdzVousTable(pListe);
-			tableRdzVs.setPreferredScrollableViewportSize(new Dimension(500,150));
-			JScrollPane scroll = new JScrollPane(tableRdzVs);		
-			panelRdzVous.add(scroll);
-			this.add(panelRdzVous, BorderLayout.CENTER);
-			this.revalidate();
-			this.repaint();
+		public RdzVousTable getRdvTable() {
+			return tableRdzVs;
 		}
 		
 		public void setNomRendezVous(String pNomClient,String pNomAnimal) {
@@ -238,10 +238,22 @@ public class RdzVousDialog extends JPanel  implements ManagerListObserver {
 			
 		}
 
-		@Override
-		public void onListUpdated() {
-			((AbstractTableModel) tableRdzVs.getModel()).fireTableDataChanged();	
-		}
+//		@Override
+//		public void onListUpdated() {
+//			((AbstractTableModel) tableRdzVs.getModel()).fireTableDataChanged();	
+//		}
+//		
+//		private void addListenerTable() {
+//			tableRdzVs.getSelectionModel().addListSelectionListener(new ListSelectionListener(){ 		
+//				@Override
+//				public void valueChanged(ListSelectionEvent arg0) {
+//
+////					RdzVousController.get().setSelectedRdzVs(tableRdzVs.getSelectedRow());
+////					Client clientToDisplay = ClientManager.get().getClients().get(clientTable.getSelectedRow());
+////					ClientManager.get().setDisplayedClient(clientToDisplay);
+//				}
+//		    });		
+//		}
 	
 		
 	

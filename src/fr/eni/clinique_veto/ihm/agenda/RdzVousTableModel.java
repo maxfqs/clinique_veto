@@ -1,5 +1,6 @@
 package fr.eni.clinique_veto.ihm.agenda;
 
+import java.util.EventObject;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -10,7 +11,7 @@ import fr.eni.clinique_veto.bo.RendezVous;
 public class RdzVousTableModel extends AbstractTableModel {
 	private List<RendezVous> listeRdzVous;
 
-	private String[] columnNames = { "Heure", "Nom du client", "Animal",  "Race" };
+	private String[] columnNames = { "Heure", "Nom du client", "Animal",  "Race", "supprimer" };
 
 	 public RdzVousTableModel(List<RendezVous> list) {
 	 this.listeRdzVous = list;
@@ -32,6 +33,10 @@ public class RdzVousTableModel extends AbstractTableModel {
 		return columnNames.length;
 	}
 
+	@Override
+	public boolean isCellEditable(int rowIndex, int columnIndex){
+	    return true;
+	}
 
 
 	@Override

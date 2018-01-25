@@ -1,8 +1,6 @@
 package fr.eni.clinique_veto.ihm.agenda;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -11,10 +9,10 @@ import java.util.Properties;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
+import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JFormattedTextField.AbstractFormatter;
+import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
 import org.jdatepicker.impl.JDatePanelImpl;
@@ -24,7 +22,7 @@ import org.jdatepicker.impl.UtilDateModel;
 
 
 @SuppressWarnings("serial")
-public class AgendaDialog extends JDialog {
+public class AgendaFrame extends JPanel {
 
 	private static int WIDTH = 600;
 	private static int HEIGHT = 500;
@@ -34,14 +32,13 @@ public class AgendaDialog extends JDialog {
 	private JPanel vetoPanel;
 	private JPanel centerPanel;
 	private JLabel comboVetoLabel;
-	private JComboBox comboVeto;
+	private JComboBox<String> comboVeto;
 	private JDatePickerImpl datePicker;
 	private JButton dossierBtn;
+	private RdzVousTable rdvTable;
 	
-	public AgendaDialog() {
-		this.setTitle("Agenda");
+	public AgendaFrame() {
 		this.setSize(WIDTH, HEIGHT);
-		this.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
 		this.initComponent();
 		this.initListeners();
 	}
@@ -63,9 +60,7 @@ public class AgendaDialog extends JDialog {
 	private void initComponent() {
 		vetoPanel = new JPanel();
 		
-		// init false combo
-		String[] listeVeto = {"toto", "robert","william cramps"};
-		comboVeto = new JComboBox(listeVeto);
+		comboVeto = new JComboBox<String>();
 		comboVetoLabel = new JLabel("vétérinaire");
 		
 		UtilDateModel model = new UtilDateModel();
@@ -93,6 +88,9 @@ public class AgendaDialog extends JDialog {
 		this.add(northPanel, BorderLayout.NORTH);
 		
 		centerPanel = new JPanel();
+		rdvTable = new RdzVousTable();
+		JScrollPane scroll = new JScrollPane(rdvTable);
+		centerPanel.add(scroll);
 		this.add(centerPanel, BorderLayout.CENTER);
 		
 		southPanel = new JPanel();
@@ -103,6 +101,17 @@ public class AgendaDialog extends JDialog {
 		
 	}
 	
+	public JComboBox<String> getVetCBox() {
+		return comboVeto;
+	}
+	
+	public RdzVousTable getRdvTable() {
+		return rdvTable;
+	}
+	
+	public JDatePickerImpl getDatePicker() {
+		return datePicker;
+	}
 	
 	private class DateLabelFormatter extends AbstractFormatter{
 
