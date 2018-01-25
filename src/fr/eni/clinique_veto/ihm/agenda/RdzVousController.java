@@ -173,6 +173,7 @@ public class RdzVousController implements MenuController {
 			RendezVousManager.removeRdv(rdzVs.getPers(), rdzVs.getAnimal(), rdzVs.getDate());
 			updateRdvTable();
 		} catch (BLLException e) {
+			ErrorDialog.showError("Erreur lors de la suppression de ce rendez vous");
 			e.printStackTrace();
 		}
 		
@@ -187,6 +188,7 @@ public class RdzVousController implements MenuController {
 			List<RendezVous> data = RendezVousManager.getVetoRdvForDate(veto, date);
 			dial.getRdvTable().updateData(data);
 		} catch (Exception e) {
+			ErrorDialog.showError("Erreur lors de la mise à jour de la table des rendez vous");
 			e.printStackTrace();
 		}
 	}
