@@ -4,10 +4,12 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import fr.eni.clinique_veto.bo.RendezVous;
+
 
 
 @SuppressWarnings("serial")
@@ -17,6 +19,7 @@ public class RdzVousTable extends JTable {
 	public static final int COL_NOM = 1;
 	public static final int COL_ANIMAL = 2;
 	public static final int COL_RACE = 3;
+	public static final int COL_SUPPR = 4;
 	
 	private List<RendezVous> rdvs;
 	private RdzVousTableModel model;
@@ -27,17 +30,21 @@ public class RdzVousTable extends JTable {
 		setModel(model);
 	
 	
-	    setPreferredScrollableViewportSize(new Dimension(500, 70));
-	    setFillsViewportHeight(true);
+    setPreferredScrollableViewportSize(new Dimension(500, 70));
+    setFillsViewportHeight(true);
+
+    this.getColumnModel().getColumn(COL_HEURE).setPreferredWidth(70);
+	this.getColumnModel().getColumn(COL_NOM).setPreferredWidth(70);
+	this.getColumnModel().getColumn(COL_ANIMAL).setPreferredWidth(70);
+	this.getColumnModel().getColumn(COL_RACE).setPreferredWidth(70);
+	this.getColumnModel().getColumn(COL_SUPPR).setPreferredWidth(70);
+
+	this.getColumnModel().getColumn(COL_SUPPR).setCellRenderer(new ButtonRenderer());
+	this.getColumnModel().getColumn(COL_SUPPR).setCellEditor(new ButtonEditor(new JCheckBox()));
 	
-	    this.getColumnModel().getColumn(COL_HEURE).setPreferredWidth(70);
-		this.getColumnModel().getColumn(COL_NOM).setPreferredWidth(70);
-		this.getColumnModel().getColumn(COL_ANIMAL).setPreferredWidth(70);
-		this.getColumnModel().getColumn(COL_RACE).setPreferredWidth(70);
-	
-		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			
-		this.setRowHeight(30);
+	this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+	this.setRowHeight(30);
 	}
 	
 	public void updateData(List<RendezVous> data) {

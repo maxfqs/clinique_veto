@@ -37,6 +37,7 @@ public class RdzVousController implements MenuController {
 	private String minutes;
 	private JDialog clientDial;
 	private RdzVousDialog dial ;
+	private RendezVous selectedRdzVs;
 
 	
 	
@@ -178,6 +179,22 @@ public class RdzVousController implements MenuController {
 	
 	public List<RendezVous> getListeRdzVous(){
 		return this.listeRdzVs;
+	}
+
+	public void removeRdzVous() {
+		try {
+			RendezVousManager.removeRdv(selectedRdzVs.getPers(), selectedRdzVs.getAnimal(), selectedRdzVs.getDate());
+			listeRdzVs.clear();
+			listeRdzVs.addAll(RendezVousManager.getVetoRdvForDate(veto, date));
+			dial.onListUpdated();
+		} catch (BLLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	public void setSelectedRdzVs(int selectedRow) {
+		this.selectedRdzVs = this.listeRdzVs.get(selectedRow);
 	}
 
 

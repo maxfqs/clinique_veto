@@ -118,7 +118,7 @@ public class RendezVousDAOJdbcImpl implements RendezVousDAO{
 	public void delete(RendezVous rdv) throws DALException {
 		java.sql.Timestamp t = new java.sql.Timestamp(rdv.getDate().getTime());
 		PreparedStatement rqt = null;
-		ResultSet rs = null;
+
 		try{
 			rqt = cnx.prepareStatement(sqlDelete);
 			
@@ -126,10 +126,14 @@ public class RendezVousDAOJdbcImpl implements RendezVousDAO{
 			rqt.setTimestamp(2, t);
 			rqt.setInt(3, rdv.getPers().getId());
 			
-			rs = rqt.executeQuery();
+			rqt.executeUpdate();
 		}  catch (SQLException e) {
+			System.out.println(e);
 			throw new DALException("Delete RDV failed" , e);
-		} 
+		}
+		
+		
+	
 	}
 
 	

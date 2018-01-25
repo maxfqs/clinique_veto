@@ -69,6 +69,7 @@ public class RendezVousManager {
 		
 		try {
 			RendezVous rdv = new RendezVous(p, d, a);
+			System.out.println(rdv);
 			rdvDAO.delete(rdv);
 		} catch (DALException e) {
 			throw new BLLException(BLLError.FAILED_RDV_DELETE);

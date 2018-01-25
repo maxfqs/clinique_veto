@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +12,7 @@ import java.util.Properties;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JLabel;
@@ -20,13 +20,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import fr.eni.clinique_veto.bll.ClientManager;
 import fr.eni.clinique_veto.bll.ManagerListObserver;
 import fr.eni.clinique_veto.bo.Personnel;
 import fr.eni.clinique_veto.bo.RendezVous;
@@ -98,7 +99,8 @@ public class RdzVousDialog extends JPanel  implements ManagerListObserver {
 			});
 			comboHeure.addActionListener((e)-> RdzVousController.get().setHeure((String)comboHeure.getSelectedItem()));
 			comboMin.addActionListener((e)-> RdzVousController.get().setMinutes((String)comboMin.getSelectedItem()));
-			btnAnnuler.addActionListener((e)->  this.setVisible(false));		
+			btnAnnuler.addActionListener((e)->  this.setVisible(false));	
+		
 		}
 
 
@@ -208,6 +210,7 @@ public class RdzVousDialog extends JPanel  implements ManagerListObserver {
 			this.add(panelRdzVous, BorderLayout.CENTER);
 			this.revalidate();
 			this.repaint();
+			this.addListenerTable();	
 		}
 		
 		public void setNomRendezVous(String pNomClient,String pNomAnimal) {
@@ -241,6 +244,18 @@ public class RdzVousDialog extends JPanel  implements ManagerListObserver {
 		@Override
 		public void onListUpdated() {
 			((AbstractTableModel) tableRdzVs.getModel()).fireTableDataChanged();	
+		}
+		
+		private void addListenerTable() {
+			tableRdzVs.getSelectionModel().addListSelectionListener(new ListSelectionListener(){ 		
+				@Override
+				public void valueChanged(ListSelectionEvent arg0) {
+
+//					RdzVousController.get().setSelectedRdzVs(tableRdzVs.getSelectedRow());
+//					Client clientToDisplay = ClientManager.get().getClients().get(clientTable.getSelectedRow());
+//					ClientManager.get().setDisplayedClient(clientToDisplay);
+				}
+		    });		
 		}
 	
 		
